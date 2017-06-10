@@ -1,4 +1,4 @@
-# AtCoder Hogehoge (仮)
+# AtCoder Hogehoge（仮）
 
 [AtCoder](https://atcoder.jp/) の問題を点数ごとに分ける非公式サイトです．
 
