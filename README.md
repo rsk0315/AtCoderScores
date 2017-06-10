@@ -15,8 +15,9 @@ writer さん達の色は出題の告知時点の色です．改訂後のレー�
 
 ## つくった人
 
-- えび（[@rsk0315_h4x](https://twitter.com/rsk0315_h4x)）
-- つたじろう（[@_TTJR_](https://twitter.com/_TTJR_)）
+- やざてん（[@Yazaten](https://twitter.com/Yazaten)）：原案
+- えび（[@rsk0315_h4x](https://twitter.com/rsk0315_h4x)）：大枠の作成
+- つたじろう（[@_TTJR_](https://twitter.com/_TTJR_)）：デザイン全般
 =======
 # AtCoderHogehoge（仮）
 AtCoder の問題を点数ごとに分けるやつ
