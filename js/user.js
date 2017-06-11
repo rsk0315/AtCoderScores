@@ -1,3 +1,8 @@
+// 入力文字エスケープ
+function selectorEscape(val){
+    return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
+}
+
 $(window).on("load", function() {
     var PointArray = [100, 200, 300, 400, 500, 600, 700, 800, 900, 1000,
                         1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
@@ -5,25 +10,81 @@ $(window).on("load", function() {
 
     $("#mainconttable").tablesorter();
 
+    // URL パース
+    var UserUrl = $(location).attr('search');
+    var Params = $.url(UserUrl).param();
+    var UserName, DelAccept, lb, ub;
+
+    // パラメータが何もなければデフォルト表示
+    if(!UserUrl.substring(1)) {
+        UserName = "";
+        DelAccept = "off";
+        lb = 100;
+        ub = 2400;
+        console.log(Params);
+    }
+    else {
+        UserName = selectorEscape(Params.user_name);
+        DelAccept = selectorEscape(Params.del_accept);
+        lb = parseInt(selectorEscape(Params.lbound));
+        ub = parseInt(selectorEscape(Params.ubound));
+        console.log(Params);
+    }
+
+    // パラメータをフォームに反映 (入力情報の保存)
+    $('input[name=form_username]').val(UserName);
+    var flag = (DelAccept == "on" ? true : false);
+    $('input[name=form_notac]').prop('checked', flag);
+    $('#difficulty_min [value=\"' + String(lb) + '\"]').prop('selected', true);
+    $('#difficulty_max [value=\"' + String(ub) + '\"]').prop('selected', true);
+
+    // 難易度絞り込み
+    // 逆でも対応する優しい世界
+    if(lb > ub) {
+        var temp = lb;
+        lb = ub; ub = temp;
+    }
+
+    for (var i = 0; i < PointArray.length; i++) {
+        // lb 以上 ub 以下の要素に関しては表示し、そうでなければ表示しない
+        if(lb <= PointArray[i] && PointArray[i] <= ub) {
+            $(".dif_" + PointArray[i]).css('display', 'table-row');
+        }
+        else {
+            $(".dif_" + PointArray[i]).css('display', 'none');
+        }
+    }
+
+    // JSON を取ってきて提出状況に応じて色を付ける
+    $.getJSON("http://kenkoooo.com/atcoder-api/problems?user=" + UserName, function(data) {
+        $(data).each(function() {
+            if(this.status == "AC") {
+                // AC していないもののみ表示 (AC の要素を消す)
+                if(DelAccept == "on") {
+                    $("#" + this.id).parent().css('display', 'none');
+                }
+
+                $("#" + this.id).addClass("success");
+                $("#" + this.id).removeClass("warning");
+            }
+            else if(this.status != "") {
+                $("#" + this.id).removeClass("success");
+                $("#" + this.id).addClass("warning");
+            }
+        })
+    });
+
+    // ボタンを押したらパラメータ付き URL に飛ぶ
     $("#difficulty_submit").click(function() {
-        var lb = parseInt($("#difficulty_min").val());
-        var ub = parseInt($("#difficulty_max").val());
-
-        // 逆でも対応する優しい世界
-        if(lb > ub) {
-            var temp = lb;
-            lb = ub; ub = temp;
-        }
-
-        for (var i = 0; i < PointArray.length; i++) {
-            // lb 以上 ub 以下の要素に関しては表示し、そうでなければ表示しない
-            if(lb <= PointArray[i] && PointArray[i] <= ub) {
-                $(".dif_" + PointArray[i]).css('display', 'table-row');
-            }
-            else {
-                $(".dif_" + PointArray[i]).css('display', 'none');
-            }
-        }
+        // URL の変更
+        var QueryObj = {
+            lbound: $("#difficulty_min").val(),
+            ubound: $("#difficulty_max").val(),
+            user_name: selectorEscape($("input[name=form_username]").val()),
+            del_accept: $("input[name=form_notac]:checked").val()
+        };
+        var RawUrl = $(location).attr('hostname') + $(location).attr('pathname') + "?";
+        window.location.href = RawUrl + $.param(QueryObj);
     });
 });
 
