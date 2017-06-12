@@ -26,10 +26,10 @@ $(window).on("load", function() {
     lb        = Params.lbound;
     ub        = Params.ubound;
 
-    isEmpty(UserName)  ? UserName = ""     : selectorEscape(UserName);
-    isEmpty(DelAccept) ? DelAccept = "off" : selectorEscape(DelAccept);
-    isEmpty(lb)        ? lb = 100          : parseInt(selectorEscape(lb));
-    isEmpty(ub)        ? ub = 2400         : parseInt(selectorEscape(ub));
+    isEmpty(UserName)  ? UserName  = ""    : UserName  = selectorEscape(UserName);
+    isEmpty(DelAccept) ? DelAccept = "off" : DelAccept = selectorEscape(DelAccept);
+    isEmpty(lb)        ? lb        = 100   : lb        = parseInt(selectorEscape(lb));
+    isEmpty(ub)        ? ub        = 2400  : ub        = parseInt(selectorEscape(ub));
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
