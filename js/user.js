@@ -8,6 +8,18 @@ function isEmpty(val) {
     return val == undefined || val == "";
 }
 
+// パラメータ付き URL を作ってそこに飛ぶ
+function jumpProcess() {
+    // URL の変更
+    var QueryObj = {
+        lbound: $("#difficulty_min").val(),
+        ubound: $("#difficulty_max").val(),
+        user_name: selectorEscape($("input[name=form_username]").val()),
+        del_accept: $("input[name=form_notac]:checked").val()
+    };
+    window.location.href = "index.html?" + $.param(QueryObj);
+}
+
 $(window).on("load", function() {
     var PointArray = [   100,  200,  300,  400,  500,  600,  700,  800,  900, 1000,
                         1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
@@ -62,6 +74,7 @@ $(window).on("load", function() {
     $.getJSON(url,
         { q: query, format: 'json'},
         function(data) {
+            if(data.query.results == null) return;
             $(data.query.results.json.json).each(function() {
                 if (this.status == "AC") {
                     // AC していないもののみ表示 (AC の要素を消す)
@@ -79,15 +92,12 @@ $(window).on("load", function() {
         });
 
     // ボタンを押したらパラメータ付き URL に飛ぶ
-    $("#difficulty_submit").click(function() {
-        // URL の変更
-        var QueryObj = {
-            lbound: $("#difficulty_min").val(),
-            ubound: $("#difficulty_max").val(),
-            user_name: selectorEscape($("input[name=form_username]").val()),
-            del_accept: $("input[name=form_notac]:checked").val()
-        };
-        window.location.href = "index.html?" + $.param(QueryObj);
+    $("#difficulty_submit").click(jumpProcess);
+
+    // Enter キーを押したらパラメータ付き URL に飛ぶ
+    $(document).on("keypress", "input[name=form_username]", function(e) {
+        if(e.keyCode == 13) jumpProcess();
+        else $.noop();
     });
 });
 
