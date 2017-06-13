@@ -57,22 +57,26 @@ $(window).on("load", function() {
     }
 
     // JSON を取ってきて提出状況に応じて色を付ける
-    $.getJSON("http://kenkoooo.com/atcoder-api/problems?user=" + UserName, function(data) {
-        $(data).each(function() {
-            if (this.status == "AC") {
-                // AC していないもののみ表示 (AC の要素を消す)
-                if(DelAccept == "on") {
-                    $("#" + this.id).parent().css('display', 'none');
+    var url = 'https://query.yahooapis.com/v1/public/yql?callback=?';
+    var query = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + UserName + '"';
+    $.getJSON(url,
+        { q: query, format: 'json'},
+        function(data) {
+            $(data.query.results.json.json).each(function() {
+                if (this.status == "AC") {
+                    // AC していないもののみ表示 (AC の要素を消す)
+                    if(DelAccept == "on") {
+                        $("#" + this.id).parent().css('display', 'none');
+                    }
+                    $("#" + this.id).addClass("success");
+                    $("#" + this.id).removeClass("warning");
                 }
-                $("#" + this.id).addClass("success");
-                $("#" + this.id).removeClass("warning");
-            }
-            else if (this.status != "") {
-                $("#" + this.id).removeClass("success");
-                $("#" + this.id).addClass("warning");
-            }
-        })
-    });
+                else if (this.status != "") {
+                    $("#" + this.id).removeClass("success");
+                    $("#" + this.id).addClass("warning");
+                }
+            })
+        });
 
     // ボタンを押したらパラメータ付き URL に飛ぶ
     $("#difficulty_submit").click(function() {
@@ -83,8 +87,7 @@ $(window).on("load", function() {
             user_name: selectorEscape($("input[name=form_username]").val()),
             del_accept: $("input[name=form_notac]:checked").val()
         };
-        var RawUrl = $(location).attr('hostname') + $(location).attr('pathname') + "?";
-        window.location.href = RawUrl + $.param(QueryObj);
+        window.location.href = "index.html?" + $.param(QueryObj);
     });
 });
 
