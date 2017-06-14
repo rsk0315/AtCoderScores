@@ -45,8 +45,8 @@ $(window).on("load", function() {
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
-    var flag = (DelAccept == "on" ? true : false);
-    $('input[name=form_notac]').prop('checked', flag);
+    // var flag = (DelAccept == "on" ? true : false);
+    $('input[name=form_notac]').prop('checked', (DelAccept == "on"));
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
     $('.selectpicker').selectpicker('refresh');
@@ -81,12 +81,26 @@ $(window).on("load", function() {
                     if(DelAccept == "on") {
                         $("#" + this.id).parent().css('display', 'none');
                     }
-                    $("#" + this.id).addClass("success");
-                    $("#" + this.id).removeClass("warning");
+
+                    // ここ，もう少し綺麗なやり方があるかもしれません
+                    // HTML 側で，ある hoge に対して <td id="hoge"> が複数あると
+                    // ちゃんと動作しないと思って変更しました -- rsk0315
+                    $("#" + this.id + "_task").addClass("success");
+                    $("#" + this.id + "_writer").addClass("success");
+                    $("#" + this.id + "_pscore").addClass("success");
+
+                    $("#" + this.id + "_task").removeClass("warning");
+                    $("#" + this.id + "_writer").removeClass("warning");
+                    $("#" + this.id + "_pscore").removeClass("warning");
                 }
                 else if (this.status != "") {
-                    $("#" + this.id).removeClass("success");
-                    $("#" + this.id).addClass("warning");
+                    $("#" + this.id + "_task").removeClass("success");
+                    $("#" + this.id + "_writer").removeClass("success");
+                    $("#" + this.id + "_pscore").removeClass("success");
+
+                    $("#" + this.id + "_task").addClass("warning");
+                    $("#" + this.id + "_writer").addClass("warning");
+                    $("#" + this.id + "_pscore").addClass("warning");
                 }
             })
         });
