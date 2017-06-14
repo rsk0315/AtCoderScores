@@ -55,7 +55,7 @@
 
       <div class="header-form form-group">
         <div class="form-inline">
-        <label class="control-label">難易度：</label>
+          難易度：
           <select id="difficulty_min" class="selectpicker" data-size="8">
             <option value= "100"> 100</option>
             <option value= "200"> 200</option>
@@ -82,7 +82,7 @@
             <option value="2300">2300</option>
             <option value="2400">2400</option>
           </select>
-          <label class="control-label">から</label>
+          から
           <select id="difficulty_max" class="selectpicker" data-size="8">
             <option value= "100"> 100</option>
             <option value= "200"> 200</option>
@@ -110,11 +110,10 @@
             <option value="2400">2400</option>
           </select>
         </div>
-        <div class="form-inline" method="get" action="./">
-          <label class="control-label">User:</label>
-          <input type="text" name="form_username" class="form-control" placeholder="User ID">
+        <div class="form-inline">
+          User: <input type="text" name="form_username" class="form-control">
           <input type="checkbox" name="form_notac">AC していない問題のみ表示
-          <button type="button" id="difficulty_submit" class="btn btn-primary">絞り込み</button>
+          <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
         </div>
       </div>
       <!-- header end -->
