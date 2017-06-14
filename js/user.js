@@ -79,7 +79,7 @@ $(window).on("load", function() {
                 if (this.status == "AC") {
                     // AC していないもののみ表示 (AC の要素を消す)
                     if(DelAccept == "on") {
-                        $("#" + this.id).parent().css('display', 'none');
+                        $("#" + this.id + "_task").parent().css('display', 'none');
                     }
 
                     // ここ，もう少し綺麗なやり方があるかもしれません
