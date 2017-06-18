@@ -79,28 +79,15 @@ $(window).on("load", function() {
                 if (this.status == "AC") {
                     // AC していないもののみ表示 (AC の要素を消す)
                     if(DelAccept == "on") {
-                        $("#" + this.id + "_task").parent().css('display', 'none');
+                        $('#'+this).parent().css('display', 'none');
                     }
 
-                    // ここ，もう少し綺麗なやり方があるかもしれません
-                    // HTML 側で，ある hoge に対して <td id="hoge"> が複数あると
-                    // ちゃんと動作しないと思って変更しました -- rsk0315
-                    $("#" + this.id + "_task").addClass("success");
-                    $("#" + this.id + "_writer").addClass("success");
-                    $("#" + this.id + "_pscore").addClass("success");
-
-                    $("#" + this.id + "_task").removeClass("warning");
-                    $("#" + this.id + "_writer").removeClass("warning");
-                    $("#" + this.id + "_pscore").removeClass("warning");
+                    $('td.'+this.id).addClass("success");
+                    $('td.'+this.id).removeClass("warning");
                 }
                 else if (this.status != "") {
-                    $("#" + this.id + "_task").removeClass("success");
-                    $("#" + this.id + "_writer").removeClass("success");
-                    $("#" + this.id + "_pscore").removeClass("success");
-
-                    $("#" + this.id + "_task").addClass("warning");
-                    $("#" + this.id + "_writer").addClass("warning");
-                    $("#" + this.id + "_pscore").addClass("warning");
+                    $('td.'+this.id).removeClass("success");
+                    $('td.'+this.id).addClass("warning");
                 }
             })
         });
