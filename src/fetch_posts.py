@@ -27,13 +27,16 @@ def main():
 
         contents = urllib2.urlopen(inname).read()
         posts = set(map(int, index_re.findall(contents)))
-        if not posts.isdisjoint(SAVED_POSTS):
+        if posts.issubset(SAVED_POSTS):
             break
 
         SAVED_POSTS |= posts
         with open(outname, 'w') as fout:
             fout.write(contents)
             print 'Saved:', outname
+
+        if not posts.isdisjoint(SAVED_POSTS):
+            break
 
         i += 1
 
