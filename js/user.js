@@ -79,7 +79,7 @@ $(window).on("load", function() {
                 if (this.status == "AC") {
                     // AC していないもののみ表示 (AC の要素を消す)
                     if(DelAccept == "on") {
-                        $('#'+this).parent().css('display', 'none');
+                        $('td.'+this.id).parent().css('display', 'none');
                     }
 
                     $('td.'+this.id).addClass("success");
