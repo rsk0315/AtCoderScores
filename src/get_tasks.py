@@ -236,8 +236,18 @@ class Post(object):
                 abc_and_arc = True
                 contests.reverse()
 
-            if scores[0] > scores[1]:
-                scores.reverse()
+            if len(scores) == 2:
+                if scores[0] > scores[1]:
+                    scores.reverse()
+            else:
+                # if scoring is not noticed, then len(scores) < 2
+                # if scoring is noticed but len(scores) < 2,
+                # maybe parsing is failed.
+                print >>sys.stderr, "### tsurai ###"
+                print >>sys.stderr, "#", ', '.join(
+                    d['contest_name'] for d in contests
+                )
+                print >>sys.stderr, "#", scores
 
         elif len(contests) > 2:
             # a little tsurai
