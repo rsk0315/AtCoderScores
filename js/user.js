@@ -69,6 +69,15 @@ $(window).on("load", function() {
     }
 
     // JSON を取ってきて提出状況に応じて色を付ける
+    var set_ac = new Set();
+    var set_not_ac = new Set();
+    var set_all_problems = new Set();
+    {
+        var $query = $("#mainconttable>tbody>tr").find('td:not([class^=mask])');
+        for (var i = 0; i < $query.length; ++i) {
+            set_all_problems.add($query[i].className);
+        }
+    }
     var url = 'https://query.yahooapis.com/v1/public/yql?callback=?';
     var query = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + UserName + '"';
     $.getJSON(url,
@@ -77,18 +86,28 @@ $(window).on("load", function() {
             if(data.query.results == null) return;
             $(data.query.results.json.json).each(function() {
                 if (this.status == "AC") {
-                    // AC していないもののみ表示 (AC の要素を消す)
-                    if(DelAccept == "on") {
-                        $('td.'+this.id).parent().css('display', 'none');
+                    if ($('td.'+this.id).length) {
+                        set_ac.add(this.id);
+                        // AC していないもののみ表示 (AC の要素を消す)
+                        if(DelAccept == "on") {
+                            $('td.'+this.id).parent().css('display', 'none');
+                        }
+                        $('td.'+this.id).addClass("success");
+                        $('td.'+this.id).removeClass("warning");
                     }
-
-                    $('td.'+this.id).addClass("success");
-                    $('td.'+this.id).removeClass("warning");
                 }
                 else if (this.status != "") {
-                    $('td.'+this.id).removeClass("success");
-                    $('td.'+this.id).addClass("warning");
+                    if ($('td.'+this.id).length && !set_ac.has(this.id)) {
+                        set_not_ac.add(this.id);
+                        $('td.'+this.id).removeClass("success");
+                        $('td.'+this.id).addClass("warning");
+                    }
                 }
+                // AC数などを表示
+                document.getElementById("num_ac").innerHTML = set_ac.size;
+                document.getElementById("num_not_ac").innerHTML = set_not_ac.size;
+                document.getElementById("num_untouched").innerHTML =
+                    set_all_problems.size - set_ac.size - set_not_ac.size;
             })
         });
 
