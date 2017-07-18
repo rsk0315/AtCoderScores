@@ -15,7 +15,7 @@ function jumpProcess() {
         lbound: $("#difficulty_min").val(),
         ubound: $("#difficulty_max").val(),
         user_name: selectorEscape($("input[name=form_username]").val()),
-        del_accept: $("input[name=form_notac]:checked").val()
+        hide_ac: $("input[name=form_notac]:checked").val()
     };
     window.location.href = "index.html?" + $.param(QueryObj);
 }
@@ -30,23 +30,22 @@ $(window).on("load", function() {
     // URL パース
     var UserUrl = $(location).attr('search');
     var Params = $.url(UserUrl).param();
-    var UserName, DelAccept, lb, ub;
+    var UserName, HideAC, lb, ub;
 
     // パラメータの取得と反映
-    UserName  = Params.user_name;
-    DelAccept = Params.del_accept;
-    lb        = Params.lbound;
-    ub        = Params.ubound;
+    UserName = Params.user_name;
+    HideAc   = Params.hide_ac;
+    lb       = Params.lbound;
+    ub       = Params.ubound;
 
-    UserName  = isEmpty(UserName)  ? ""    : selectorEscape(UserName);
-    DelAccept = isEmpty(DelAccept) ? "off" : selectorEscape(DelAccept);
-    lb        = isEmpty(lb)        ?  100  : parseInt(selectorEscape(lb));
-    ub        = isEmpty(ub)        ? 2400  : parseInt(selectorEscape(ub));
+    UserName = isEmpty(UserName) ? ""    : selectorEscape(UserName);
+    HideAc   = isEmpty(HideAc)   ? "off" : selectorEscape(HideAC);
+    lb       = isEmpty(lb)       ?  100  : parseInt(selectorEscape(lb));
+    ub       = isEmpty(ub)       ? 2400  : parseInt(selectorEscape(ub));
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
-    // var flag = (DelAccept == "on" ? true : false);
-    $('input[name=form_notac]').prop('checked', (DelAccept == "on"));
+    $('input[name=form_notac]').prop('checked', (HideAC == "on"));
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
     $('.selectpicker').selectpicker('refresh');
@@ -89,7 +88,7 @@ $(window).on("load", function() {
                     if ($('td.'+this.id).length) {
                         set_ac.add(this.id);
                         // AC していないもののみ表示 (AC の要素を消す)
-                        if(DelAccept == "on") {
+                        if(HideAC == "on") {
                             $('td.'+this.id).parent().css('display', 'none');
                         }
                         $('td.'+this.id).addClass("success");
