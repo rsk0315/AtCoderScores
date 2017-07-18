@@ -447,6 +447,21 @@ def main():
         </div>
       </div>
       <!-- header end -->
+
+      <div class="placeholders row">
+        <div class="col-sm-3 col-xs-6">
+          <h4>AC</h4>
+          <h3><div id="num_ac">0</div></h3>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <h4>未AC（誤答あり）</h4>
+          <h3><div id="num_not_ac">0</div></h3>
+        </div>
+        <div class="col-sm-3 col-xs-6">
+          <h4>未提出</h4>
+          <h3><div id="num_unsubmitted">0</div></h3>
+        </div>
+      </div>
 '''.encode('utf-8')
 
     ## print contents
@@ -458,7 +473,9 @@ def main():
             <th style="width: 25%;">writer</th>
             <th style="width: 10%;">部分点</th>
           </tr>
-        </thead>'''.encode('utf-8')
+        </thead>
+
+        <tbody>'''.encode('utf-8')
 
     key_func = lambda x: x.contest_name+x.task_id
     for score, problems in sorted(list(ss.items())):
@@ -476,12 +493,12 @@ def main():
                 )
 
                 print (
-                    u'''        <tr class="dif_{score}">
-          <td class="mask_{score}">{score}</td>
-          <td class="{task_bname}"><a href="{task_url}">{task_name}</a></td>
-          <td class="{task_bname}">{writers}</td>
-          <td class="{task_bname}">{partial_score}</td>
-        </tr>'''.encode('utf-8')
+                    u'''          <tr class="dif_{score}">
+            <td class="mask_{score}">{score}</td>
+            <td class="{task_bname}"><a href="{task_url}">{task_name}</a></td>
+            <td class="{task_bname}">{writers}</td>
+            <td class="{task_bname}">{partial_score}</td>
+          </tr>'''.encode('utf-8')
                 ).format(
                     score=score,
                     task_bname=problem.get_task_basename(),
@@ -491,7 +508,8 @@ def main():
                     partial_score=partial_score,
                 )
 
-    print u'''      </table>
+    print u'''        </tbody>
+      </table>
     </div>
   </body>
 </html>'''
