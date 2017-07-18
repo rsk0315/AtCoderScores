@@ -105,7 +105,7 @@ $(window).on("load", function() {
                 // AC数などを表示
                 document.getElementById("num_ac").innerHTML = set_ac.size;
                 document.getElementById("num_not_ac").innerHTML = set_not_ac.size;
-                document.getElementById("num_untouched").innerHTML =
+                document.getElementById("num_unsubmitted").innerHTML =
                     set_all_problems.size - set_ac.size - set_not_ac.size;
             })
         });
