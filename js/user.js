@@ -34,12 +34,12 @@ $(window).on("load", function() {
 
     // パラメータの取得と反映
     UserName = Params.user_name;
-    HideAc   = Params.hide_ac;
+    HideAC   = Params.hide_ac;
     lb       = Params.lbound;
     ub       = Params.ubound;
 
     UserName = isEmpty(UserName) ? ""    : selectorEscape(UserName);
-    HideAc   = isEmpty(HideAc)   ? "off" : selectorEscape(HideAC);
+    HideAC   = isEmpty(HideAC)   ? "off" : selectorEscape(HideAC);
     lb       = isEmpty(lb)       ?  100  : parseInt(selectorEscape(lb));
     ub       = isEmpty(ub)       ? 2400  : parseInt(selectorEscape(ub));
 
