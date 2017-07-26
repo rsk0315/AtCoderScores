@@ -15,6 +15,7 @@ function jumpProcess() {
         lbound: $("#difficulty_min").val(),
         ubound: $("#difficulty_max").val(),
         user_name: selectorEscape($("input[name=form_username]").val()),
+        rival_name: selectorEscape($("input[name=form_rivalname]").val()),
         hide_ac: $("input[name=form_notac]:checked").val()
     };
     window.location.href = "index.html?" + $.param(QueryObj);
@@ -30,21 +31,24 @@ $(window).on("load", function() {
     // URL パース
     var UserUrl = $(location).attr('search');
     var Params = $.url(UserUrl).param();
-    var UserName, HideAC, lb, ub;
+    var UserName, RivalName, HideAC, lb, ub;
 
     // パラメータの取得と反映
-    UserName = Params.user_name;
-    HideAC   = Params.hide_ac;
-    lb       = Params.lbound;
-    ub       = Params.ubound;
+    UserName  = Params.user_name;
+    RivalName = Params.rival_name;
+    HideAC    = Params.hide_ac;
+    lb        = Params.lbound;
+    ub        = Params.ubound;
 
-    UserName = isEmpty(UserName) ? ""    : selectorEscape(UserName);
-    HideAC   = isEmpty(HideAC)   ? "off" : selectorEscape(HideAC);
-    lb       = isEmpty(lb)       ?  100  : parseInt(selectorEscape(lb));
-    ub       = isEmpty(ub)       ? 2400  : parseInt(selectorEscape(ub));
+    UserName  = isEmpty(UserName)  ? ""    : selectorEscape(UserName);
+    RivalName = isEmpty(RivalName) ? ""    : selectorEscape(RivalName);
+    HideAC    = isEmpty(HideAC)    ? "off" : selectorEscape(HideAC);
+    lb        = isEmpty(lb)        ?  100  : parseInt(selectorEscape(lb));
+    ub        = isEmpty(ub)        ? 2400  : parseInt(selectorEscape(ub));
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
+    $('input[name=form_rivalname]').val(RivalName);
     $('input[name=form_notac]').prop('checked', (HideAC == "on"));
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
@@ -68,56 +72,105 @@ $(window).on("load", function() {
     }
 
     // JSON を取ってきて提出状況に応じて色を付ける
-    var set_ac = new Set();
-    var set_not_ac = new Set();
+    var set_user_ac      = new Set();
+    var set_user_not_ac  = new Set();
+    var set_rival_ac     = new Set();
+    var set_rival_not_ac = new Set();
     var set_all_problems = new Set();
-    {
-        var $query = $("#mainconttable>tbody>tr").find('td:not([class^=mask])');
+    {   
+        // 指定された難易度範囲の問題総数を数える
+        var $query = $("#mainconttable>tbody>tr:visible").find('td:not([class^=mask])');
         for (var i = 0; i < $query.length; ++i) {
             set_all_problems.add($query[i].className);
         }
     }
     var url = 'https://query.yahooapis.com/v1/public/yql?callback=?';
-    var query = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + UserName + '"';
+    var query_user  = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + UserName + '"';
+    var query_rival = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + RivalName + '"';
     $.getJSON(url,
-        { q: query, format: 'json'},
+        { q: query_user, format: 'json'},
         function(data) {
             if(data.query.results == null) return;
             $(data.query.results.json.json).each(function() {
                 if (this.status == "AC") {
-                    if ($('td.'+this.id).length) {
-                        set_ac.add(this.id);
+                    if ($('td.'+this.id).length
+                            && $('td.'+this.id).parent().css('display') != 'none') {
+                        set_user_ac.add(this.id);
                         // AC していないもののみ表示 (AC の要素を消す)
                         if(HideAC == "on") {
                             $('td.'+this.id).parent().css('display', 'none');
                         }
-                        $('td.'+this.id).addClass("success");
                         $('td.'+this.id).removeClass("warning");
+                        $('td.'+this.id).removeClass("danger");
+                        $('td.'+this.id).addClass("success");
                     }
                 }
                 else if (this.status != "") {
-                    if ($('td.'+this.id).length && !set_ac.has(this.id)) {
-                        set_not_ac.add(this.id);
+                    if ($('td.'+this.id).length && !set_user_ac.has(this.id)
+                            && $('td.'+this.id).parent().css('display') != 'none') {
+                        set_user_not_ac.add(this.id);
                         $('td.'+this.id).removeClass("success");
+                        $('td.'+this.id).removeClass("danger");
                         $('td.'+this.id).addClass("warning");
                     }
                 }
-                // AC数などを表示
-                document.getElementById("num_ac").innerHTML = set_ac.size;
-                document.getElementById("num_not_ac").innerHTML = set_not_ac.size;
-                document.getElementById("num_unsubmitted").innerHTML =
-                    set_all_problems.size - set_ac.size - set_not_ac.size;
             })
+            // AC数などを表示
+            document.getElementById("num_user_ac").innerHTML = set_user_ac.size;
+            document.getElementById("num_user_not_ac").innerHTML = set_user_not_ac.size;
+            document.getElementById("num_user_unsubmitted").innerHTML =
+                set_all_problems.size - set_user_ac.size - set_user_not_ac.size;
+        });
+
+    // 自分が未 AC かつ相手が AC ならば背景色を赤くする
+    $.getJSON(url,
+        { q: query_rival, format: 'json'},
+        function(data) {
+            if(data.query.results == null) return;
+            $(data.query.results.json.json).each(function() {
+                if(this.status == "AC") {
+                    if ($('td.'+this.id).length
+                            && $('td.'+this.id).parent().css('display') != 'none') {
+                        set_rival_ac.add(this.id);
+                        if($('td.'+this.id).hasClass("success") == false) {
+                            $('td.'+this.id).removeClass("success");
+                            $('td.'+this.id).removeClass("warning");
+                            $('td.'+this.id).addClass("danger");
+                        }
+                    }
+                }
+                else if(this.status != "") {
+                    if ($('td.'+this.id).length && !set_rival_ac.has(this.id)
+                            && $('td.'+this.id).parent().css('display') != 'none') {
+                        set_rival_not_ac.add(this.id);
+                    }
+                }
+            })
+            // AC数などを表示
+            document.getElementById("num_rival_ac").innerHTML = set_rival_ac.size;
+            document.getElementById("num_rival_not_ac").innerHTML = set_rival_not_ac.size;
+            document.getElementById("num_rival_unsubmitted").innerHTML =
+            set_all_problems.size - set_rival_ac.size - set_rival_not_ac.size;
         });
 
     // ボタンを押したらパラメータ付き URL に飛ぶ
     $("#difficulty_submit").click(jumpProcess);
 
-    // Enter キーを押したらパラメータ付き URL に飛ぶ
+    // テキストフォームで Enter キーを押したらパラメータ付き URL に飛ぶ
     $(document).on("keypress", "input[name=form_username]", function(e) {
         if(e.keyCode == 13) jumpProcess();
         else $.noop();
     });
+    $(document).on("keypress", "input[name=form_rivalname]", function(e) {
+        if(e.keyCode == 13) jumpProcess();
+        else $.noop();
+    });
+
+    // User, Rival の進捗状況を表示するかどうか (空文字列なら表示しない)
+    if(UserName  == "") $(".result_user").css('display', 'none');
+    else $(".result_user").css('display', 'block');
+    if(RivalName == "") $(".result_rival").css('display', 'none');
+    else $(".result_rival").css('display', 'block');
 });
 
 /*
