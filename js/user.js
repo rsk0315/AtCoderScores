@@ -22,9 +22,11 @@ function jumpProcess() {
 }
 
 $(window).on("load", function() {
+    /*
     var PointArray = [   100,  200,  300,  400,  500,  600,  700,  800,  900, 1000,
                         1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
                         2100, 2200, 2300, 2400, 2500];
+    */
 
     $("#mainconttable").tablesorter();
 
@@ -61,13 +63,16 @@ $(window).on("load", function() {
         lb = ub; ub = temp;
     }
 
-    for (var i = 0; i < PointArray.length; i++) {
+    for (var point = 100; point <= 4200; point += 100) {
         // lb 以上 ub 以下の要素に関しては表示し、そうでなければ表示しない
-        if(lb <= PointArray[i] && PointArray[i] <= ub) {
-            $(".dif_" + PointArray[i]).css('display', 'table-row');
+
+        // 100 点刻みでない配点は出さないでください＞＜（AtCoder さんへ）
+        // ↑ AtCoder さんわざわざこのコード読まないでしょ
+        if(lb <= point && point <= ub) {
+            $(".dif_" + point).css('display', 'table-row');
         }
         else {
-            $(".dif_" + PointArray[i]).css('display', 'none');
+            $(".dif_" + point).css('display', 'none');
         }
     }
 
