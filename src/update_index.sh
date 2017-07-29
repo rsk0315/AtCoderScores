@@ -1,11 +1,13 @@
 #!/bin/bash
 
-if [ -f index.html ]; then
+if [ -f index.html ] && [ "$1" != '--no-backup' ] ; then
     backup index.html
 fi
 
 ./fetch_posts.py
-(./get_tasks.py posts/* | cat top.html.part -) > index.html
+(./get_tasks.py posts/*.html | cat top.html.part -) > index.html
+
+firefox index.html
 
 echo "Are you sure to upload? [y/N]" >&2
 read query

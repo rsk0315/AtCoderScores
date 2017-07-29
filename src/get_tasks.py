@@ -441,25 +441,45 @@ def main():
     print u'''          </select>
         </div>
         <div class="form-inline">
-          User: <input type="text" name="form_username" class="form-control">
+          User：<input type="text" name="form_username" class="form-control">
+          Rival：<input type="text" name="form_rivalname" class="form-control">
           <input type="checkbox" name="form_notac">AC していない問題のみ表示
           <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
         </div>
       </div>
       <!-- header end -->
 
-      <div class="placeholders row">
-        <div class="col-sm-3 col-xs-6">
-          <h4>AC</h4>
-          <h3><div id="num_ac">0</div></h3>
+      <div class="result_user" style="display:none">
+        <div class="placeholders row">
+          <div class="col-sm-3 col-xs-6">
+            <h4>User AC</h4>
+            <h3><div id="num_user_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未AC（誤答あり）</h4>
+            <h3><div id="num_user_not_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未提出</h4>
+            <h3><div id="num_user_unsubmitted">0</div></h3>
+          </div>
         </div>
-        <div class="col-sm-3 col-xs-6">
-          <h4>未AC（誤答あり）</h4>
-          <h3><div id="num_not_ac">0</div></h3>
-        </div>
-        <div class="col-sm-3 col-xs-6">
-          <h4>未提出</h4>
-          <h3><div id="num_unsubmitted">0</div></h3>
+      </div>
+
+      <div class="result_rival" style="display:none">
+        <div class="placeholders row">
+          <div class="col-sm-3 col-xs-6">
+            <h4>Rival AC</h4>
+            <h3><div id="num_rival_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未AC（誤答あり）</h4>
+            <h3><div id="num_rival_not_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未提出</h4>
+            <h3><div id="num_rival_unsubmitted">0</div></h3>
+          </div>
         </div>
       </div>
 '''.encode('utf-8')
