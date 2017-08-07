@@ -1,6 +1,20 @@
 #!/bin/bash
 
-if [ -f index.html ] && [ "$1" != '--no-backup' ] ; then
+BACKUP=1
+UPLOAD=1
+
+# (maybe) bad hack for dealing (GNU-style) long option
+for arg in $@; do
+    case $arg in
+        --no-backup)
+            BACKUP=0;;
+
+        --no-upload)
+            UPLOAD=0;;
+    esac
+done
+
+if [ -f index.html ] && (( $BACKUP )); then
     backup index.html
 fi
 
@@ -8,6 +22,10 @@ fi
 (./get_tasks.py posts/*.html | cat top.html.part -) > index.html
 
 firefox index.html
+
+if (( ! $UPLOAD )); then
+    exit 0
+fi
 
 echo "Are you sure to upload? [y/N]" >&2
 read query

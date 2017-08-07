@@ -30,7 +30,6 @@ def main():
         if posts.issubset(SAVED_POSTS):
             break
 
-        SAVED_POSTS |= posts
         with open(outname, 'w') as fout:
             fout.write(contents)
             print 'Saved:', outname
@@ -38,6 +37,7 @@ def main():
         if not posts.isdisjoint(SAVED_POSTS):
             break
 
+        SAVED_POSTS |= posts
         i += 1
 
     with open('saved_posts.py', 'w') as fout:

@@ -207,14 +207,25 @@ class Post(object):
         self.scores = scores
 
     def get_info(self):
-        contests = [
-            re.search(
-                r'\[(?P<contest_name>[^]]+)\]'
-                r'\(https?://(?P<contest_url>[^)]+)\)', s
-            ).groupdict()
-            for s in self.contests
-            if 'editorial' not in s and 'statistics' not in s
-        ]
+        try:
+            contests = [
+                re.search(
+                    r'\[(?P<contest_name>[^]]+)\]'
+                    r'\(https?://(?P<contest_url>[^)]+)\)', s
+                ).groupdict()
+                for s in self.contests
+                if 'editorial' not in s and 'statistics' not in s
+            ]
+        except AttributeError:
+            print>>sys.stderr, '### tsurai if it contains contests ###'
+            print>>sys.stderr, self.contests
+            print>>sys.stderr, '^ Please check ^'
+            print>>sys.stderr
+            return []
+
+        if self.index < 0:
+            for c in self.contests:
+                print >>sys.stderr, 'Patched:', c.decode('utf-8').encode('utf-8')
 
         contests = [
             c for c in contests
@@ -248,6 +259,7 @@ class Post(object):
                     d['contest_name'] for d in contests
                 )
                 print >>sys.stderr, "#", scores
+                print >>sys.stderr
 
         elif len(contests) > 2:
             # a little tsurai
