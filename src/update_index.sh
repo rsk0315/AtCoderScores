@@ -6,10 +6,10 @@ UPLOAD=1
 # (maybe) bad hack for dealing (GNU-style) long option
 for arg in $@; do
     case $arg in
-        --no-backup)
+        '--no-backup')
             BACKUP=0;;
 
-        --no-upload)
+        '--no-upload')
             UPLOAD=0;;
     esac
 done
@@ -41,6 +41,9 @@ fi
 cp -f index.html $ATCODER_SCORES_DIR/index.html
 cd $ATCODER_SCORES_DIR
 git add index.html
-git commit -m 'Update index.html'
+git commit -m 'Add new contest(s) to index.html'
+
 git push origin gh-pages
-cd -
+status=$?
+# do blah if needed
+exit $status
