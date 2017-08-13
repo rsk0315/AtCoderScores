@@ -229,7 +229,8 @@ class Post(object):
 
         contests = [
             c for c in contests
-            if 'contest.atcoder.jp' in c['contest_url'] and
+            if ('contest.atcoder.jp' in c['contest_url'] or
+                'beta.atcoder.jp' in c['contest_url']) and
             c['contest_name'] != u'前回のコンテスト'.encode('utf-8')
         ]
 
