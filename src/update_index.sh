@@ -15,13 +15,16 @@ for arg in $@; do
 done
 
 if [ -f index.html ] && (( $BACKUP )); then
-    backup index.html
+    OLDER=$(backup index.html 2>&1 | awk '{print $4}')
 fi
 
 ./fetch_posts.py
 (./get_tasks.py posts/*.html | cat top.html.part -) > index.html
 
-firefox index.html
+firefox index.html &
+if (( $BACKUP )); then
+    diff $OLDER index.html | less
+fi
 
 if (( ! $UPLOAD )); then
     exit 0
