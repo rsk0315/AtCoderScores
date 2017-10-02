@@ -2,6 +2,10 @@
 
 BACKUP=1
 UPLOAD=1
+if [ ! $ATCODER_SCORES_DIR ]; then
+    # todo: use bash features for variable expansion
+    ATCODER_SCORES_DIR="${HOME}/github/AtCoderScores/"
+fi
 
 # (maybe) bad hack for dealing (GNU-style) long option
 for arg in $@; do
@@ -14,6 +18,11 @@ for arg in $@; do
     esac
 done
 
+if ! which backup 2> /dev/null; then
+    BACKUP=0
+fi
+
+OLDER=$ATCODER_SCORES_DIR/index.html
 if [ -f index.html ] && (( $BACKUP )); then
     OLDER=$(backup index.html 2>&1 | awk '{print $4}')
 fi
@@ -26,6 +35,8 @@ if (( $BACKUP )); then
     diff $OLDER index.html | less
 fi
 
+diff $OLDER index.html | grep -E '^<'
+
 if (( ! $UPLOAD )); then
     exit 0
 fi
@@ -35,10 +46,6 @@ read query
 if [ "${query::1}" != y ]; then
     echo "Cancelled uploading" >&2
     exit 1
-fi
-
-if [ ! $ATCODER_SCORES_DIR ]; then
-    ATCODER_SCORES_DIR="${HOME}/github/AtCoderScores/"
 fi
 
 cp -f index.html $ATCODER_SCORES_DIR/index.html

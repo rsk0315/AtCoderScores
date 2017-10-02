@@ -58,6 +58,12 @@ TASK_PREFIXES = {
         'dwango2017qual',
     'yahoo-procon2017-qual.contest.atcoder.jp':
         'yahoo_procon2017_qual',
+    'code-festival-2017-quala.contest.atcoder.jp':
+        'code_festival_2017_quala',
+    'tenka1-2017.contest.atcoder.jp':
+        'tenka1_2017',
+    'tenka1-2017-beginner.contest.atcoder.jp':
+        'tenka1_2017',
 }
 
 
@@ -118,6 +124,9 @@ class Problem(object):
                 task_id = 'db'[ord(self.task_id)-ord('A')]
             else:
                 raise ValueError('Unexpected task id.')
+        elif task_prefix is None:
+            print>>sys.stderr, `self.contest_url`
+            raise Exception('Need to edit TASK_PREFIXES')
         else:
             task_id = self.task_id.lower()
 
@@ -237,6 +246,7 @@ class Post(object):
         scores = self.scores if self.scores else ['?']
 
         abc_and_arc = False
+        task_offset = 0
         if len(contests) == 2:
             if (
                     'Beginner' in contests[0]['contest_name'] and
@@ -247,6 +257,9 @@ class Post(object):
                     'Beginner' in contests[1]['contest_name']):
                 abc_and_arc = True
                 contests.reverse()
+            elif contests[0]['contest_name'] == 'Tenka1 Programmer Beginner Contest':
+                abc_and_arc = True  # todo
+                task_offset = 2
 
             if len(scores) == 2:
                 if scores[0] > scores[1]:
@@ -280,6 +293,14 @@ class Post(object):
                         task_id >= 'C'):
 
                     continue  # skip duplicated tasks
+
+                if (
+                        abc_and_arc and
+                        'Beginner' not in contest['contest_name'] and
+                        task_offset):
+
+                    task_id = chr(ord(task_id)+task_offset)
+
 
                 info.append(
                     Problem(
