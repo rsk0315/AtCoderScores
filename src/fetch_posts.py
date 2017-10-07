@@ -35,6 +35,7 @@ def main():
             print 'Saved:', outname
 
         if not posts.isdisjoint(SAVED_POSTS):
+            SAVED_POSTS |= posts
             break
 
         SAVED_POSTS |= posts

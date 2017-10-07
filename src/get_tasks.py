@@ -126,37 +126,19 @@ class Problem(object):
                 raise ValueError('Unexpected task id.')
         elif task_prefix is None:
             print>>sys.stderr, `self.contest_url`
-            raise Exception('Need to edit TASK_PREFIXES')
+            return None
+            #raise Exception('Need to edit TASK_PREFIXES')
         else:
             task_id = self.task_id.lower()
 
         return task_prefix+'_'+task_id
 
     def guess_task_url(self):
-        self.task_url = 'https://'+self.contest_url+'/tasks/'
-        self.task_url += self.get_task_basename()
-        return
-
-        if self.contest_type != Problem.OTHER:
-            contest_num = self.contest_name.rsplit(' ', 1)[-1]
-            self.task_url += 'a{}c{}_{}'.format(
-                self.contest_type, contest_num, self.task_id.lower()
-            )
-        else:
-            task_prefix = TASK_PREFIXES.get(self.contest_url)
-            if task_prefix == 'asaporo':
-                if 'round1' in self.contest_name:
-                    task_id = 'cf'[ord(self.task_id)-ord('A')]
-                elif 'round2' in self.contest_name:
-                    task_id = 'ea'[ord(self.task_id)-ord('A')]
-                elif 'round3' in self.contest_name:
-                    task_id = 'db'[ord(self.task_id)-ord('A')]
-                else:
-                    raise ValueError('Unexpected task id.')
-            else:
-                task_id = self.task_id.lower()
-
-            self.task_url += task_prefix+'_'+task_id
+        try:
+            self.task_url = 'https://'+self.contest_url+'/tasks/'
+            self.task_url += self.get_task_basename()
+        except TypeError:
+            self.task_url = ''
 
     def get_task_name(self):
         if self.contest_type == Problem.OTHER:
@@ -182,7 +164,6 @@ class Post(object):
         self.contests = None
 
         self.init_info()
-
     def init_info(self):
         contests = re.findall(r'\[[^\]]+\]\([^)]+\)', self.content)
         self.contests = [s for s in contests if 'JST' not in s]
@@ -197,11 +178,11 @@ class Post(object):
             )
 
         scores = re.findall(
-            r'(?: |^)'
+            ur'(?: |^|(?<=：))'
             r'\d+'
             r'(?: *\([^)]*\) *)?'
             r'(?:[, -]+\d+(?: *\([^)]*\) *)?)+',
-            self.content, flags=re.M
+            self.content.decode('utf-8'), flags=re.M
         )
 
         # ignore ratings
@@ -545,6 +526,9 @@ def main():
                     '-' if problem.partial_score is None
                     else problem.partial_score
                 )
+
+                if not problem.task_url:
+                    continue
 
                 print (
                     u'''          <tr class="dif_{score}">
