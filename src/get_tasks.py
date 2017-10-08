@@ -64,6 +64,10 @@ TASK_PREFIXES = {
         'tenka1_2017',
     'tenka1-2017-beginner.contest.atcoder.jp':
         'tenka1_2017',
+    'ddcc2017-qual.contest.atcoder.jp':
+        'ddcc2017_qual',
+    'code-festival-2017-qualb.contest.atcoder.jp':
+        'code_festival_2017_qualb',
 }
 
 
