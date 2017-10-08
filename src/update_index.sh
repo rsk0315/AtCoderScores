@@ -2,6 +2,7 @@
 
 BACKUP=1
 UPLOAD=1
+EDITMESSAGE=0
 if [ ! $ATCODER_SCORES_DIR ]; then
     # todo: use bash features for variable expansion
     ATCODER_SCORES_DIR="${HOME}/github/AtCoderScores/"
@@ -15,6 +16,9 @@ for arg in $@; do
 
         '--no-upload')
             UPLOAD=0;;
+
+        '--message')
+            EDITMESSAGE=1;;
     esac
 done
 
@@ -35,7 +39,7 @@ if (( $BACKUP )); then
     diff $OLDER index.html | less
 fi
 
-diff $OLDER index.html | grep -E '^<'
+diff $OLDER index.html | grep --color=always -E '^<'
 
 if (( ! $UPLOAD )); then
     exit 0
@@ -51,7 +55,11 @@ fi
 cp -f index.html $ATCODER_SCORES_DIR/index.html
 cd $ATCODER_SCORES_DIR
 git add index.html
-git commit -m 'Add new contest(s) to index.html'
+if (( ! EDITMESSAGE )); then
+    git commit -m 'Add new contest(s) to index.html (by script)'
+else
+    git commit
+fi
 
 git push origin gh-pages
 status=$?

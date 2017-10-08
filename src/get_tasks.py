@@ -146,14 +146,18 @@ class Problem(object):
 
     def get_task_name(self):
         if self.contest_type == Problem.OTHER:
-            return self.contest_name+' '+self.task_id
+            contest_name = self.contest_name
+            for q in ('Qualification Qual', 'Qualification Round'):
+                contest_name = contest_name.replace(q, '予選')
+                
+            return contest_name+': '+self.task_id
 
         task_id = (
             self.task_id if self.contest_type != Problem.ARC
             else chr(ord(self.task_id)+2)
         )
 
-        return 'A{}C {} {}'.format(
+        return 'A{}C {}: {}'.format(
             self.contest_type.upper(),
             self.contest_name.rsplit(' ', 1)[-1], task_id
         )
