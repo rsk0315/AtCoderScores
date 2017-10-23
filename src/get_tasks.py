@@ -68,6 +68,8 @@ TASK_PREFIXES = {
         'ddcc2017_qual',
     'code-festival-2017-qualb.contest.atcoder.jp':
         'code_festival_2017_qualb',
+    'code-festival-2017-qualc.contest.atcoder.jp':
+        'code_festival_2017_qualc',
 }
 
 
@@ -172,6 +174,7 @@ class Post(object):
         self.contests = None
 
         self.init_info()
+
     def init_info(self):
         contests = re.findall(r'\[[^\]]+\]\([^)]+\)', self.content)
         self.contests = [s for s in contests if 'JST' not in s]
