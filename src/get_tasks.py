@@ -187,10 +187,14 @@ class Post(object):
                 r'&lt;span class=&#34;user-(?P<COLOR>\w+)&#34;&gt;'
                 r'(?P<NAME>[\w-]+)&lt;/span&gt;', wline
             )
+
             if not self.writer:
                 self.writer = re.findall(
                     r'(?P<COLOR>)&gt;(?P<NAME>[\w-]+)&lt;', wline
                 )
+
+            if re.search(r'\banonymous\b', wline):
+                self.writer.append((None, 'anonymous'))
 
         scores = re.findall(
             ur'(?: |^|(?<=：))'
@@ -385,6 +389,8 @@ class PostRetriever(HTMLParser):
         return self.scanned_index
 
 def colorize_user(color, name):
+    if color is None:
+        return name
     if not color:
         return (
             '<a class="username" href="https://atcoder.jp/user/{name}">'
