@@ -28,6 +28,9 @@ $(window).on("load", function() {
                         2100, 2200, 2300, 2400, 2500];
     */
 
+    // 難易度の MAX (割る 100)
+    const MAX_D = 24;
+
     $("#mainconttable").tablesorter();
 
     // URL パース
@@ -42,11 +45,11 @@ $(window).on("load", function() {
     lb        = Params.lbound;
     ub        = Params.ubound;
 
-    UserName  = isEmpty(UserName)  ? ""    : selectorEscape(UserName);
-    RivalName = isEmpty(RivalName) ? ""    : selectorEscape(RivalName);
-    HideAC    = isEmpty(HideAC)    ? "off" : selectorEscape(HideAC);
-    lb        = isEmpty(lb)        ?  100  : parseInt(selectorEscape(lb));
-    ub        = isEmpty(ub)        ? 2400  : parseInt(selectorEscape(ub));
+    UserName  = isEmpty(UserName)  ? ""          : selectorEscape(UserName);
+    RivalName = isEmpty(RivalName) ? ""          : selectorEscape(RivalName);
+    HideAC    = isEmpty(HideAC)    ? "off"       : selectorEscape(HideAC);
+    lb        = isEmpty(lb)        ? 100         : parseInt(selectorEscape(lb));
+    ub        = isEmpty(ub)        ? MAX_D * 100 : parseInt(selectorEscape(ub));
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
@@ -63,7 +66,7 @@ $(window).on("load", function() {
         lb = ub; ub = temp;
     }
 
-    for (var point = 100; point <= 4200; point += 100) {
+    for (var point = 100; point <= MAX_D * 100; point += 100) {
         // lb 以上 ub 以下の要素に関しては表示し、そうでなければ表示しない
 
         // 100 点刻みでない配点は出さないでください＞＜（AtCoder さんへ）
@@ -131,8 +134,32 @@ $(window).on("load", function() {
                 }
             })
 
+            // 進捗表示用に、難易度ごとに AC 問題数を数える
+            var count_ac_all   = Array(MAX_D);
+            var count_ac_user  = Array(MAX_D);
+            var count_ac_rival = Array(MAX_D);
+            count_ac_all.fill(0);
+            count_ac_user.fill(0);
+            count_ac_rival.fill(0);
+
             // 全問題を舐めて、表に色を付ける
             set_all_problems.forEach(function(pid) {
+                // その問題に対応する難易度を出す
+                // class 名は "dif_xxxx" の形になっているので先頭 4 文字を削る
+                // 配列に入れるために値の整形もする
+                var val_difficulty = $('td.'+pid).parent()[0].className.slice(4);
+                val_difficulty = parseInt(val_difficulty) / 100 - 1;
+                // console.log(val_difficulty);
+
+                // AC カウント
+                count_ac_all[val_difficulty]++;
+                if(set_user_ac.has(pid)) {
+                    count_ac_user[val_difficulty]++;
+                }
+                if(set_rival_ac.has(pid)) {
+                    count_ac_rival[val_difficulty]++;
+                }
+
                 // 自分が AC してたら青
                 if(set_user_ac.has(pid)) {
                     if(HideAC == "on") {
@@ -157,6 +184,80 @@ $(window).on("load", function() {
                     }
                 }
             })
+
+            // 総合得点の計算
+            var total_whole = 0;
+            var total_user  = 0;
+            var total_rival = 0;
+
+            for(var idx=0; idx<MAX_D; idx++) {
+                var point = (idx + 1) * 100;
+                var str_head  = "prog_head_"  + point;
+                var str_whole = "prog_whole_" + point;
+                var str_user  = "prog_user_"  + point;
+                var str_rival = "prog_rival_" + point;
+
+                id_head = document.getElementById(str_head);
+                id_whole = document.getElementById(str_whole);
+                id_user = document.getElementById(str_user);
+                id_rival = document.getElementById(str_rival);
+
+                // 範囲外なら表示しない
+                if(point < lb || ub < point) {
+                    id_head.style.display  = 'none';
+                    id_whole.style.display = 'none';
+                    id_user.style.display  = 'none';
+                    id_rival.style.display = 'none';
+                    continue;
+                }
+
+                id_whole.innerHTML = count_ac_all[idx];
+                id_user.innerHTML = count_ac_user[idx];
+                id_rival.innerHTML = count_ac_rival[idx];
+
+                total_whole += point * count_ac_all[idx];
+                total_user  += point * count_ac_user[idx];
+                total_rival += point * count_ac_rival[idx];
+
+                var ratio_user, ratio_rival;
+
+                // ゼロ除算防止
+                if(count_ac_all[idx] == 0) {
+                    ratio_user = 0;
+                    ratio_rival = 0;
+                }
+                else {
+                    ratio_user = count_ac_user[idx] / count_ac_all[idx];
+                    ratio_rival = count_ac_rival[idx] / count_ac_all[idx];
+                }
+
+                // 濃淡を変える
+                // rgba の a だけスマートに変える方法ないですか？ないですね (悲しい)
+                var color_user  = window.getComputedStyle(id_user).backgroundColor;
+                var colors_user = color_user.match(/\d+/g);
+                var colors_join_user = colors_user.join(',');
+                var new_color_user = "rgba(" + colors_join_user +  "," + ratio_user + ")";
+
+                var color_rival  = window.getComputedStyle(id_rival).backgroundColor;
+                var colors_rival = color_rival.match(/\d+/g);
+                var colors_join_rival = colors_rival.join(',');
+                var new_color_rival = "rgba(" + colors_join_rival +  "," + ratio_rival + ")";
+
+                id_user.style.backgroundColor = new_color_user;
+                id_rival.style.backgroundColor = new_color_rival;
+            }
+
+            // 表を表示する
+            document.getElementById("progresstable").style.display = 'table';
+
+            // 表のユーザー名とか総合得点とか変える
+            var link_user  = "<a href = \"https://atcoder.jp/user/" + UserName + "\">" + UserName + "</a>";
+            var link_rival = "<a href = \"https://atcoder.jp/user/" + RivalName + "\">" + RivalName + "</a>";
+            document.getElementById("prog_user_name").innerHTML = link_user;
+            document.getElementById("prog_rival_name").innerHTML = link_rival;
+            document.getElementById("prog_whole_total").innerHTML = total_whole;
+            document.getElementById("prog_user_total").innerHTML = total_user;
+            document.getElementById("prog_rival_total").innerHTML = total_rival;
 
             // AC数などを表示
             document.getElementById("num_user_ac").innerHTML = set_user_ac.size;
@@ -184,10 +285,23 @@ $(window).on("load", function() {
     });
 
     // User, Rival の進捗状況を表示するかどうか (空文字列なら表示しない)
-    if(UserName  == "") $(".result_user").css('display', 'none');
-    else $(".result_user").css('display', 'block');
-    if(RivalName == "") $(".result_rival").css('display', 'none');
-    else $(".result_rival").css('display', 'block');
+    if(UserName  == "") {
+        $(".result_user").css('display', 'none');
+        document.getElementById('progress_user').style.display = 'none';
+    }
+    else {
+        $(".result_user").css('display', 'block');
+        document.getElementById('progress_user').style.display = 'table-row';
+    }
+
+    if(RivalName == "") {
+        $(".result_rival").css('display', 'none');
+        document.getElementById('progress_rival').style.display = 'none';
+    }
+    else {
+        $(".result_rival").css('display', 'block');
+        document.getElementById('progress_rival').style.display = 'table-row';
+    }
 });
 
 /*

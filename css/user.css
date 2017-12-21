@@ -29,35 +29,35 @@ body{padding-top: 70px;} */
     margin-bottom: 20px;
 }
 
- .mask_100{background-color:#E6E6E6; font-weight:bold; text-align:center;}
+ .mask_100{background-color:rgba(230, 230, 230, 1); font-weight:bold; text-align:center;}
 
- .mask_200{background-color:#E2E2BE; font-weight:bold; text-align:center;}
+ .mask_200{background-color:rgba(226, 226, 190, 1); font-weight:bold; text-align:center;}
 
- .mask_300{background-color:#CEF6CE; font-weight:bold; text-align:center;}
+ .mask_300{background-color:rgba(206, 246, 206, 1); font-weight:bold; text-align:center;}
 
- .mask_400{background-color:#CEECF5; font-weight:bold; text-align:center;}
+ .mask_400{background-color:rgba(206, 236, 245, 1); font-weight:bold; text-align:center;}
 
- .mask_500{background-color:#CED8F6; font-weight:bold; text-align:center;}
- .mask_600{background-color:#CED8F6; font-weight:bold; text-align:center;}
- .mask_700{background-color:#CED8F6; font-weight:bold; text-align:center;}
+ .mask_500{background-color:rgba(206, 216, 246, 1); font-weight:bold; text-align:center;}
+ .mask_600{background-color:rgba(206, 216, 246, 1); font-weight:bold; text-align:center;}
+ .mask_700{background-color:rgba(206, 216, 246, 1); font-weight:bold; text-align:center;}
 
- .mask_800{background-color:#F5F6CE; font-weight:bold; text-align:center;}
- .mask_900{background-color:#F5F6CE; font-weight:bold; text-align:center;}
-.mask_1000{background-color:#F5F6CE; font-weight:bold; text-align:center;}
-.mask_1100{background-color:#F5F6CE; font-weight:bold; text-align:center;}
-.mask_1200{background-color:#F5F6CE; font-weight:bold; text-align:center;}
+ .mask_800{background-color:rgba(245, 246, 206, 1); font-weight:bold; text-align:center;}
+ .mask_900{background-color:rgba(245, 246, 206, 1); font-weight:bold; text-align:center;}
+.mask_1000{background-color:rgba(245, 246, 206, 1); font-weight:bold; text-align:center;}
+.mask_1100{background-color:rgba(245, 246, 206, 1); font-weight:bold; text-align:center;}
+.mask_1200{background-color:rgba(245, 246, 206, 1); font-weight:bold; text-align:center;}
 
-.mask_1300{background-color:#F6E3CE; font-weight:bold; text-align:center;}
-.mask_1400{background-color:#F6E3CE; font-weight:bold; text-align:center;}
-.mask_1500{background-color:#F6E3CE; font-weight:bold; text-align:center;}
-.mask_1600{background-color:#F6E3CE; font-weight:bold; text-align:center;}
-.mask_1700{background-color:#F6E3CE; font-weight:bold; text-align:center;}
+.mask_1300{background-color:rgba(246, 227, 206, 1); font-weight:bold; text-align:center;}
+.mask_1400{background-color:rgba(246, 227, 206, 1); font-weight:bold; text-align:center;}
+.mask_1500{background-color:rgba(246, 227, 206, 1); font-weight:bold; text-align:center;}
+.mask_1600{background-color:rgba(246, 227, 206, 1); font-weight:bold; text-align:center;}
+.mask_1700{background-color:rgba(246, 227, 206, 1); font-weight:bold; text-align:center;}
 
-.mask_1800{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_1900{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2000{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2100{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2200{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2300{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2400{background-color:#F6CECE; font-weight:bold; text-align:center;}
-.mask_2500{background-color:#F6CECE; font-weight:bold; text-align:center;}
+.mask_1800{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_1900{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2000{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2100{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2200{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2300{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2400{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
+.mask_2500{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
