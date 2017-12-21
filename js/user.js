@@ -90,68 +90,80 @@ $(window).on("load", function() {
         }
     }
     var url = 'https://query.yahooapis.com/v1/public/yql?callback=?';
-    var query_user  = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + UserName + '"';
-    var query_rival = 'select * from json where url="http://kenkoooo.com/atcoder-api/problems?user=' + RivalName + '"';
+    var query  = 'select * from json where url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=' + UserName + '&rivals=' + RivalName + '"';
     $.getJSON(url,
-        { q: query_user, format: 'json'},
+        { q: query, format: 'json'},
         function(data) {
             if(data.query.results == null) return;
             $(data.query.results.json.json).each(function() {
-                if (this.status == "AC") {
-                    if ($('td.'+this.id).length
-                            && $('td.'+this.id).parent().css('display') != 'none') {
-                        set_user_ac.add(this.id);
-                        // AC していないもののみ表示 (AC の要素を消す)
-                        if(HideAC == "on") {
-                            $('td.'+this.id).parent().css('display', 'none');
+                // ちゃんと表に存在して、かつ表示得点範囲内にあるやつかどうかを見よう
+                var pid = this.problem_id;
+                if ($('td.'+pid).length
+                            && $('td.'+pid).parent().css('display') != 'none') {
+                    // AC のものとそうでないものは分けて set に入れよう
+                    // 全提出が返ってくるので AC している問題について set_user_not_ac に
+                    // 突っ込まれる可能性も普通にあるけど、後でうまいことやる
+                    
+                    // User の提出
+                    if(this.user_id == UserName) {
+                        if(this.result == "AC") {
+                            set_user_ac.add(pid);
+                            set_user_not_ac.delete(pid);
                         }
-                        $('td.'+this.id).removeClass("warning");
-                        $('td.'+this.id).removeClass("danger");
-                        $('td.'+this.id).addClass("success");
+                        else {
+                            if(!set_user_ac.has(pid)) {
+                                set_user_not_ac.add(pid);
+                            }
+                        }
                     }
-                }
-                else if (this.status != "") {
-                    if ($('td.'+this.id).length && !set_user_ac.has(this.id)
-                            && $('td.'+this.id).parent().css('display') != 'none') {
-                        set_user_not_ac.add(this.id);
-                        $('td.'+this.id).removeClass("success");
-                        $('td.'+this.id).removeClass("danger");
-                        $('td.'+this.id).addClass("warning");
+                    // Rival の提出
+                    else {
+                        if(this.result == "AC") {
+                            set_rival_ac.add(pid);
+                            set_rival_not_ac.delete(pid);
+                        }
+                        else {
+                            if(!set_rival_ac.has(pid)) {
+                                set_rival_not_ac.add(pid);
+                            }
+                        }
                     }
                 }
             })
+
+            // 全問題を舐めて、表に色を付ける
+            set_all_problems.forEach(function(pid) {
+                // 自分が AC してたら青
+                if(set_user_ac.has(pid)) {
+                    if(HideAC == "on") {
+                        $('td.'+pid).parent().css('display', 'none');
+                    }
+                    $('td.'+pid).removeClass("warning");
+                    $('td.'+pid).removeClass("danger");
+                    $('td.'+pid).addClass("success");
+                }
+                else {
+                    // rival だけが AC してたら赤
+                    if(set_rival_ac.has(pid)) {
+                        $('td.'+pid).removeClass("success");
+                        $('td.'+pid).removeClass("warning");
+                        $('td.'+pid).addClass("danger");
+                    }
+                    // rival も AC していなくて、自分が提出している問題であれば黄色
+                    else if(set_user_not_ac.has(pid)) {
+                        $('td.'+pid).removeClass("success");
+                        $('td.'+pid).removeClass("danger");
+                        $('td.'+pid).addClass("warning");
+                    }
+                }
+            })
+
             // AC数などを表示
             document.getElementById("num_user_ac").innerHTML = set_user_ac.size;
             document.getElementById("num_user_not_ac").innerHTML = set_user_not_ac.size;
             document.getElementById("num_user_unsubmitted").innerHTML =
                 set_all_problems.size - set_user_ac.size - set_user_not_ac.size;
-        });
 
-    // 自分が未 AC かつ相手が AC ならば背景色を赤くする
-    $.getJSON(url,
-        { q: query_rival, format: 'json'},
-        function(data) {
-            if(data.query.results == null) return;
-            $(data.query.results.json.json).each(function() {
-                if(this.status == "AC") {
-                    if ($('td.'+this.id).length
-                            && $('td.'+this.id).parent().css('display') != 'none') {
-                        set_rival_ac.add(this.id);
-                        if($('td.'+this.id).hasClass("success") == false) {
-                            $('td.'+this.id).removeClass("success");
-                            $('td.'+this.id).removeClass("warning");
-                            $('td.'+this.id).addClass("danger");
-                        }
-                    }
-                }
-                else if(this.status != "") {
-                    if ($('td.'+this.id).length && !set_rival_ac.has(this.id)
-                            && $('td.'+this.id).parent().css('display') != 'none') {
-                        set_rival_not_ac.add(this.id);
-                    }
-                }
-            })
-            // AC数などを表示
             document.getElementById("num_rival_ac").innerHTML = set_rival_ac.size;
             document.getElementById("num_rival_not_ac").innerHTML = set_rival_not_ac.size;
             document.getElementById("num_rival_unsubmitted").innerHTML =
