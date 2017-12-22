@@ -202,8 +202,8 @@ $(window).on("load", function() {
                 id_user = document.getElementById(str_user);
                 id_rival = document.getElementById(str_rival);
 
-                // 範囲外なら表示しない
-                if(point < lb || ub < point) {
+                // 範囲外または 1 問もないなら表示しない
+                if(point < lb || ub < point || count_ac_all[idx] == 0) {
                     id_head.style.display  = 'none';
                     id_whole.style.display = 'none';
                     id_user.style.display  = 'none';
@@ -219,17 +219,8 @@ $(window).on("load", function() {
                 total_user  += point * count_ac_user[idx];
                 total_rival += point * count_ac_rival[idx];
 
-                var ratio_user, ratio_rival;
-
-                // ゼロ除算防止
-                if(count_ac_all[idx] == 0) {
-                    ratio_user = 0;
-                    ratio_rival = 0;
-                }
-                else {
-                    ratio_user = count_ac_user[idx] / count_ac_all[idx];
-                    ratio_rival = count_ac_rival[idx] / count_ac_all[idx];
-                }
+                var ratio_user = count_ac_user[idx] / count_ac_all[idx];
+                var ratio_rival = count_ac_rival[idx] / count_ac_all[idx];
 
                 // 濃淡を変える
                 // rgba の a だけスマートに変える方法ないですか？ないですね (悲しい)
