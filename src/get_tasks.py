@@ -70,6 +70,8 @@ TASK_PREFIXES = {
         'code_festival_2017_qualb',
     'code-festival-2017-qualc.contest.atcoder.jp':
         'code_festival_2017_qualc',
+    'colopl2018-qual.contest.atcoder.jp':
+        'colopl2018_qual',
 }
 
 
@@ -187,6 +189,12 @@ class Post(object):
                 r'&lt;span class=&#34;user-(?P<COLOR>\w+)&#34;&gt;'
                 r'(?P<NAME>[\w-]+)&lt;/span&gt;', wline
             )
+
+            if not self.writer:
+                self.writer = re.findall(
+                    r'class=&#34;username '
+                    r'user-(?P<COLOR>red)&#34;&gt;(?P<NAME>DEGwer)&lt;', wline
+                )
 
             if not self.writer:
                 self.writer = re.findall(
@@ -456,6 +464,8 @@ def main():
       </div>
       <p class="description"><a href="http://atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を難易度順に並べる非公式サイトです．</p>
 
+      <p>ユーザ名を指定すると進捗を表示します．</p>
+
       <div class="header-form form-group">
         <div class="form-inline">
           難易度：
@@ -489,6 +499,62 @@ def main():
         </div>
       </div>
       <!-- header end -->
+
+      <!-- AOJ-ICPC みたいなやつ -->
+      <table id="progresstable" class="table table-condensed" style="display:none;">
+        <thead>
+          <tr>
+            <th style="font-weight:bold;text-align:center;">ID</th>
+            <th style="font-weight:bold;text-align:center;">POINTS</th>'''.encode('utf-8')
+
+    for i in range(min_score, max_score+1, 100):
+        print (
+            ' '*12
+            + '<th id="prog_head_{0}" class="mask_{0}">{0}</th>'.format(i)
+        )
+
+    print u'''          </tr>
+        </thead>
+
+        <tbody>
+          <tr id="progress_whole">
+            <td style="font-weight:bold;text-align:center;">TOTAL</td>
+            <td id="prog_whole_total" style="font-weight:bold;text-align:center;">0</td>'''.encode('utf-8')
+
+    for i in range(min_score, max_score+1, 100):
+        print (
+            ' '*12
+            + '<td id="prog_whole_{0}" class="mask_{0}">0</td>'.format(i)
+        )
+
+    print u'''          </tr>
+
+          <tr id="progress_user" style="display:none;">
+            <td id="prog_user_name" style="font-weight:bold;text-align:center;">User</td>
+            <td id="prog_user_total" style="font-weight:bold;text-align:center;">0</td>'''
+
+    for i in range(min_score, max_score+1, 100):
+        print (
+            ' '*12
+            + '<td id="prog_user_{0}" class="mask_{0}">0</td>'.format(i)
+        )
+
+    print u'''          </tr>
+
+          <tr id="progress_rival" style="display:none">
+            <td id="prog_rival_name" style="font-weight:bold;text-align:center;">Rival</td>
+            <td id="prog_rival_total" style="font-weight:bold;text-align:center;">0</td>'''.encode('utf-8')
+
+    for i in range(min_score, max_score+1, 100):
+        print (
+            ' '*12
+            + '<td id="prog_rival_{0}" class="mask_{0}">0</td>'.format(i)
+        )
+
+    print u'''          </tr>
+        </tbody>
+      </table>
+      <!-- AOJ-ICPC みたいなやつ end -->
 
       <div class="result_user" style="display:none">
         <div class="placeholders row">
