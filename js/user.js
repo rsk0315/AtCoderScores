@@ -138,9 +138,11 @@ $(window).on("load", function() {
             var count_ac_all   = Array(MAX_D);
             var count_ac_user  = Array(MAX_D);
             var count_ac_rival = Array(MAX_D);
-            count_ac_all.fill(0);
-            count_ac_user.fill(0);
-            count_ac_rival.fill(0);
+            for(var i=0; i<MAX_D; i++) {
+                count_ac_all[i]   = 0;
+                count_ac_user[i]  = 0;
+                count_ac_rival[i] = 0;
+            }
 
             // 全問題を舐めて、表に色を付ける
             set_all_problems.forEach(function(pid) {
