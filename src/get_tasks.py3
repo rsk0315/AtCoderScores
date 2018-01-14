@@ -17,11 +17,11 @@ from bs4 import BeautifulSoup
 # beta.atcoder.jp/contests/contest-name/tasks/task_prefix_*
 TRADITIONAL_URL = re.compile(
     r'\[(?P<CONTEST_TITLE>[^\]]+)\]'
-    r'\(https?://(?P<CONTEST_NAME>[\w-]+).contest.atcoder.jp/?\)'
+    r'\((https?://(?P<CONTEST_NAME>[\w-]+).contest.atcoder.jp/?)\)'
 )
 BETA_URL = re.compile(
     r'\[(?P<CONTEST_TITLE>[^\]]+)\]'
-    r'\(https?://beta.atcoder.jp/contests/(?P<CONTEST_NAME>[\w-]+)/?\)'
+    r'\((https?://beta.atcoder.jp/contests/(?P<CONTEST_NAME>[\w-]+)/?)\)'
 )
 TASK_PREFIXES = {
     'tenka1-2016-quala':
@@ -84,7 +84,178 @@ TASK_PREFIXES = {
         'code_festival_2017_qualc',
     'colopl2018-qual':
         'colopl2018_qual',
+    'dwacon2018-prelims':
+        'dwacon2018_prelims',
 }
+
+ABC_TYPE, ARC_TYPE, AGC_TYPE, IRREGULAR_TYPE = range(4)
+CONTEST_TYPES = {
+    'abc': ABC_TYPE,
+    'arc': ARC_TYPE,
+    'agc': AGC_TYPE,
+}
+
+MAIN_TEMPLATE = '''<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AtCoder Scores</title>
+
+    <!-- Bootstrap の CSS 読み込み -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery 読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap の JS 読み込み -->
+    <script src="./js/bootstrap.min.js"></script>
+
+    <!-- tablesorter の CSS/JS 読み込み -->
+    <link href="./themes/blue/style.css" rel="stylesheet" media="print, projection, screen">
+    <script src="./js/jquery.tablesorter.min.js"></script>
+
+    <!-- bootstrap-select の CSS/JS 読み込み -->
+    <link href="./css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="./js/bootstrap-select.min.js"></script>
+
+    <!-- purl の JS 読み込み -->
+    <script src="./js/purl.js"></script>
+
+    <!-- ユーザー CSS/JS 読み込み -->
+    <link href="./css/user.css" rel="stylesheet">
+    <script src="./js/user.js"></script>
+  </head>
+
+  <body>
+    <!-- navigation -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="./index.html">AtCoder Scores</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+          <li><a href="./about.html">このページについて</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- navigation end -->
+
+    <!-- header -->
+    <div class="container">
+      <div class="page-header">
+        <h1>AtCoder Scores</h1>
+      </div>
+      <p class="description"><a href="http://atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を難易度順に並べる非公式サイトです．</p>
+
+      <p>ユーザ名を指定すると進捗を表示します．</p>
+
+      <div class="header-form form-group">
+        <div class="form-inline">
+          難易度：
+          <select id="difficulty_min" class="selectpicker" data-size="8">
+            {score_min}
+          </select>
+          から
+          <select id="difficulty_max" class="selectpicker" data-size="8">
+            {score_max}
+          </select>
+        </div>
+        <div class="form-inline">
+          User：<input type="text" name="form_username" class="form-control">
+          Rival：<input type="text" name="form_rivalname" class="form-control">
+          <input type="checkbox" name="form_notac">AC していない問題のみ表示
+          <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
+        </div>
+      </div>
+      <!-- header end -->
+
+      <!-- AOJ-ICPC みたいなやつ -->
+      <table id="progresstable" class="table table-condensed" style="display:none;">
+        <thead>
+          <tr>
+            <th style="font-weight:bold;text-align:center;">ID</th>
+            <th style="font-weight:bold;text-align:center;">POINTS</th>
+            {prog_head}
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr id="progress_whole">
+            <td style="font-weight:bold;text-align:center;">TOTAL</td>
+            <td id="prog_whole_total" style="font-weight:bold;text-align:center;">0</td>
+            {prog_whole}
+          </tr>
+
+          <tr id="progress_user" style="display:none;">
+            <td id="prog_user_name" style="font-weight:bold;text-align:center;">User</td>
+            <td id="prog_user_total" style="font-weight:bold;text-align:center;">0</td>
+            {prog_user}
+          </tr>
+
+          <tr id="progress_rival" style="display:none">
+            <td id="prog_rival_name" style="font-weight:bold;text-align:center;">Rival</td>
+            <td id="prog_rival_total" style="font-weight:bold;text-align:center;">0</td>
+            {prog_rival}
+          </tr>
+        </tbody>
+      </table>
+      <!-- AOJ-ICPC みたいなやつ end -->
+
+      <div class="result_user" style="display:none">
+        <div class="placeholders row">
+          <div class="col-sm-3 col-xs-6">
+            <h4>User AC</h4>
+            <h3><div id="num_user_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未AC（誤答あり）</h4>
+            <h3><div id="num_user_not_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未提出</h4>
+            <h3><div id="num_user_unsubmitted">0</div></h3>
+          </div>
+        </div>
+      </div>
+
+      <div class="result_rival" style="display:none">
+        <div class="placeholders row">
+          <div class="col-sm-3 col-xs-6">
+            <h4>Rival AC</h4>
+            <h3><div id="num_rival_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未AC（誤答あり）</h4>
+            <h3><div id="num_rival_not_ac">0</div></h3>
+          </div>
+          <div class="col-sm-3 col-xs-6">
+            <h4>未提出</h4>
+            <h3><div id="num_rival_unsubmitted">0</div></h3>
+          </div>
+        </div>
+      </div>
+
+      <table id="mainconttable" class="table table-striped table-hover table-condensed tablesorter">
+        <thead>
+          <tr>
+            <th style="text-align:center; width:10%;">得点</th>
+            <th style="width: 55%;">問題</th>
+            <th style="width: 25%;">writer</th>
+            <th style="width: 10%;">部分点</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {maintable}
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+'''
 
 # contest
 # |- index
@@ -108,7 +279,7 @@ class PostParser(object):
 
         # parser for partial score
         self.ps = lambda s: (
-            (int(s), None) if '(' not in s  # no partial scores
+            (int(s), '-') if '(' not in s  # no partial scores
             else (int(s.split('(')[0]), re.split('[()]', s)[1])
         )
         # parser for writer
@@ -120,6 +291,9 @@ class PostParser(object):
             else Writer(x[:-2], 'username') if '()' in x
             else Writer(x.split('(')[0], 'user-'+x[:-1].split('(')[1])
         )
+
+        self.min_score = 10000
+        self.max_score = 0
 
     def fetch(self):
         br = mechanicalsoup.Browser()
@@ -139,16 +313,18 @@ class PostParser(object):
                 break
 
             for a in links:
-                print(a, file=sys.stderr)
                 index = re.search(r'\d+', a.attrs['href']).group()
                 if '-'+index in self.collected:
                     # modified post corresponding `post/index'
                     disjoint = False
+                    break
                 elif index in self.collected:
                     # already collected one
                     disjoint = False
+                    break
                 else:
                     # emulate `br.follow_link(a.attrs['href'])'
+                    print(a, file=sys.stderr)
                     post_url = urljoin(top_page.url, a.attrs['href'])
                     post = br.get(post_url)
                     with open('posts/'+index, 'w') as fout:
@@ -162,7 +338,7 @@ class PostParser(object):
         indices = [
             # remove unpatched irregular posts
             i for i in self.collected
-            if '-'+i not in self.collected and i[0] != '-'
+            if '-'+i not in self.collected and i[0] != '-' and i[-1] != '~'
         ]
         posts = []
         for i in indices:
@@ -218,8 +394,9 @@ class PostParser(object):
             #fout = sys.stderr
             #if 1:
                 print('<div class="panel-body blog-post">', file=fout)
+                print(contest_names[i], file=sys.stderr)
                 print(
-                    '[{}](https://{}.contest.atcoder.jp/)'.format(
+                    '[{0}](https://{2}.contest.atcoder.jp/)'.format(
                         *contest_names[i]
                     ), file=fout
                 )
@@ -259,7 +436,12 @@ class PostParser(object):
             writers, scores = self.patch(contest_names, scores, writers, index)
             #print((scores), (contest_names), file=sys.stderr)
 
-        assert len(scores) in (0, len(contest_names))
+        for ss in scores:
+            if ss[0][0] < self.min_score:
+                self.min_score = ss[0][0]
+            if ss[-1][0] > self.max_score:
+                self.max_score = ss[-1][0]
+
         if len(scores) > 1:
             if 'abc' in contest_names[0][1] and 'arc' in contest_names[1][1]:
                 if scores[0][0][0] > scores[1][0][0]:
@@ -281,6 +463,19 @@ class PostParser(object):
                 Contest(
                     contest_names[1], scores[1], index, writers[1],
                     'CDEF', 'abcd'
+                )
+            ]
+
+        if 'arc' in contest_names[0][1]:
+            return [
+                Contest(
+                    contest_names[0], scores[0], index, writers[0],
+                    'CDEF', 'abcd')
+            ]
+        elif contest_names[0][2] == 'tenka1-2017':
+            return [
+                Contest(
+                    contest_names[0], scores[0], index, writers[0],'CDEF'
                 )
             ]
 
@@ -365,27 +560,82 @@ class Contest(object):
             self.task_char = task_char
 
         assert len(self.task_name) == len(self.task_char)
-        #assert len(self.scores) in (0, len(self.task_char)
         assert len(self.scores) == len(self.task_char)
         self.set_tasks()
 
     def set_tasks(self):
         self.tasks = []
         for tn, tc, s in zip(self.task_name, self.task_char, self.scores):
-            self.tasks.append(Task(tn, tc, s, self.contest_name))
+            self.tasks.append(
+                Task(tn, tc, s, self.contest_name, self.writers, self.index)
+            )
 
 class Task(object):
-    def __init__(self, tname, tchar, score, cname):
+    def __init__(self, tname, tchar, score, cname, writers, index):
         self.tname = tname
         self.tchar = tchar
         self.score, self.pscore = score
-        self.cname = cname
+        self.ctitle, self.url, self.cname = cname
+        self.writers = writers
+        self.index = index
+
+        if self.url[-1] != '/':
+            self.url += '/'
+        if re.match('a[bgr]c\d{3}', self.cname):
+            self.prefix = self.cname
+            self.ctitle = 'A{}C {}'.format(
+                self.cname[1].upper(), self.cname[3:6]
+            )
+            self.ctype = CONTEST_TYPES[self.cname[:3]]
+        else:
+            # raise KeyError if new irregular contest comes
+            self.prefix = TASK_PREFIXES[self.cname]
+            self.ctype = IRREGULAR_TYPE
+            if self.prefix == 'asaporo':
+                if 'round1' in self.cname:
+                    self.tchar = {'A': 'c', 'B': 'f'}[self.tname]
+                elif 'round2' in self.cname:
+                    self.tchar = {'A': 'e', 'B': 'a'}[self.tname]
+                elif 'round3' in self.cname:
+                    self.tchar = {'A': 'd', 'B': 'b'}[self.tname]
+            elif 'Qualification ' in self.ctitle:
+                self.ctitle = self.ctitle.replace(
+                    'Qualification Round', '予選'
+                ).replace(
+                    'Qualification Qual', '予選'
+                )
+
+    def to_html(self, indent):
+        trad_url = 'https://{0.cname}.contest.atcoder.jp/'.format(self)
+        beta_url = 'https://beta.atcoder.jp/contests/{0.cname}/'.format(self)
+        return (
+            '<tr class="dif_{0.score}">'
+            '{indent}  <td class="mask_{0.score}">{0.score}</td>'
+            '{indent}  <td class="{0.prefix}_{0.tchar}">'
+              '<a href="{trad_url}tasks/{0.prefix}_{0.tchar}">'
+                '{0.ctitle}: {0.tname}</a>'
+              ' <a href="{beta_url}tasks/{0.prefix}_{0.tchar}">[beta]</a>'
+            '</td>'
+            '{indent}  <td class="{0.prefix}_{0.tchar}">'
+              '{writers}</td>'            
+            '{indent}  <td class="{0.prefix}_{0.tchar}">'
+              '{0.pscore}</td>'
+            '{indent}</tr>'
+        ).format(
+            self,
+            writers=', '.join(map(Writer.to_html, self.writers)),
+            trad_url=trad_url, beta_url=beta_url,
+            indent='\n'+' '*indent,
+        )
 
     def __lt__(self, oth):
         if self.score != oth.score:
             return self.score < oth.score
-
-        return self.cname < oth.cname
+        if self.ctype != oth.ctype:
+            return self.ctype < oth.ctype
+        if self.ctitle != oth.ctitle:
+            return self.ctitle < oth.ctitle
+        return self.tname < oth.tname
 
     def __repr__(self):
         return '{} {}'.format(self.score, self.cname)
@@ -406,7 +656,24 @@ class Writer(object):
 
         self.color = attrs[0]
 
+    def to_html(self):
+        # for html
+        if self.color is None:
+            return self.name
+
+        if self.color == 'username':
+            return (
+                '<a class="username" href="https://atcoder.jp/user/{0.name}">'
+                '{0.name}</a>'
+            ).format(self)
+
+        return (
+            '<a class="username" href="https://atcoder.jp/user/{0.name}">'
+            '<span class="{0.color}">{0.name}</span></a>'
+        ).format(self)
+
     def to_tag(self):
+        # for patch file
         if self.color is None:
             return self.name
 
@@ -416,82 +683,41 @@ class Writer(object):
 
 def main():
     pr = PostParser()
-    # Uncomment following line to update
-    #pr.fetch()
+    pr.fetch()
     contests = pr.parse_allposts()
-    #contests = list(set(contests))
     tasks = reduce(lambda x, y: x+y, [c.tasks for c in contests], [])
     tasks.sort()
 
-    print('''<!DOCTYPE html>
-<html lang="ja">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>AtCoder Scores</title>
-
-    <!-- Bootstrap の CSS 読み込み -->
-    <link href="./css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- jQuery 読み込み -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
-    <!-- Bootstrap の JS 読み込み -->
-    <script src="./js/bootstrap.min.js"></script>
-
-    <!-- tablesorter の CSS/JS 読み込み -->
-    <link href="./themes/blue/style.css" rel="stylesheet" media="print, projection, screen">
-    <script src="./js/jquery.tablesorter.min.js"></script>
-
-    <!-- bootstrap-select の CSS/JS 読み込み -->
-    <link href="./css/bootstrap-select.min.css" rel="stylesheet">
-    <script src="./js/bootstrap-select.min.js"></script>
-
-    <!-- purl の JS 読み込み -->
-    <script src="./js/purl.js"></script>
-
-    <!-- ユーザー CSS/JS 読み込み -->
-    <link href="./css/user.css" rel="stylesheet">
-    <script src="./js/user.js"></script>
-  </head>
-
-  <body>
-    <!-- navigation -->
-    <nav class="navbar navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="./index.html">AtCoder Scores</a>
-        </div>
-
-        <ul class="nav navbar-nav">
-          <li><a href="./about.html">このページについて</a></li>
-        </ul>
-      </div>
-    </nav>
-    <!-- navigation end -->
-
-    <!-- header -->
-    <div class="container">
-      <div class="page-header">
-        <h1>AtCoder Scores</h1>
-      </div>
-      <p class="description"><a href="http://atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を難易度順に並べる非公式サイトです．</p>
-
-      <p>ユーザ名を指定すると進捗を表示します．</p>
-
-      <div class="header-form form-group">
-        <div class="form-inline">
-          難易度：
-          <select id="difficulty_min" class="selectpicker" data-size="8">
-
-    
-    ''')
-
-    # つかれた
-    # あとはリンクを貼るのとかをやる
-
-    print(*tasks, sep='\n')
+    score_range = range(pr.min_score, pr.max_score+1, 100)
+    print(
+        MAIN_TEMPLATE.format(
+            score_min=('\n'+' '*12).join(
+                '<option value="{0}">{0}</option>'.format(i)
+                for i in score_range
+            ),
+            score_max=('\n'+' '*12).join(
+                '<option value="{0}">{0}</option>'.format(i)
+                for i in score_range
+            ),
+            prog_head=('\n'+' '*12).join(
+                '<th id="prog_head_{0}" class="mask_{0}">{0}</th>'.format(i)
+                for i in score_range
+            ),
+            prog_whole=('\n'+' '*12).join(
+                '<td id="prog_whole_{0}" class="mask_{0}">0</td>'.format(i)
+                for i in score_range
+            ),
+            prog_user=('\n'+' '*12).join(
+                '<td id="prog_user_{0}" class="mask_{0}">0</td>'.format(i)
+                for i in score_range
+            ),
+            prog_rival=('\n'+' '*12).join(
+                '<td id="prog_rival_{0}" class="mask_{0}">0</td>'.format(i)
+                for i in score_range
+            ),
+            maintable=('\n'+' '*10).join(t.to_html(10) for t in tasks)
+        )
+    )
 
 if __name__ == '__main__':
-    raise NotImplementedError
+    main()
