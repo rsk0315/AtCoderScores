@@ -22,7 +22,7 @@ python3 get_tasks.py3 >| "$temp"
 
 if ! diff -q "$ATCODER_SCORES_DIR/index.html" "$temp"; then
     # Changed
-    diff -q "$ATCODER_SCORES_DIR/index.html" "$temp" | less
+    diff "$ATCODER_SCORES_DIR/index.html" "$temp" | less
 else
     echo No changes are made. >&2
 fi
@@ -45,7 +45,7 @@ if [[ "${reply,?}" != y ]]; then
 fi
 
 mv -f "$temp" "$ATCODER_SCORES_DIR/index.html"
-cd "$ATCODER_SCORES_DIR/index.html"
+cd "$ATCODER_SCORES_DIR"
 git add index.html
 if [ -n "$commit_msg" ]; then
     git commit -m "$commit_msg"
