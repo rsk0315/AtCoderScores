@@ -54,6 +54,8 @@ TASK_PREFIXES = {
         'cf16_exhibition_final',
     'ddcc2016-qual':
         'ddcc_2016_qual',
+    'ddcc2016-final':
+        'ddcc_2016_final',
     'code-festival-2016-qualc':
         'codefestival_2016_qualC',
     'code-festival-2016-qualb':
@@ -78,14 +80,32 @@ TASK_PREFIXES = {
         'tenka1_2017',
     'ddcc2017-qual':
         'ddcc2017_qual',
+    'ddcc2017-final':
+        'ddcc2017_final',
     'code-festival-2017-qualb':
         'code_festival_2017_qualb',
     'code-festival-2017-qualc':
         'code_festival_2017_qualc',
+    'cf17-final-open':
+        'cf17_final',
+    'cf17-exhibition-open':
+        'cf17_exhibition',
+    'cf17-tournament-round1-open':
+        'asaporo2',  # c d
+    'cf17-tournament-round2-open':
+        'asaporo2',  # a b
+    'cf17-tournament-round3-open':
+        'asaporo2',  # e f
+    'cf17-relay-open':
+        'relay2',
+    'code-thanks-festival-2017-open':
+        'code_thanks_festival_2017',
     'colopl2018-qual':
         'colopl2018_qual',
     'dwacon2018-prelims':
         'dwacon2018_prelims',
+    'colopl2018-final-open':
+        'colopl2018_final',
 }
 
 ABC_TYPE, ARC_TYPE, AGC_TYPE, IRREGULAR_TYPE = range(4)
@@ -316,8 +336,7 @@ class PostParser(object):
                 index = re.search(r'\d+', a.attrs['href']).group()
                 if '-'+index in self.collected:
                     # modified post corresponding `post/index'
-                    disjoint = False
-                    break
+                    continue
                 elif index in self.collected:
                     # already collected one
                     disjoint = False
@@ -589,6 +608,8 @@ class Task(object):
             self.ctype = CONTEST_TYPES[self.cname[:3]]
         else:
             # raise KeyError if new irregular contest comes
+            # In many cases, self.cname.replace('-open', '').replace('-', '_')
+            # will be the prefix.
             self.prefix = TASK_PREFIXES[self.cname]
             self.ctype = IRREGULAR_TYPE
             if self.prefix == 'asaporo':
@@ -598,6 +619,13 @@ class Task(object):
                     self.tchar = {'A': 'e', 'B': 'a'}[self.tname]
                 elif 'round3' in self.cname:
                     self.tchar = {'A': 'd', 'B': 'b'}[self.tname]
+            elif self.prefix == 'asaporo2':
+                if 'round1' in self.cname:
+                    self.tchar = {'A': 'c', 'B': 'd'}[self.tname]
+                    self.tname = self.tchar.upper()
+                elif 'round3' in self.cname:
+                    self.tchar = {'A': 'e', 'B': 'f'}[self.tname]
+                    self.tname = self.tchar.upper()
             elif 'Qualification ' in self.ctitle:
                 self.ctitle = self.ctitle.replace(
                     'Qualification Round', '予選'
