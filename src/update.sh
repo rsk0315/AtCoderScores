@@ -45,11 +45,10 @@ if [[ "${reply,?}" != y ]]; then
 fi
 
 mv -f "$temp" "$ATCODER_SCORES_DIR/index.html"
+mv -nv ./posts/*[^~] "$ATCODER_SCORES_DIR/posts/"
 cd "$ATCODER_SCORES_DIR"
 git add index.html
-if [ -n "$commit_msg" ]; then
-    git commit -m "$commit_msg"
-else
-    git commit
-fi
+git commit -m "${commit_msg:-Add new contests}"
+git add posts/*
+git commit -m 'Add new posts'
 git push origin gh-pages
