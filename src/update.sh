@@ -45,7 +45,7 @@ if [[ "${reply,?}" != y ]]; then
 fi
 
 mv -f "$temp" "$ATCODER_SCORES_DIR/index.html"
-mv -nv ./posts/*[^~] "$ATCODER_SCORES_DIR/posts/"
+cp -nv ./posts/*[^~] "$ATCODER_SCORES_DIR/posts/"
 cd "$ATCODER_SCORES_DIR"
 git add index.html
 git commit -m "${commit_msg:-Add new contests}"

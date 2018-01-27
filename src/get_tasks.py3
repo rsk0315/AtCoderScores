@@ -106,6 +106,8 @@ TASK_PREFIXES = {
         'dwacon2018_prelims',
     'colopl2018-final-open':
         'colopl2018_final',
+    'soundhound2018':
+        'soundhound2018',
 }
 
 ABC_TYPE, ARC_TYPE, AGC_TYPE, IRREGULAR_TYPE = range(4)
