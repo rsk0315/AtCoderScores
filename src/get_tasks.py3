@@ -110,11 +110,12 @@ TASK_PREFIXES = {
         'soundhound2018',
 }
 
-ABC_TYPE, ARC_TYPE, AGC_TYPE, IRREGULAR_TYPE = range(4)
+ABC_TYPE, ARC_TYPE, AGC_TYPE, APC_TYPE, IRREGULAR_TYPE = range(5)
 CONTEST_TYPES = {
     'abc': ABC_TYPE,
     'arc': ARC_TYPE,
     'agc': AGC_TYPE,
+    'apc': APC_TYPE,
 }
 
 MAIN_TEMPLATE = '''<!DOCTYPE html>
@@ -602,7 +603,7 @@ class Task(object):
 
         if self.url[-1] != '/':
             self.url += '/'
-        if re.match('a[bgr]c\d{3}', self.cname):
+        if re.match('a[bgpr]c\d{3}', self.cname):
             self.prefix = self.cname
             self.ctitle = 'A{}C {}'.format(
                 self.cname[1].upper(), self.cname[3:6]
