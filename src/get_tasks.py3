@@ -317,6 +317,7 @@ class PostParser(object):
 
         self.min_score = 10000
         self.max_score = 0
+        self.new = []
 
     def fetch(self):
         br = mechanicalsoup.Browser()
@@ -353,22 +354,71 @@ class PostParser(object):
                         print(index, file=sys.stderr)
                         print(post.text, file=fout)
 
-                    self.collected.append(index)
+                    self.new.append(index)
             i += 1
 
+        #self.collected.extend(self.new)
+
     def parse_allposts(self):
+        try:
+            from cache import cache_posts, cache_indices
+        except ImportError:
+            cache_posts = []
+            cache_indices = set([])
+            #posts = cache.posts
+        posts = list(map(
+            lambda x: list(map(
+                lambda y:
+                Contest(y[0], y[1], y[2], list(map(Writer, y[3])), y[4], y[5]), x
+            )), cache_posts
+        ))
+        for i in self.new:
+            with open('posts/'+i) as fin:
+                posts.append(self.parse(fin.read(), i))
+
         indices = [
             # remove unpatched irregular posts
             i for i in self.collected
             if '-'+i not in self.collected and i[0] != '-' and i[-1] != '~'
         ]
-        posts = []
-        for i in indices:
-            #print('posts/'+i)
-            with open('posts/'+i) as fin:
-                posts.extend(self.parse(fin.read(), i))
 
-        return posts
+        for i in indices:
+            if i in cache_indices:
+                continue
+
+            with open('posts/'+i) as fin:
+                posts.append(self.parse(fin.read(), i))
+
+        with open('cache/__init__.py', 'w') as fout:
+            print('cache_indices = {', file=fout)
+            for i in set(indices) | set(self.new):
+                print('    '+repr(i)+',', file=fout)
+
+            print('}\n', file=fout)
+
+            print('cache_posts = [', file=fout)
+            for post in posts:
+                print('    [', file=fout)
+                for contest in post:
+                    print(
+                        '        ({}, {}, {}, {}, {}, {}),'.format(
+                            contest.contest_name, contest.scores,
+                            repr(contest.index), contest.writers,
+                            repr(contest.task_name), repr(contest.task_char)
+                        ), file=fout
+                    )
+
+                    if contest.scores[0][0] < self.min_score:
+                        self.min_score = contest.scores[0][0]
+                    if contest.scores[-1][0] > self.max_score:
+                        self.max_score = contest.scores[-1][0]
+
+                print('    ],', file=fout)
+
+            print(']', file=fout)
+
+        self.collected.extend(self.new)
+        return reduce(lambda x, y: x+y, posts)
 
     def patch(self, contest_names, scores, writers, index):
         assert not os.path.isfile('posts/-'+index)
@@ -492,7 +542,8 @@ class PostParser(object):
             return [
                 Contest(
                     contest_names[0], scores[0], index, writers[0],
-                    'CDEF', 'abcd')
+                    'CDEF', 'abcd'
+                )
             ]
         elif contest_names[0][2] == 'tenka1-2017':
             return [
@@ -501,8 +552,9 @@ class PostParser(object):
                 )
             ]
 
+        print(contest_names[0], scores[0], index, writers[0], file=sys.stderr)
         return [Contest(contest_names[0], scores[0], index, writers[0])]
-
+    
     def parse_writers(self, body, index):
         USER_RE = re.compile(r'username|user-\w+')
         bs = BeautifulSoup(body, 'html.parser')
@@ -679,6 +731,11 @@ class Writer(object):
             self.color = color
             return
 
+        if type(tag) == list:
+            # already parsed
+            self.name, self.color = tag
+            return
+
         self.name = tag.text
         attrs = tag.attrs['class']
         if len(attrs) > 1:
@@ -711,6 +768,9 @@ class Writer(object):
         return (
             '<a class="{}">{}</a>'.format(self.color, self.name)
         ).replace('<', '&lt;').replace('>', '&gt;')
+
+    def __repr__(self):
+        return str([self.name, self.color])
 
 def main():
     pr = PostParser()
