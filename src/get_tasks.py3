@@ -108,6 +108,8 @@ TASK_PREFIXES = {
         'colopl2018_final',
     'soundhound2018':
         'soundhound2018',
+    'dwacon2018-final-open':
+        'dwacon2018_final',
 }
 
 ABC_TYPE, ARC_TYPE, AGC_TYPE, APC_TYPE, IRREGULAR_TYPE = range(5)
@@ -366,6 +368,7 @@ class PostParser(object):
             cache_posts = []
             cache_indices = set([])
             #posts = cache.posts
+
         posts = list(map(
             lambda x: list(map(
                 lambda y:
