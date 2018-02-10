@@ -110,6 +110,8 @@ TASK_PREFIXES = {
         'soundhound2018',
     'dwacon2018-final-open':
         'dwacon2018_final',
+    'yahoo-procon2018-qual':
+        'yahoo_procon2018_qual',
 }
 
 ABC_TYPE, ARC_TYPE, AGC_TYPE, APC_TYPE, IRREGULAR_TYPE = range(5)
@@ -566,6 +568,9 @@ class PostParser(object):
             if 'anonymous' in body:
                 # XXX - false-positive
                 writers.append('anonymous')
+            if 'other' in body:
+                # XXX - so ugly
+                writers.append('other')
         elif 'writer' not in body.lower():
             print(
                 '\x1b[0;91m! Writer not found in post:', index+'\x1b[0m',
