@@ -26,6 +26,8 @@ BETA_URL = re.compile(
 TASK_PREFIXES = {
     'tenka1-2016-quala':
         'tenka1_2016_qualA',
+    'tenka1-2016-final-open':
+        'tenka1_2016_final',
     'yahoo-procon2017-final-open':
         'yahoo_procon2017_final',
     'yahoo-procon2017-qual':
