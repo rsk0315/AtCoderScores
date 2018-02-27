@@ -1,6 +1,8 @@
 // 入力文字エスケープ
 function selectorEscape(val){
-    return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
+    //return val.replace(/[ !"#$%&'()*+,.\/:;<=>?@\[\\\]^`{|}~]/g, '\\$&');
+    // エスケープ（エスケープとは言ってない）
+    return val.replace(/[^\w-]+/g, '');
 }
 
 // パラメータが空であるかどうか (未定義または空文字列)
@@ -71,6 +73,7 @@ $(window).on("load", function() {
 
         // 100 点刻みでない配点は出さないでください＞＜（AtCoder さんへ）
         // ↑ AtCoder さんわざわざこのコード読まないでしょ
+        // ↑ 390 点問題しゃん...
         if(lb <= point && point <= ub) {
             $(".dif_" + point).css('display', 'table-row');
         }
