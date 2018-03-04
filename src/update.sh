@@ -1,4 +1,4 @@
-# -*- sh -*-
+#!/usr/bin/env bash
 
 # We run this script in beta-working directory.
 # beta-working directory contains `get_tasks.py3' and 'posts/*'.
@@ -46,7 +46,7 @@ fi
 
 mv -f "$temp" "$ATCODER_SCORES_DIR/index.html"
 cp -nv ./posts/*[^~] "$ATCODER_SCORES_DIR/posts/"
-cp -v ./cache/__init__.py "$ATCODER_SCORES_DIR/posts/"
+cp -v ./cache/__init__.py "$ATCODER_SCORES_DIR/cache/"
 cd "$ATCODER_SCORES_DIR"
 git add index.html
 git commit -m "${commit_msg:-Add new contests}"
