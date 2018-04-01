@@ -167,6 +167,7 @@ MAIN_TEMPLATE = '''<!DOCTYPE html>
 
         <ul class="nav navbar-nav">
           <li><a href="./about.html">このページについて</a></li>
+          <li><a href="./contact.html">お問い合わせ</a></li>
         </ul>
       </div>
     </nav>
@@ -179,7 +180,7 @@ MAIN_TEMPLATE = '''<!DOCTYPE html>
       </div>
       <p class="description"><a href="http://atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を難易度順に並べる非公式サイトです．</p>
 
-      <p>ユーザ名を指定すると進捗を表示します．</p>
+      <p>ユーザ名を指定すると進捗を表示します．（おそらく）API 関連の事情で反映には時間がかかることがありますことをご承知おきくださいませ．ご不満があれば<a href="./contact.html">こちら</a></p>
 
       <div class="header-form form-group">
         <div class="form-inline">
@@ -393,7 +394,11 @@ class PostParser(object):
             if i in cache_indices:
                 continue
 
+            if i == '__init__.py':
+                continue
+
             with open('posts/'+i) as fin:
+                print(fin.name, file=sys.stderr, flush=True)
                 posts.append(self.parse(fin.read(), i))
 
         with open('cache/__init__.py', 'w') as fout:
@@ -493,6 +498,9 @@ class PostParser(object):
     def parse(self, html, index):
         soup = BeautifulSoup(html, 'html.parser')
         body = soup.find('div', attrs={'class': 'panel-body blog-post'})
+        if body is None:
+            print('index is:', index, file=sys.stderr, flush=True)
+            raise Exception('Tsurai')
         contest_names = (
             TRADITIONAL_URL.findall(body.text)
             + BETA_URL.findall(body.text)
