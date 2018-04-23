@@ -96,11 +96,24 @@ $(window).on("load", function() {
         }
     }
     var url = 'https://query.yahooapis.com/v1/public/yql?callback=?';
-    var query  = 'select * from json where url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=' + UserName + '&rivals=' + RivalName + '"';
+    var cacheExpires = 300 * 1000;  // milliseconds
+    var curTime = Math.floor(Date.now()/cacheExpires);
+    // query のパラメータが同じだとキャッシュを残してしまって確認に行ってくれないみたいです（←575）．
+    // そこで，現在時刻をクエリに乗せてみることにしました．ただ，毎秒毎秒更新するのも頭が悪い気が
+    // したのである程度の時間は同じパラメータになるようにしています．
+    // 解決に対して正しいハックではないかもしれませんが，しばらくはこれで様子を見てみます（←575）．
+    // えびより．
+
+    var query  = 'select * from json where url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=' + UserName + '&rivals=' + RivalName + '&tsurai=' + curTime + '"';
     $.getJSON(url,
-        { q: query, format: 'json'},
+        { q: query, format: 'json' },
         function(data) {
             if(data.query.results == null) return;
+
+            // ↓あとでコメントアウトする
+            // console.log(data.query.results.json)
+            // console.log(curTime);
+            // ↑見つけた人へ．忘れてたら叱ってください（えびより）
             $(data.query.results.json.json).each(function() {
                 // ちゃんと表に存在して、かつ表示得点範囲内にあるやつかどうかを見よう
                 var pid = this.problem_id;
