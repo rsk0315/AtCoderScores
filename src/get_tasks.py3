@@ -114,6 +114,8 @@ TASK_PREFIXES = {
         'dwacon2018_final',
     'yahoo-procon2018-qual':
         'yahoo_procon2018_qual',
+    'yahoo-procon2018-final':
+        'yahoo_procon2018_final',
 }
 
 ABC_TYPE, ARC_TYPE, AGC_TYPE, APC_TYPE, IRREGULAR_TYPE = range(5)
