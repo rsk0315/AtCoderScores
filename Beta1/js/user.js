@@ -96,7 +96,30 @@ function append_task($table, point, task) {
     $tr.append($td);
 };
 
+function setTable() {
+    // スクロール可能なテーブル．もっとマシな書き方がありそう定期
+    var width = $('#mainconttable').width();
+    $('.scroll').attr({
+        width: width+'px',
+    }).css('overflow-x', 'auto');
+}
+
+var timer_set = false;
+$(window).on('resize', function() {
+    if (timer_set !== false) {
+        clearTimeout(timer_set);
+    }
+    timer_set = setTimeout(function() {
+        setTable();
+    }, 200);
+});
+
 $(window).on("load", function() {
+    var width = $('#mainconttable').width();
+    setTimeout(function() {
+        setTable();
+    }, 0);
+
     // 難易度の MAX (割る 100)
     const MAX_D = 24;
 
