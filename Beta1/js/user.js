@@ -98,6 +98,7 @@ function append_task($table, point, task) {
 
 function setTable() {
     // スクロール可能なテーブル．もっとマシな書き方がありそう定期
+    // スクロールバーの上に余白があるの，気持ち悪いかも？
     var width = $('#mainconttable').width();
     $('.scroll').attr({
         width: width+'px',
