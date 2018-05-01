@@ -320,21 +320,21 @@ $(window).on("load", function() {
                 }
 
                 $.each(tasks, function(i, task) {
-                    var pid = task['screen_name'];
-                    if (HideAC == "on" && set_user_AC.has(pid)) {
-                        // AC を非表示にしているときは，AC している問題を
-                        // スキップすることにしましょう
-                        return;
-                    }
+                    setTimeout(function(point, task) {
+                        var id_user = 'prog_user_' + point;
+                        var id_rival = 'prog_rival_' + point;
+                        var id_whole = 'prog_whole_' + point;
+                        var el_user = document.getElementById(id_user);
+                        var el_rival = document.getElementById(id_rival);
+                        var el_whole = document.getElementById(id_whole);
+                        var pt_color =
+                            window.getComputedStyle(el_whole).backgroundColor
+                            .match(/\d+/g).join(',');
+                        var i_pt = Math.floor(point/100)-1;
+                        var pid = task['screen_name'];
 
-                    var timer = setTimeout(function(el_user, el_rival, pt_color) {
-                        // 問題を追加するよ
-                        append_task(
-                            $('#mainconttable>tbody'), point, task
-                        );
-
-                        // console.log(el_user);
                         var state = 0;
+
                         if (set_user_AC.has(pid)) {
                             state |= STATE_FLAGS.USER_AC;
                             state |= STATE_FLAGS.USER_SUBMITTED;
@@ -392,7 +392,6 @@ $(window).on("load", function() {
                         el_user.innerHTML = count_user_AC[i_pt];
                         el_rival.innerHTML = count_rival_AC[i_pt];
 
-
                         total_whole += parseInt(point);
                         document.getElementById('prog_whole_total')
                             .innerHTML = total_whole;
@@ -409,7 +408,20 @@ $(window).on("load", function() {
                             'rgba(' + pt_color + ','
                                 + count_rival_AC[i_pt] / count_all[i_pt] + ')'
                         );
-                    }.bind(null, el_user, el_rival, pt_color), 0);
+                    }.bind(null, point, task), 0);
+                    if (HideAC == "on" && set_user_AC.has(pid)) {
+                        // AC を非表示にしているときは，AC している問題を
+                        // スキップすることにしましょう
+                        // AC を非表示にしていると 0 点になるバグがありました
+                        return;
+                    }
+
+                    setTimeout(function(point, task) {
+                        // 問題を追加するよ
+                        append_task(
+                            $('#mainconttable>tbody'), point, task
+                        );
+                    }.bind(null, point, task), 0);
                     // 問題の処理おわり
 
                 });  // その得点における全問題の処理おわり
