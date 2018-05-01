@@ -97,12 +97,6 @@ function append_task($table, point, task) {
 };
 
 $(window).on("load", function() {
-    /*
-    var PointArray = [   100,  200,  300,  400,  500,  600,  700,  800,  900, 1000,
-                        1100, 1200, 1300, 1400, 1500, 1600, 1700, 1800, 1900, 2000,
-                        2100, 2200, 2300, 2400, 2500];
-    */
-
     // 難易度の MAX (割る 100)
     const MAX_D = 24;
 
@@ -211,34 +205,37 @@ $(window).on("load", function() {
         mimeType: 'application/json',
         data: {},
         success: function(data) {
-            /* if (テーブルを書くべき) */ setTimeout(function() {
-                document.getElementById('progresstable').style
-                    .display = 'table'
+            var showTable = (UserName.length > 0 || RivalName.length > 0);
+            if (showTable) {
+                setTimeout(function() {
+                    document.getElementById('progresstable').style
+                        .display = 'table'
 
-                var link_user = (
-                    '<a href="https://atcoder.jp/user/' + UserName + '">'
-                        + UserName + '</a>'
-                );
-                var link_rival = (
-                    '<a href="https://atcoder.jp/user/' + RivalName + '">'
-                        + RivalName + '</a>'
-                );
+                    var link_user = (
+                        '<a href="https://atcoder.jp/user/' + UserName + '">'
+                            + UserName + '</a>'
+                    );
+                    var link_rival = (
+                        '<a href="https://atcoder.jp/user/' + RivalName + '">'
+                            + RivalName + '</a>'
+                    );
 
-                document.getElementById('prog_user_name')
-                    .innerHTML = link_user;
-                document.getElementById('prog_rival_name')
-                    .innerHTML = link_rival;
+                    document.getElementById('prog_user_name')
+                        .innerHTML = link_user;
+                    document.getElementById('prog_rival_name')
+                        .innerHTML = link_rival;
 
-                document.getElementById('num_user_ac')
-                    .innerHTML = set_user_AC.size;
-                document.getElementById('num_user_not_ac')
-                    .innerHTML = set_user_not_AC.size;
+                    document.getElementById('num_user_ac')
+                        .innerHTML = set_user_AC.size;
+                    document.getElementById('num_user_not_ac')
+                        .innerHTML = set_user_not_AC.size;
 
-                document.getElementById('num_rival_ac')
-                    .innerHTML = set_rival_AC.size;
-                document.getElementById('num_rival_not_ac')
-                    .innerHTML = set_rival_not_AC.size;
-            }, 0);
+                    document.getElementById('num_rival_ac')
+                        .innerHTML = set_rival_AC.size;
+                    document.getElementById('num_rival_not_ac')
+                        .innerHTML = set_rival_not_AC.size;
+                }, 0);
+            }
 
             // 点数ごとに，総問題数およびユーザ/ライバルの AC 数を持っておく．
             // ライバルはユーザではないの？ みたいな疑問があるけど気にしない．
@@ -421,20 +418,18 @@ $(window).on("load", function() {
     });
 
     // User, Rival の進捗状況を表示するかどうか (空文字列なら表示しない)
-    if(UserName  == "") {
+    if (UserName  == "") {
         $(".result_user").css('display', 'none');
         document.getElementById('progress_user').style.display = 'none';
-    }
-    else {
+    } else {
         $(".result_user").css('display', 'block');
         document.getElementById('progress_user').style.display = 'table-row';
     }
 
-    if(RivalName == "") {
+    if (RivalName == "") {
         $(".result_rival").css('display', 'none');
         document.getElementById('progress_rival').style.display = 'none';
-    }
-    else {
+    } else {
         $(".result_rival").css('display', 'block');
         document.getElementById('progress_rival').style.display = 'table-row';
     }
