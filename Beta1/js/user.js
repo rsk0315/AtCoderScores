@@ -138,16 +138,18 @@ $(window).on("load", function() {
 
     UserName  = isEmpty(UserName)  ? ""          : selectorEscape(UserName);
     RivalName = isEmpty(RivalName) ? ""          : selectorEscape(RivalName);
-    HideAC    = isEmpty(HideAC)    ? "off"       : selectorEscape(HideAC);
+    // HideAC    = isEmpty(HideAC)    ? "off"       : selectorEscape(HideAC);
+    HideAC    = (isEmpty(HideAC) == "on");
     lb        = isEmpty(lb)        ? 100         : parseInt(selectorEscape(lb));
     ub        = isEmpty(ub)        ? MAX_D * 100 : parseInt(selectorEscape(ub));
 
     // なんで HideAC が true/false じゃないんですか？ あとで直しますね
+    // 直しました
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
     $('input[name=form_rivalname]').val(RivalName);
-    $('input[name=form_notac]').prop('checked', (HideAC == "on"));
+    $('input[name=form_notac]').prop('checked', HideAC);
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
     $('.selectpicker').selectpicker('refresh');
@@ -334,7 +336,12 @@ $(window).on("load", function() {
 
                         var state = 0;
 
-                        console.log(pid);
+                        if (!(HideAC && state & STATE_FLAGS.USER_AC)) {
+                            // 問題を追加するよ
+                            append_task(
+                                $('#mainconttable>tbody'), point, task_
+                            );
+                        }
 
                         if (set_user_AC.has(pid)) {
                             state |= STATE_FLAGS.USER_AC;
@@ -409,13 +416,6 @@ $(window).on("load", function() {
                             'rgba(' + pt_color + ','
                                 + count_rival_AC[i_pt] / count_all[i_pt] + ')'
                         );
-
-                        if (!(HideAC == "on" && state & STATE_FLAGS.USER_AC)) {
-                            // 問題を追加するよ
-                            append_task(
-                                $('#mainconttable>tbody'), point, task_
-                            );
-                        }
                     }.bind(null, point, task), 0);
                     // 問題の処理おわり
 
