@@ -23,7 +23,7 @@ function jumpProcess() {
     window.location.href = "index.html?" + $.param(QueryObj);
 }
 
-function append_task($table, point, task) {
+function appendTask($table, point, task) {
     // $table.append('<tr class="dif_'+point+'">');
     // var $tr = $table.find('tr:last');
     var $tr = $('<tr>').attr({
@@ -105,12 +105,12 @@ function setTable() {
     }).css('overflow-x', 'auto');
 }
 
-var timer_set = false;
+var timerSet = false;
 $(window).on('resize', function() {
-    if (timer_set !== false) {
-        clearTimeout(timer_set);
+    if (timerSet !== false) {
+        clearTimeout(timerSet);
     }
-    timer_set = setTimeout(function() {
+    timerSet = setTimeout(function() {
         setTable();
     }, 200);
 });
@@ -177,11 +177,11 @@ $(window).on("load", function() {
     );
 
     // JSON を取ってきて提出状況に応じて色を付ける
-    var set_user_AC = new Set();
-    var set_user_not_AC = new Set();
-    var set_rival_AC = new Set();
-    var set_rival_not_AC = new Set();
-    var set_all_problems = new Set();
+    var setUserAC = new Set();
+    var setUserNotAC = new Set();
+    var setRivalAC = new Set();
+    var setRivalNotAC = new Set();
+    var setAllProblems = new Set();
     // problem より task がいいのかなぁみたいな気持ちになっています
 
     var STATE_FLAGS = {
@@ -202,20 +202,20 @@ $(window).on("load", function() {
 
                 if (this.user_id == UserName) {
                     if (this.result == "AC") {
-                        set_user_AC.add(pid);
-                        set_user_not_AC.delete(pid);
+                        setUserAC.add(pid);
+                        setUserNotAC.delete(pid);
                     } else {
-                        if (!set_user_AC.has(pid)) {
-                            set_user_not_AC.add(pid);
+                        if (!setUserAC.has(pid)) {
+                            setUserNotAC.add(pid);
                         }
                     }
                 } else {
                     if (this.result == "AC") {
-                        set_rival_AC.add(pid);
-                        set_rival_not_AC.delete(pid);
+                        setRivalAC.add(pid);
+                        setRivalNotAC.delete(pid);
                     } else {
-                        if (!set_rival_not_AC.has(pid)) {
-                            set_rival_not_AC.add(pid);
+                        if (!setRivalNotAC.has(pid)) {
+                            setRivalNotAC.add(pid);
                         }
                     }
                 }
@@ -235,153 +235,153 @@ $(window).on("load", function() {
                     document.getElementById('progresstable').style
                         .display = 'table'
 
-                    var link_user = (
+                    var linkUser = (
                         '<a href="https://atcoder.jp/user/' + UserName + '">'
                             + UserName + '</a>'
                     );
-                    var link_rival = (
+                    var linkRival = (
                         '<a href="https://atcoder.jp/user/' + RivalName + '">'
                             + RivalName + '</a>'
                     );
 
                     document.getElementById('prog_user_name')
-                        .innerHTML = link_user;
+                        .innerHTML = linkUser;
                     document.getElementById('prog_rival_name')
-                        .innerHTML = link_rival;
+                        .innerHTML = linkRival;
 
                     document.getElementById('num_user_ac')
-                        .innerHTML = set_user_AC.size;
+                        .innerHTML = setUserAC.size;
                     document.getElementById('num_user_not_ac')
-                        .innerHTML = set_user_not_AC.size;
+                        .innerHTML = setUserNotAC.size;
 
                     document.getElementById('num_rival_ac')
-                        .innerHTML = set_rival_AC.size;
+                        .innerHTML = setRivalAC.size;
                     document.getElementById('num_rival_not_ac')
-                        .innerHTML = set_rival_not_AC.size;
+                        .innerHTML = setRivalNotAC.size;
                 }, 0);
             }
 
             // 点数ごとに，総問題数およびユーザ/ライバルの AC 数を持っておく．
             // ライバルはユーザではないの？ みたいな疑問があるけど気にしない．
-            var count_all = Array(MAX_D);
-            var count_user_AC = Array(MAX_D);
-            var count_rival_AC = Array(MAX_D);
+            var countAll = Array(MAX_D);
+            var countUserAC = Array(MAX_D);
+            var countRivalAC = Array(MAX_D);
             for (var i=0; i<MAX_D; ++i) {
                 // count_all[i] は O(1) でわかるのでそのときにやる
                 // ↑ foo.length を O(1) だと思って言っています
-                count_user_AC[i] = 0;
-                count_rival_AC[i] = 0;
+                countUserAC[i] = 0;
+                countRivalAC[i] = 0;
             }
 
             // 総合得点
-            var total_whole = 0;
-            var total_user = 0;
-            var total_rival = 0;
+            var totalWhole = 0;
+            var totalUser = 0;
+            var totalRival = 0;
 
-            var num_user_AC = 0;
-            var num_user_not_AC = 0;
-            var num_user_unsubmitted = 0;
+            var numUserAC = 0;
+            var numUserNotAC = 0;
+            var numUserUnsubmitted = 0;
 
-            var num_rival_AC = 0;
-            var num_rival_not_AC = 0;
-            var num_rival_unsubmitted = 0;
+            var numRivalAC = 0;
+            var numRivalNotAC = 0;
+            var numRivalUnsubmitted = 0;
 
             $.each(data, function(point, tasks) {
-                var i_pt = Math.floor(point/100)-1;
-                count_all[i_pt] = tasks.length;
+                var iPt = Math.floor(point/100)-1;
+                countAll[iPt] = tasks.length;
 
-                var id_head = 'prog_head_' + point;
-                var id_whole = 'prog_whole_' + point;
-                var id_user = 'prog_user_' + point;
-                var id_rival = 'prog_rival_' + point;
+                var idHead = 'prog_head_' + point;
+                var idWhole = 'prog_whole_' + point;
+                var idUser = 'prog_user_' + point;
+                var idRival = 'prog_rival_' + point;
 
-                var el_head = document.getElementById(id_head);
-                var el_whole = document.getElementById(id_whole);
-                var el_user = document.getElementById(id_user);
-                var el_rival = document.getElementById(id_rival);
+                var elHead = document.getElementById(idHead);
+                var elWhole = document.getElementById(idWhole);
+                var elUser = document.getElementById(idUser);
+                var elRival = document.getElementById(idRival);
 
-                var pt_color =
-                    window.getComputedStyle(el_whole).backgroundColor
+                var ptColor =
+                    window.getComputedStyle(elWhole).backgroundColor
                     .match(/\d+/g).join(',');
 
-                el_user.style.backgroundColor =
-                    'rgba(' + pt_color + ',' + 0.0 + ')';
-                el_rival.style.backgroundColor =
-                    'rgba(' + pt_color + ',' + 0.0 + ')';
+                elUser.style.backgroundColor =
+                    'rgba(' + ptColor + ',' + 0.0 + ')';
+                elRival.style.backgroundColor =
+                    'rgba(' + ptColor + ',' + 0.0 + ')';
 
                 // 点数が指定範囲外であれば最初から書かないことにしましょう
                 if (!(lb <= point && point <= ub) || tasks.length == 0) {
-                    setTimeout(function(el_head, el_whole, el_user, el_rival) {
-                        el_head.style.display = 'none';
-                        el_whole.style.display = 'none';
-                        el_user.style.display = 'none';
-                        el_rival.style.display = 'none';
-                    }.bind(null, el_head, el_whole, el_user, el_rival), 0);
+                    setTimeout(function(elHead, elWhole, elUser, elRival) {
+                        elHead.style.display = 'none';
+                        elWhole.style.display = 'none';
+                        elUser.style.display = 'none';
+                        elRival.style.display = 'none';
+                    }.bind(null, elHead, elWhole, elUser, elRival), 0);
                     return;
                 }
 
                 $.each(tasks, function(i, task) {
                     setTimeout(function(point, task_) {
-                        var id_user = 'prog_user_' + point;
-                        var id_rival = 'prog_rival_' + point;
-                        var id_whole = 'prog_whole_' + point;
-                        var el_user = document.getElementById(id_user);
-                        var el_rival = document.getElementById(id_rival);
-                        var el_whole = document.getElementById(id_whole);
-                        var pt_color =
-                            window.getComputedStyle(el_whole).backgroundColor
+                        var idUser = 'prog_user_' + point;
+                        var idRival = 'prog_rival_' + point;
+                        var idWhole = 'prog_whole_' + point;
+                        var elUser = document.getElementById(idUser);
+                        var elRival = document.getElementById(idRival);
+                        var elWhole = document.getElementById(idWhole);
+                        var ptColor =
+                            window.getComputedStyle(elWhole).backgroundColor
                             .match(/\d+/g).join(',');
-                        var i_pt = Math.floor(point/100)-1;
+                        var iPt = Math.floor(point/100)-1;
                         var pid = task_['screen_name'];
 
                         var state = 0;
 
                         if (!(HideAC && state & STATE_FLAGS.USER_AC)) {
                             // 問題を追加するよ
-                            append_task(
+                            appendTask(
                                 $('#mainconttable>tbody'), point, task_
                             );
                         }
 
-                        if (set_user_AC.has(pid)) {
+                        if (setUserAC.has(pid)) {
                             state |= STATE_FLAGS.USER_AC;
                             state |= STATE_FLAGS.USER_SUBMITTED;
-                            total_user += parseInt(point);
+                            totalUser += parseInt(point);
                             document.getElementById('num_user_ac')
-                                .innerHTML = ++num_user_AC;
+                                .innerHTML = ++numUserAC;
                             document.getElementById('prog_user_total')
-                                .innerHTML = total_user;
-                        } else if (set_user_not_AC.has(pid)) {
+                                .innerHTML = totalUser;
+                        } else if (setUserNotAC.has(pid)) {
                             state |= STATE_FLAGS.USER_SUBMITTED;
                             document.getElementById('num_user_not_ac')
-                                .innerHTML = ++num_user_not_AC;
+                                .innerHTML = ++numUserNotAC;
                         } else {
                             document.getElementById('num_user_unsubmitted')
-                                .innerHTML = ++num_user_unsubmitted;
+                                .innerHTML = ++numUserUnsubmitted;
                         }
 
-                        if (set_rival_AC.has(pid)) {
+                        if (setRivalAC.has(pid)) {
                             state |= STATE_FLAGS.RIVAL_AC;
                             state |= STATE_FLAGS.RIVAL_SUBMITTED;
-                            total_rival += parseInt(point);
+                            totalRival += parseInt(point);
                             document.getElementById('num_rival_ac')
-                                .innerHTML = ++num_rival_AC;
+                                .innerHTML = ++numRivalAC;
                             document.getElementById('prog_rival_total')
-                                .innerHTML = total_rival;
-                        } else if (set_rival_not_AC.has(pid)) {
+                                .innerHTML = totalRival;
+                        } else if (setRivalNotAC.has(pid)) {
                             state |= STATE_FLAGS.RIVAL_SUBMITTED;
                             document.getElementById('num_rival_not_ac')
-                                .innerHTML = ++num_rival_not_AC;
+                                .innerHTML = ++numRivalNotAC;
                         } else {
                             document.getElementById('num_rival_unsubmitted')
-                                .innerHTML = ++num_rival_unsubmitted;
+                                .innerHTML = ++numRivalUnsubmitted;
                         }
 
                         if (state & STATE_FLAGS.USER_AC) {
                             // 他の class になっていないはずなので
                             // removeClass していません（まずい？）
                             $('td.'+pid).addClass('success');
-                            ++count_user_AC[i_pt];
+                            ++countUserAC[iPt];
                         } else if (state & STATE_FLAGS.RIVAL_AC) {
                             $('td.'+pid).addClass('danger');
                         } else if (state & STATE_FLAGS.USER_SUBMITTED) {
@@ -393,28 +393,28 @@ $(window).on("load", function() {
                         }
 
                         if (state & STATE_FLAGS.RIVAL_AC) {
-                            ++count_rival_AC[i_pt];
+                            ++countRivalAC[iPt];
                         }
 
-                        el_whole.innerHTML = count_all[i_pt];  // ここ無駄？
-                        el_user.innerHTML = count_user_AC[i_pt];
-                        el_rival.innerHTML = count_rival_AC[i_pt];
+                        elWhole.innerHTML = countAll[iPt];  // ここ無駄？
+                        elUser.innerHTML = countUserAC[iPt];
+                        elRival.innerHTML = countRivalAC[iPt];
 
-                        total_whole += parseInt(point);
+                        totalWhole += parseInt(point);
                         document.getElementById('prog_whole_total')
-                            .innerHTML = total_whole;
+                            .innerHTML = totalWhole;
 
                         // 濃淡を変える
                         // rgba の a だけスマートに変える方法ないですか？
                         // ↑ 575（えびより）
-                        el_user.style.backgroundColor = (
-                            'rgba(' + pt_color + ','
-                                + count_user_AC[i_pt] / count_all[i_pt] + ')'
+                        elUser.style.backgroundColor = (
+                            'rgba(' + ptColor + ','
+                                + countUserAC[iPt] / countAll[iPt] + ')'
                         );
 
-                        el_rival.style.backgroundColor = (
-                            'rgba(' + pt_color + ','
-                                + count_rival_AC[i_pt] / count_all[i_pt] + ')'
+                        elRival.style.backgroundColor = (
+                            'rgba(' + ptColor + ','
+                                + countRivalAC[iPt] / countAll[iPt] + ')'
                         );
                     }.bind(null, point, task), 0);
                     // 問題の処理おわり
