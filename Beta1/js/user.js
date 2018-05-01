@@ -314,13 +314,12 @@ $(window).on("load", function() {
                         el_whole.style.display = 'none';
                         el_user.style.display = 'none';
                         el_rival.style.display = 'none';
-                        return;
-                    }(el_head, el_whole, el_user, el_rival), 0);
+                    }.bind(null, el_head, el_whole, el_user, el_rival), 0);
                     return;
                 }
 
                 $.each(tasks, function(i, task) {
-                    setTimeout(function(point, task) {
+                    setTimeout(function(point, task_) {
                         var id_user = 'prog_user_' + point;
                         var id_rival = 'prog_rival_' + point;
                         var id_whole = 'prog_whole_' + point;
@@ -331,9 +330,11 @@ $(window).on("load", function() {
                             window.getComputedStyle(el_whole).backgroundColor
                             .match(/\d+/g).join(',');
                         var i_pt = Math.floor(point/100)-1;
-                        var pid = task['screen_name'];
+                        var pid = task_['screen_name'];
 
                         var state = 0;
+
+                        console.log(pid);
 
                         if (set_user_AC.has(pid)) {
                             state |= STATE_FLAGS.USER_AC;
@@ -408,19 +409,13 @@ $(window).on("load", function() {
                             'rgba(' + pt_color + ','
                                 + count_rival_AC[i_pt] / count_all[i_pt] + ')'
                         );
-                    }.bind(null, point, task), 0);
-                    if (HideAC == "on" && set_user_AC.has(pid)) {
-                        // AC を非表示にしているときは，AC している問題を
-                        // スキップすることにしましょう
-                        // AC を非表示にしていると 0 点になるバグがありました
-                        return;
-                    }
 
-                    setTimeout(function(point, task) {
-                        // 問題を追加するよ
-                        append_task(
-                            $('#mainconttable>tbody'), point, task
-                        );
+                        if (!(HideAC == "on" && state & STATE_FLAGS.USER_AC)) {
+                            // 問題を追加するよ
+                            append_task(
+                                $('#mainconttable>tbody'), point, task_
+                            );
+                        }
                     }.bind(null, point, task), 0);
                     // 問題の処理おわり
 
