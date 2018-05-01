@@ -100,8 +100,6 @@ $(window).on("load", function() {
     // 難易度の MAX (割る 100)
     const MAX_D = 24;
 
-    //$("#mainconttable").tablesorter();
-
     // URL パース
     var UserUrl = $(location).attr('search');
     var Params = $.url(UserUrl).param();
