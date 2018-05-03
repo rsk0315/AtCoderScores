@@ -111,6 +111,85 @@ function setTable() {
     }).css('overflow-x', 'auto');
 }
 
+function prettifyUser(who, name) {
+    // えびちゃんこだわりポイントみたいなの，正直どうかと思うんですよね
+    // えびより
+
+    // 色が変わるスパンはそんなに短くない（一週間単位）なので
+    // キャッシュの長さは長めでいいよなぁと思うのだけど，
+    // せっかく色昇格してもなかなか変わらないとアレなので参る．
+    // コンテストのありそうな土日の夜中だけ早めにするとかもできるけど，
+    // 面倒なので，今のところ 30 分で更新にします
+
+    var cacheExpires = 30 * 60 * 1000;  // ms
+    var curTime = Math.floor(Date.now()/cacheExpires);
+
+    var imageXpath = "//img[contains(@src, '/public/img/icon/crown')]";
+    var imageUrl = "https://atcoder.jp/user/" + name;
+    var imageYql = (
+        "https://query.yahooapis.com/v1/public/yql?format=json&"
+            + "env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q="
+            + 'select * from htmlstring where '
+            + 'url="' + imageUrl + '" and xpath="' + imageXpath + '"'
+            + '&tsurai=' + curTime
+    );
+    var imgName = null;
+
+    var userXpath = "//a[@class='username']/span"
+    var userUrl = "https://atcoder.jp/user/" + name;
+    var userYql = (
+        "https://query.yahooapis.com/v1/public/yql?format=json&"
+            + "env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&q="
+            + 'select * from htmlstring where '
+            + 'url="' + userUrl + '" and xpath="'+userXpath+'"'
+            + '&tsurai=' + curTime
+    );
+
+    $.ajax({
+        type: 'GET',
+        url: imageYql,
+        dataType: 'json',
+        cache: false,
+    }).done(function(data) {
+        var reply = data.query.results.result;
+        if (reply != '') {
+            imgName = reply.match(/crown\d+.gif/)[0];
+        }
+
+        $.ajax({
+            type: 'GET',
+            url: userYql,
+            dataType: 'json',
+            cache: false,
+        }).done(function(data) {
+            var reply = data.query.results.result;
+            var html = $.parseHTML(reply);
+            html = (html === null ? null : html[0]);
+                
+            var $a = $('<a>').attr({
+                href: userUrl,
+            }).text(name);
+            if (html !== null) {
+                // これが null だった場合たぶん存在しないユーザなので
+                // 何かしらの例外処理をやるかもです
+                var style = $(html).attr('style');
+                var class_ = $(html).attr('class');
+                $a.attr({style: style, class: class_});
+            }
+            $('#prog_'+who+'_name').html($a);
+            $('#ac_count_'+who+'_name').html($a.clone());
+
+            if (imgName != '' && imgName !== null) {
+                var $img = $('<img>').attr({src: './img/'+imgName});
+                $('#prog_'+who+'_name').prepend(' ');
+                $('#prog_'+who+'_name').prepend($img);
+                $('#ac_count_'+who+'_name').prepend(' ');
+                $('#ac_count_'+who+'_name').prepend($img.clone());
+            }
+        })
+    });
+}
+
 var timerSet = false;
 $(window).on('resize', function() {
     if (timerSet !== false) {
@@ -264,24 +343,24 @@ $(window).on("load", function() {
                     document.getElementById('ac_count').style
                         .display = 'table'
 
-                    var linkUser = (
-                        '<a href="https://atcoder.jp/user/' + UserName + '">'
-                            + UserName + '</a>'
-                    );
-                    var linkRival = (
-                        '<a href="https://atcoder.jp/user/' + RivalName + '">'
-                            + RivalName + '</a>'
-                    );
+                    // var linkUser = (
+                    //     '<a href="https://atcoder.jp/user/' + UserName + '">'
+                    //         + UserName + '</a>'
+                    // );
+                    // var linkRival = (
+                    //     '<a href="https://atcoder.jp/user/' + RivalName + '">'
+                    //         + RivalName + '</a>'
+                    // );
 
-                    document.getElementById('prog_user_name')
-                        .innerHTML = linkUser;
-                    document.getElementById('prog_rival_name')
-                        .innerHTML = linkRival;
+                    // document.getElementById('prog_user_name')
+                    //     .innerHTML = linkUser;
+                    // document.getElementById('prog_rival_name')
+                    //     .innerHTML = linkRival;
 
-                    document.getElementById('ac_count_user_name')
-                        .innerHTML = linkUser;
-                    document.getElementById('ac_count_rival_name')
-                        .innerHTML = linkRival;
+                    // document.getElementById('ac_count_user_name')
+                    //     .innerHTML = linkUser;
+                    // document.getElementById('ac_count_rival_name')
+                    //     .innerHTML = linkRival;
 
                     document.getElementById('num_user_ac').innerHTML = 0;
                     document.getElementById('num_user_not_ac').innerHTML = 0;
@@ -508,6 +587,9 @@ $(window).on("load", function() {
         }, 0);
     })});
 
+    // こういうのいらないですか？
+    prettifyUser('user', UserName);
+    prettifyUser('rival', RivalName);
 
     // ボタンを押したらパラメータ付き URL に飛ぶ
     $("#difficulty_submit").click(jumpProcess);
