@@ -108,6 +108,7 @@ function setTable() {
     var width = $('#mainconttable').width();
     $('.scroll').attr({
         width: width+'px',
+        style: "white-space: nowrap",
     }).css('overflow-x', 'auto');
 }
 
@@ -180,7 +181,9 @@ function prettifyUser(who, name) {
             $('#ac_count_'+who+'_name').html($a.clone());
 
             if (imgName != '' && imgName !== null) {
-                var $img = $('<img>').attr({src: './img/'+imgName});
+                var $img = $('<img>').attr({
+                    src: './img/'+imgName,
+                });
                 $('#prog_'+who+'_name').prepend(' ');
                 $('#prog_'+who+'_name').prepend($img);
                 $('#ac_count_'+who+'_name').prepend(' ');
@@ -343,40 +346,11 @@ $(window).on("load", function() {
                     document.getElementById('ac_count').style
                         .display = 'table'
 
-                    // var linkUser = (
-                    //     '<a href="https://atcoder.jp/user/' + UserName + '">'
-                    //         + UserName + '</a>'
-                    // );
-                    // var linkRival = (
-                    //     '<a href="https://atcoder.jp/user/' + RivalName + '">'
-                    //         + RivalName + '</a>'
-                    // );
-
-                    // document.getElementById('prog_user_name')
-                    //     .innerHTML = linkUser;
-                    // document.getElementById('prog_rival_name')
-                    //     .innerHTML = linkRival;
-
-                    // document.getElementById('ac_count_user_name')
-                    //     .innerHTML = linkUser;
-                    // document.getElementById('ac_count_rival_name')
-                    //     .innerHTML = linkRival;
-
                     document.getElementById('num_user_ac').innerHTML = 0;
                     document.getElementById('num_user_not_ac').innerHTML = 0;
 
                     document.getElementById('num_rival_ac').innerHTML = 0;
                     document.getElementById('num_rival_not_ac').innerHTML = 0;
-
-                    // document.getElementById('num_user_ac')
-                    //     .innerHTML = setUserAC.size;
-                    // document.getElementById('num_user_not_ac')
-                    //     .innerHTML = setUserNotAC.size;
-
-                    // document.getElementById('num_rival_ac')
-                    //     .innerHTML = setRivalAC.size;
-                    // document.getElementById('num_rival_not_ac')
-                    //     .innerHTML = setRivalNotAC.size;
                 }, 0);
             }
 
