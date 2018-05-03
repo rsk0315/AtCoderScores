@@ -184,6 +184,9 @@ MAIN_TEMPLATE = '''<!DOCTYPE html>
 
       <p>ユーザ名を指定すると進捗を表示します．<s>（おそらく）API 関連の事情で反映には時間がかかることがありますことをご承知おきくださいませ．</s>反映までの時間が長すぎる問題を解決しました（たぶん）．ご不満があれば<a href="./contact.html">こちら</a>まで</p>
 
+      <!-- ここパラメータを維持して飛ばせたらうれしいですか？ -->
+      <p>変更を加えた<a href="./Beta1/index.html">ベータ版</a>を公開中です．ご確認くださいませ．</p>
+
       <div class="header-form form-group">
         <div class="form-inline">
           難易度：
