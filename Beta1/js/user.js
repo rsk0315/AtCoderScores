@@ -18,7 +18,7 @@ function jumpProcess() {
         ubound: $("#difficulty_max").val(),
         user_name: selectorEscape($("input[name=form_username]").val()),
         rival_name: selectorEscape($("input[name=form_rivalname]").val()),
-        hide_ac: $("input[name=form_notac]:checked").val(),
+        hide_ac: $("input[name=form_not_ac]:checked").val(),
 
         show_abc: $("input[name=filter_abc]:checked").val(),
         show_arc: $("input[name=filter_arc]:checked").val(),
@@ -136,6 +136,8 @@ $(window).on("load", function() {
     var UserName, RivalName, HideAC, lb, ub;
     var showABC, showARC, showAGC, showAPC, showOther;
 
+    // console.log(Params);
+
     // パラメータの取得と反映
     UserName  = Params.user_name;
     RivalName = Params.rival_name;
@@ -162,7 +164,7 @@ $(window).on("load", function() {
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
     $('input[name=form_rivalname]').val(RivalName);
-    $('input[name=form_notac]').prop('checked', HideAC);
+    $('input[name=form_not_ac]').prop('checked', HideAC);
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
     
