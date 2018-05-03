@@ -58,67 +58,129 @@
 
       <div class="header-form form-group">
         <div class="form-inline">
-          難易度：
-          <select id="difficulty_min" class="selectpicker" data-size="8">
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="300">300</option>
-            <option value="400">400</option>
-            <option value="500">500</option>
-            <option value="600">600</option>
-            <option value="700">700</option>
-            <option value="800">800</option>
-            <option value="900">900</option>
-            <option value="1000">1000</option>
-            <option value="1100">1100</option>
-            <option value="1200">1200</option>
-            <option value="1300">1300</option>
-            <option value="1400">1400</option>
-            <option value="1500">1500</option>
-            <option value="1600">1600</option>
-            <option value="1700">1700</option>
-            <option value="1800">1800</option>
-            <option value="1900">1900</option>
-            <option value="2000">2000</option>
-            <option value="2100">2100</option>
-            <option value="2200">2200</option>
-            <option value="2300">2300</option>
-            <option value="2400">2400</option>
-          </select>
-          から
-          <select id="difficulty_max" class="selectpicker" data-size="8">
-            <option value="100">100</option>
-            <option value="200">200</option>
-            <option value="300">300</option>
-            <option value="400">400</option>
-            <option value="500">500</option>
-            <option value="600">600</option>
-            <option value="700">700</option>
-            <option value="800">800</option>
-            <option value="900">900</option>
-            <option value="1000">1000</option>
-            <option value="1100">1100</option>
-            <option value="1200">1200</option>
-            <option value="1300">1300</option>
-            <option value="1400">1400</option>
-            <option value="1500">1500</option>
-            <option value="1600">1600</option>
-            <option value="1700">1700</option>
-            <option value="1800">1800</option>
-            <option value="1900">1900</option>
-            <option value="2000">2000</option>
-            <option value="2100">2100</option>
-            <option value="2200">2200</option>
-            <option value="2300">2300</option>
-            <option value="2400">2400</option>
-          </select>
-        </div>
-        <div class="form-inline">
           User：<input type="text" name="form_username" class="form-control">
           Rival：<input type="text" name="form_rivalname" class="form-control">
-          <input type="checkbox" name="form_notac">AC していない問題のみ表示
-          <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
         </div>
+
+        <!-- filters -->
+        <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
+             後々ちゃんと勉強したいです．えびより -->
+        <div class="panel panel-default" style="margin-top: 10px">
+          <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="true">
+            <h3 class="panel-title">
+              絞り込み
+              <span class="glyphicon pull-right"></span>
+            </h3>
+          </div>
+
+          <div id="collapse-filter" class="panel-body panel-collapse collapse in">
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: 18px">コンテスト</span>
+            </p>
+            <div class="filters">
+              <div>
+                <input name="filter_abc" type="checkbox">
+                AtCoder Beginner Contest
+              </div>
+
+              <div>
+                <input name="filter_arc" type="checkbox">
+                AtCoder Regular Contest
+              </div>
+
+              <div>
+                <input name="filter_agc" type="checkbox">
+                AtCoder Grand Contest
+              </div>
+
+              <div>
+                <input name="filter_apc" type="checkbox">
+                AtCoder Petrozavodsk Contest
+              </div>
+
+              <div style="margin-top: 5px">
+                <input name="filter_other" type="checkbox">
+                その他
+              </div>
+            </div>
+            
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: 18px">得点</span>
+            </p>
+
+            <div class="form-inline">
+              難易度：
+              <select id="difficulty_min" class="selectpicker" data-size="8">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+                <option value="1000">1000</option>
+                <option value="1100">1100</option>
+                <option value="1200">1200</option>
+                <option value="1300">1300</option>
+                <option value="1400">1400</option>
+                <option value="1500">1500</option>
+                <option value="1600">1600</option>
+                <option value="1700">1700</option>
+                <option value="1800">1800</option>
+                <option value="1900">1900</option>
+                <option value="2000">2000</option>
+                <option value="2100">2100</option>
+                <option value="2200">2200</option>
+                <option value="2300">2300</option>
+                <option value="2400">2400</option>
+              </select>
+              から
+              <select id="difficulty_max" class="selectpicker" data-size="8">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+                <option value="1000">1000</option>
+                <option value="1100">1100</option>
+                <option value="1200">1200</option>
+                <option value="1300">1300</option>
+                <option value="1400">1400</option>
+                <option value="1500">1500</option>
+                <option value="1600">1600</option>
+                <option value="1700">1700</option>
+                <option value="1800">1800</option>
+                <option value="1900">1900</option>
+                <option value="2000">2000</option>
+                <option value="2100">2100</option>
+                <option value="2200">2200</option>
+                <option value="2300">2300</option>
+                <option value="2400">2400</option>
+              </select>
+            </div>
+
+            
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: 18px">その他</span>
+            </p>
+            <div class="filters">
+              <div class="filter_notac">
+                <input type="checkbox" name="form_notac">
+                AC していない問題のみ表示
+              </div>
+            </div>
+
+          </div>
+          <!-- filters end -->
+        </div>
+
+        <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
       </div>
       <!-- header end -->
 

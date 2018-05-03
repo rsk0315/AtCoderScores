@@ -18,7 +18,13 @@ function jumpProcess() {
         ubound: $("#difficulty_max").val(),
         user_name: selectorEscape($("input[name=form_username]").val()),
         rival_name: selectorEscape($("input[name=form_rivalname]").val()),
-        hide_ac: $("input[name=form_notac]:checked").val()
+        hide_ac: $("input[name=form_notac]:checked").val(),
+
+        show_abc: $("input[name=filter_abc]:checked").val(),
+        show_arc: $("input[name=filter_arc]:checked").val(),
+        show_agc: $("input[name=filter_agc]:checked").val(),
+        show_apc: $("input[name=filter_apc]:checked").val(),
+        show_other: $("input[name=filter_other]:checked").val(),
     };
     window.location.href = "index.html?" + $.param(QueryObj);
 }
@@ -128,6 +134,7 @@ $(window).on("load", function() {
     var UserUrl = $(location).attr('search');
     var Params = $.url(UserUrl).param();
     var UserName, RivalName, HideAC, lb, ub;
+    var showABC, showARC, showAGC, showAPC, showOther;
 
     // パラメータの取得と反映
     UserName  = Params.user_name;
@@ -139,12 +146,18 @@ $(window).on("load", function() {
     UserName  = isEmpty(UserName)  ? ""          : selectorEscape(UserName);
     RivalName = isEmpty(RivalName) ? ""          : selectorEscape(RivalName);
     // HideAC    = isEmpty(HideAC)    ? "off"       : selectorEscape(HideAC);
-    HideAC    = (isEmpty(HideAC) == "on");
+    // HideAC    = (!isEmpty(HideAC));
+    // .../index.html でアクセスしたときは false になっていてほしい
+    HideAC    = (HideAC == "on");
     lb        = isEmpty(lb)        ? 100         : parseInt(selectorEscape(lb));
     ub        = isEmpty(ub)        ? MAX_D * 100 : parseInt(selectorEscape(ub));
 
-    // なんで HideAC が true/false じゃないんですか？ あとで直しますね
-    // 直しました
+    // .../index.html でアクセスしたときは true になっていてほしい
+    showABC   = (Params.show_abc != "");
+    showARC   = (Params.show_arc != "");
+    showAGC   = (Params.show_agc != "")
+    showAPC   = (Params.show_apc != "");
+    showOther = (Params.show_other != "");
 
     // パラメータをフォームに反映 (入力情報の保存)
     $('input[name=form_username]').val(UserName);
@@ -152,6 +165,13 @@ $(window).on("load", function() {
     $('input[name=form_notac]').prop('checked', HideAC);
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
+    
+    $('input[name=filter_abc]').prop('checked', showABC);
+    $('input[name=filter_arc]').prop('checked', showARC);
+    $('input[name=filter_agc]').prop('checked', showAGC);
+    $('input[name=filter_apc]').prop('checked', showAPC);
+    $('input[name=filter_other]').prop('checked', showOther);
+
     $('.selectpicker').selectpicker('refresh');
 
     // 難易度絞り込み
@@ -267,8 +287,10 @@ $(window).on("load", function() {
             var countUserAC = Array(MAX_D);
             var countRivalAC = Array(MAX_D);
             for (var i=0; i<MAX_D; ++i) {
-                // count_all[i] は O(1) でわかるのでそのときにやる
+                // countAll[i] は O(1) でわかるのでそのときにやる
                 // ↑ foo.length を O(1) だと思って言っています
+                // ↑ と思ったけどやっぱり逐一やることにしました
+                countAll[i] = 0;
                 countUserAC[i] = 0;
                 countRivalAC[i] = 0;
             }
@@ -288,7 +310,6 @@ $(window).on("load", function() {
 
             $.each(data, function(point, tasks) {
                 var iPt = Math.floor(point/100)-1;
-                countAll[iPt] = tasks.length;
 
                 var idHead = 'prog_head_' + point;
                 var idWhole = 'prog_whole_' + point;
@@ -322,6 +343,20 @@ $(window).on("load", function() {
 
                 $.each(tasks, function(i, task) {
                     setTimeout(function(point, task_) {
+                        var pid = task_['screen_name'];
+
+                        if (pid.match(/abc\d+/)) {
+                            if (!showABC) return;
+                        } else if (pid.match(/arc\d+/)) {
+                            if (!showARC) return;
+                        } else if (pid.match(/agc\d+/)) {
+                            if (!showAGC) return;
+                        } else if (pid.match(/apc\d+/)) {
+                            if (!showAPC) return;
+                        } else {
+                            if (!showOther) return;
+                        }
+
                         var idUser = 'prog_user_' + point;
                         var idRival = 'prog_rival_' + point;
                         var idWhole = 'prog_whole_' + point;
@@ -332,16 +367,7 @@ $(window).on("load", function() {
                             window.getComputedStyle(elWhole).backgroundColor
                             .match(/\d+/g).join(',');
                         var iPt = Math.floor(point/100)-1;
-                        var pid = task_['screen_name'];
-
                         var state = 0;
-
-                        if (!(HideAC && state & STATE_FLAGS.USER_AC)) {
-                            // 問題を追加するよ
-                            appendTask(
-                                $('#mainconttable>tbody'), point, task_
-                            );
-                        }
 
                         if (setUserAC.has(pid)) {
                             state |= STATE_FLAGS.USER_AC;
@@ -377,6 +403,15 @@ $(window).on("load", function() {
                                 .innerHTML = ++numRivalUnsubmitted;
                         }
 
+                        if (!(HideAC && (state & STATE_FLAGS.USER_AC))) {
+                            // 問題を追加するよ
+                            // AC 非表示の場合は，表示はしないけど
+                            // 諸々のカウントはすることにしています
+                            appendTask(
+                                $('#mainconttable>tbody'), point, task_
+                            );
+                        }
+
                         if (state & STATE_FLAGS.USER_AC) {
                             // 他の class になっていないはずなので
                             // removeClass していません（まずい？）
@@ -396,7 +431,7 @@ $(window).on("load", function() {
                             ++countRivalAC[iPt];
                         }
 
-                        elWhole.innerHTML = countAll[iPt];  // ここ無駄？
+                        elWhole.innerHTML = ++countAll[iPt];
                         elUser.innerHTML = countUserAC[iPt];
                         elRival.innerHTML = countRivalAC[iPt];
 
@@ -428,6 +463,27 @@ $(window).on("load", function() {
     }).done(function() {
         // setTimeout しないで生で書くとうまくいかない
         setTimeout(function() {
+
+            for (var i=1; i<=MAX_D; ++i) {
+                var point = 100*i;
+                var idHead = 'prog_head_' + point;
+                var idWhole = 'prog_whole_' + point;
+                var idUser = 'prog_user_' + point;
+                var idRival = 'prog_rival_' + point;
+
+                var elHead = document.getElementById(idHead);
+                var elWhole = document.getElementById(idWhole);
+                var elUser = document.getElementById(idUser);
+                var elRival = document.getElementById(idRival);
+
+                if (elWhole.innerHTML == "0") {
+                    elHead.style.display = 'none';
+                    elWhole.style.display = 'none';
+                    elUser.style.display = 'none';
+                    elRival.style.display = 'none';
+                }
+            }
+
             $("#mainconttable").tablesorter();
         }, 0);
     })});
