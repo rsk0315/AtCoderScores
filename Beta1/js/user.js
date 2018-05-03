@@ -255,6 +255,9 @@ $(window).on("load", function() {
                     document.getElementById('progresstable').style
                         .display = 'table'
 
+                    document.getElementById('ac_count').style
+                        .display = 'table'
+
                     var linkUser = (
                         '<a href="https://atcoder.jp/user/' + UserName + '">'
                             + UserName + '</a>'
@@ -269,15 +272,26 @@ $(window).on("load", function() {
                     document.getElementById('prog_rival_name')
                         .innerHTML = linkRival;
 
-                    document.getElementById('num_user_ac')
-                        .innerHTML = setUserAC.size;
-                    document.getElementById('num_user_not_ac')
-                        .innerHTML = setUserNotAC.size;
+                    document.getElementById('ac_count_user_name')
+                        .innerHTML = linkUser;
+                    document.getElementById('ac_count_rival_name')
+                        .innerHTML = linkRival;
 
-                    document.getElementById('num_rival_ac')
-                        .innerHTML = setRivalAC.size;
-                    document.getElementById('num_rival_not_ac')
-                        .innerHTML = setRivalNotAC.size;
+                    document.getElementById('num_user_ac').innerHTML = 0;
+                    document.getElementById('num_user_not_ac').innerHTML = 0;
+
+                    document.getElementById('num_rival_ac').innerHTML = 0;
+                    document.getElementById('num_rival_not_ac').innerHTML = 0;
+
+                    // document.getElementById('num_user_ac')
+                    //     .innerHTML = setUserAC.size;
+                    // document.getElementById('num_user_not_ac')
+                    //     .innerHTML = setUserNotAC.size;
+
+                    // document.getElementById('num_rival_ac')
+                    //     .innerHTML = setRivalAC.size;
+                    // document.getElementById('num_rival_not_ac')
+                    //     .innerHTML = setRivalNotAC.size;
                 }, 0);
             }
 
@@ -506,17 +520,21 @@ $(window).on("load", function() {
     if (UserName  == "") {
         $(".result_user").css('display', 'none');
         document.getElementById('progress_user').style.display = 'none';
+        document.getElementById('ac_count_user').style.display = 'none';
     } else {
         $(".result_user").css('display', 'block');
         document.getElementById('progress_user').style.display = 'table-row';
+        document.getElementById('ac_count_user').style.display = 'table-row';
     }
 
     if (RivalName == "") {
         $(".result_rival").css('display', 'none');
         document.getElementById('progress_rival').style.display = 'none';
+        document.getElementById('ac_count_rival').style.display = 'none';
     } else {
         $(".result_rival").css('display', 'block');
         document.getElementById('progress_rival').style.display = 'table-row';
+        document.getElementById('ac_count_rival').style.display = 'table-row';
     }
 });
 

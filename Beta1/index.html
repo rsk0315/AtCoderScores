@@ -75,7 +75,7 @@
 
           <div id="collapse-filter" class="panel-body panel-collapse collapse in">
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: 18px">コンテスト</span>
+              <span style="font-size: large">コンテスト</span>
             </p>
             <div class="filters">
               <div>
@@ -105,7 +105,7 @@
             </div>
             
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: 18px">得点</span>
+              <span style="font-size: large">得点</span>
             </p>
 
             <div class="form-inline">
@@ -167,11 +167,11 @@
 
             
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: 18px">その他</span>
+              <span style="font-size: large">その他</span>
             </p>
             <div class="filters">
-              <div class="filter_notac">
-                <input type="checkbox" name="form_notac">
+              <div class="filter_not_ac">
+                <input type="checkbox" name="form_not_ac">
                 AC していない問題のみ表示
               </div>
             </div>
@@ -185,7 +185,7 @@
       <!-- header end -->
 
       <!-- AOJ-ICPC みたいなやつ -->
-      <div class="scroll">
+      <div class="scroll" style="margin-bottom: 10px">
         <table id="progresstable" class="table table-condensed" style="display:none; table-layout: auto; width: 150%; overflow-x: scroll">
           <thead>
             <tr>
@@ -310,39 +310,32 @@
       </div>
       <!-- AOJ-ICPC みたいなやつ end -->
 
-      <div class="result_user" style="display:none">
-        <div class="placeholders row">
-          <div class="col-sm-3 col-xs-6">
-            <h4>User AC</h4>
-            <h3><div id="num_user_ac">0</div></h3>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <h4>未AC（誤答あり）</h4>
-            <h3><div id="num_user_not_ac">0</div></h3>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <h4>未提出</h4>
-            <h3><div id="num_user_unsubmitted">0</div></h3>
-          </div>
-        </div>
-      </div>
+      <table id="ac_count" class="table table-condensed" style="display:none; table-layout: auto">
+        <thead>
+          <tr>
+            <th class="ac_count_id">ID</th>
+            <th class="ac_count_ac">AC 済み</th>
+            <th class="ac_count_not_ac">挑戦中</th>
+            <th class="ac_count_unsubmitted">未提出</th>
+          </tr>
+        </thead>
 
-      <div class="result_rival" style="display:none">
-        <div class="placeholders row">
-          <div class="col-sm-3 col-xs-6">
-            <h4>Rival AC</h4>
-            <h3><div id="num_rival_ac">0</div></h3>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <h4>未AC（誤答あり）</h4>
-            <h3><div id="num_rival_not_ac">0</div></h3>
-          </div>
-          <div class="col-sm-3 col-xs-6">
-            <h4>未提出</h4>
-            <h3><div id="num_rival_unsubmitted">0</div></h3>
-          </div>
-        </div>
-      </div>
+        <tbody>
+          <tr id="ac_count_user">
+            <td id="ac_count_user_name">User</td>
+            <td id="num_user_ac">0</td>
+            <td id="num_user_not_ac">0</td>
+            <td id="num_user_unsubmitted">0</td>
+          </tr>
+
+          <tr id="ac_count_rival">
+            <td id="ac_count_rival_name">Rival</td>
+            <td id="num_rival_ac">0</td>
+            <td id="num_rival_not_ac">0</td>
+            <td id="num_rival_unsubmitted">0</td>
+          </tr>
+        </tbody>
+      </table>
 
       <table id="mainconttable" class="table table-striped table-hover table-condensed tablesorter">
         <thead>
