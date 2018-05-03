@@ -138,6 +138,10 @@ $(window).on("load", function() {
 
     // console.log(Params);
 
+    // = の記号の位置を揃えるの，新しい要素を加えるときに面倒なので
+    // どうにかするかもしれません．
+    // 見やすいだろうと言われると見やすい気はするんですけどね...
+
     // パラメータの取得と反映
     UserName  = Params.user_name;
     RivalName = Params.rival_name;
