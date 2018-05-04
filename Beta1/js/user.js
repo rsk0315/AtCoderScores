@@ -114,6 +114,16 @@ function setTable() {
     }).css('overflow-x', 'auto');
 }
 
+var timerSet = false;
+$(window).on('resize', function() {
+    if (timerSet !== false) {
+        clearTimeout(timerSet);
+    }
+    timerSet = setTimeout(function() {
+        setTable();
+    }, 200);
+});
+
 function prettifyUser(who, name) {
     // えびちゃんこだわりポイントみたいなの，正直どうかと思うんですよね
     // えびより
@@ -199,17 +209,6 @@ function prettifyUser(who, name) {
         })
     });
 }
-
-var timerSet = false;
-$(window).on('resize', function() {
-    // ??? setInterval?
-    if (timerSet !== false) {
-        clearTimeout(timerSet);
-    }
-    timerSet = setTimeout(function() {
-        setTable();
-    }, 200);
-});
 
 $(window).on("load", function() {
     var width = $('#mainconttable').width();
