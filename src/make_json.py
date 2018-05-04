@@ -171,18 +171,18 @@ class PostCollector(object):
 
             for a in links:
                 index = re.search(r'\d+', a.attrs['href']).group()
-                warn(index)
+                # warn(index)
                 if '-'+index in self.collected:
                     continue
                 elif index in self.collected:
                     disjoint = False
                     break
 
-                print(a, file=sys.stderr)
+                # print(a, file=sys.stderr)
                 post_url = urljoin(top_page.url, a.attrs['href'])
                 post = br.get(post_url)
                 with open(self.save_to+index, 'w') as fout:
-                    print(index, file=sys.stderr)
+                    # print(index, file=sys.stderr)
                     print(post.text, file=fout)
 
                 # self.new.append(index)
@@ -202,7 +202,7 @@ class PostCollector(object):
         self.posts = []
         for i in indices:
             with open(self.save_to+i) as fin:
-                print(fin.name, file=sys.stderr, flush=True)
+                # print(fin.name, file=sys.stderr, flush=True)
                 self.posts.append(Post(fin, i))
 
 
