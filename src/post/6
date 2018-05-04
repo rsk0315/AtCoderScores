@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+	<title>AtCoder</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+	<link rel="stylesheet" type="text/css" href="/public/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/settings.css">
+	<link rel="stylesheet" type="text/css" href="/public/css/username.css">
+	<link rel="shortcut icon" type="image/png" href="/public/img/favicon.png">
+	<script src="/public/js/lib/jquery-1.9.1.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/public/js/lib/bootstrap.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="/public/js/lib/marked.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.css" type="text/css" rel="stylesheet" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/prettify/r298/prettify.min.js"></script>
+	<script type="text/x-mathjax-config">MathJax.Hub.Config({messageStyle:"none",tex2jax:{skipTags:["script","noscript","style","textarea","code"],inlineMath:[['$','$'],['\\(','\\)']]}});</script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-timeago/1.5.2/jquery.timeago.min.js"></script>
+	<script src="/public/js/lib/jquery.timeago.ja.js"></script>
+	<script src="/public/js/share-button.js"></script>
+	<script src="/public/js/blog.js"></script>
+	<script src="/public/js/ga.js"></script>
+</head>
+
+<body>
+<div id="main-div">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+				<span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/"></a>
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav">
+				<li><a href="/">ホーム</a></li>
+				<li><a href="/contest">コンテスト</a></li>
+				<li><a href="/ranking">ランキング</a></li>
+			</ul>
+			<form class="navbar-form navbar-left" role="search" action="/search/user" method="GET">
+				<div class="form-group input-group input-group-sm" style="margin-top:3px;">
+					<input type="text" class="form-control" name="text" placeholder="ユーザ検索">
+					<div class="input-group-btn">
+						<button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-search" aria-hidden="true"></span></button>
+					</div>
+				</div>
+			</form>
+			<ul class="nav navbar-nav navbar-right">
+				
+				<li class="dropdown">
+					<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+						<img src='/public/img/flag-lang/ja.png'> 日本語 <span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li><a href="?lang=ja"><img src='/public/img/flag-lang/ja.png'> 日本語</a></li>
+						<li><a href="?lang=en"><img src='/public/img/flag-lang/en.png'> English</a></li>
+					</ul>
+				</li>
+				
+				
+					<li><a href="https://practice.contest.atcoder.jp/register">新規登録</a></li>
+					<li><a href="https://practice.contest.atcoder.jp/login">ログイン</a></li>
+				
+			</ul>
+		</div>
+	</div>
+</nav>
+
+
+<script>document.title="AtCoder Grand Contest 001 告知";</script>
+
+<div class="container">
+	<div class="row">
+		<div class="col-sm-10 col-sm-offset-1">
+			
+<div class="panel panel-default">
+	<div class="panel-heading post-heading">
+		<h3 class="panel-title"><a href="/post/6">AtCoder Grand Contest 001 告知</a></h3>
+		
+			<small>投稿:
+				<span aria-hidden="true" data-html="true" data-toggle="tooltip" data-placement="right" title="1468501696">
+					<time class="timeago" datetime="2016/07/14 22:08"></time>
+				</span>
+			</small>
+		
+	</div>
+	<div class="panel-body blog-post">AtCoder では、次のコンテストから問題文を日本語と英語の両方で書くことになりました。
+初の国際コンテストとなる [AtCoder Grand Contest 001](https://agc001.contest.atcoder.jp/) が土曜日に開催されます。
+
+- 開始時刻： 7月16日（土曜日） 21:00
+- コンテスト時間： &lt;font color=&#34;red&#34;&gt;110分&lt;/font&gt;
+- 問題数： 6
+- writer：&lt;a href=&#34;/user/snuke&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-unrated&#34;&gt;snuke&lt;/span&gt;&lt;/a&gt;
+- レーティング変化： あり
+
+レーティングシステムは完全に新しくなります (今までついていたレーティングはリセットされます)。
+また、コンテスト後には、レーティンググラフやレーティングによる色も付く予定です。
+
+今までの ARC と ABC ではすべての問題が 100 点満点でしたが、今後は問題によって配点が異なる可能性があります。
+
+皆様、是非ご参加ください！
+
+**更新:** 解説PDFが公開されました。[リンク](https://agc001.contest.atcoder.jp/data/agc/001/editorial.pdf)
+
+**更新:** レーティングが更新されました！
+
+**更新:** Top 5 は
+1. &lt;a href=&#34;/user/cgy4ever&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-red&#34;&gt;cgy4ever&lt;/span&gt;&lt;/a&gt;
+2. &lt;a href=&#34;/user/DEGwer&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-red&#34;&gt;DEGwer&lt;/span&gt;&lt;/a&gt;
+3. &lt;a href=&#34;/user/Um_nik&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-red&#34;&gt;Um_nik&lt;/span&gt;&lt;/a&gt;
+4. &lt;a href=&#34;/user/yosupo&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-orange&#34;&gt;yosupo&lt;/span&gt;&lt;/a&gt;
+5. &lt;a href=&#34;/user/jcvb&#34; class=&#34;username&#34;&gt;&lt;span class=&#34;user-orange&#34;&gt;jcvb&lt;/span&gt;&lt;/a&gt;
+
+でした。おめでとうございます。
+
+また、コンテストの統計情報を[ここ](https://agc001.contest.atcoder.jp/statistics)から見ることができます。
+</div>
+	
+		<div class="panel-footer post-footer">
+			<div class="row">
+				<div class="col-xs-7">
+					<small>最終更新:
+						<span aria-hidden="true" data-html="true" data-toggle="tooltip" data-placement="right" title="1469010451">
+							<time class="timeago" datetime="2016/07/20 19:27"></time>
+						</span>
+					</small>
+				</div>
+				<div class="col-xs-5">
+					<div class="pull-right">
+						<a class="share-button" target="_blank" onclick="share_button('facebook','/post/6','AtCoder Grand Contest 001 告知',600,400)" style="background-image:url(/public/img/share/facebook.png);"></a>
+						<a class="share-button" target="_blank" onclick="share_button('twitter','/post/6','AtCoder Grand Contest 001 告知',512,256)" style="background-image:url(/public/img/share/twitter.png);"></a>
+						<a class="share-button" target="_blank" onclick="share_button('google_plus','/post/6','AtCoder Grand Contest 001 告知',512,450)" style="background-image:url(/public/img/share/google.png);"></a>
+						<a class="share-button" target="_blank" onclick="share_button('hatena','/post/6','AtCoder Grand Contest 001 告知',512,360)" style="background-image:url(/public/img/share/hatena.png);"></a>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+</div>
+<script>
+$(function(){$('[data-toggle="tooltip"]').each(function(){
+var unix=parseInt($(this).attr('title'),10);if(1400000000<=unix&&unix<=5000000000){var date=new Date(unix*1000);$(this).attr('title',date.toLocaleString());}
+$(this).tooltip();});});
+</script>
+
+		</div>
+	</div>
+</div>
+<script>convert_posts();</script>
+
+
+<hr>
+</div> 
+<div class="container">
+	<footer class="footer" style="margin-bottom: 20px;">
+		<ul>
+			<li><a href="/tos">利用規約</a></li>
+			<li><a href="/privacy">プライバシーポリシー</a></li>
+			<li><a href="/personal">個人情報保護方針</a></li>
+			<li><a href="/company">企業情報</a></li>
+			<li><a href="/contact">お問い合わせ</a></li>
+		</ul>
+		<div class="row text-center">
+			<small id="copyright" class="col-sm-12">Copyright 2016 &copy;<a href="http://atcoder.co.jp">AtCoder Inc.</a> All rights reserved.</small>
+		</div>
+	</footer>
+</div>
+<script>$(document).ready(function(){$('[data-toggle="tooltip"]').tooltip();});</script>
+</body>
+</html>
+
