@@ -29,11 +29,36 @@ function jumpProcess() {
     window.location.href = "index.html?" + $.param(QueryObj);
 }
 
-function appendTask($table, point, task) {
-    var $tr = $('<tr>').attr({
-        class: 'dif_'+point,
-    });
-    $table.append($tr);
+function taskLessThan(task1, task2) {
+    // XXX
+    var scr1 = task1['screen_name'];
+    var scr2 = task2['screen_name'];
+    var reg1 = scr1.match(/a[brgp]c\d+/);
+    var reg2 = scr2.match(/a[brgp]c\d+/);
+
+    if (!reg1 ^ !reg2) {
+        // a[brgp]c < other
+        return !!reg1;
+    }
+
+    if (!!reg1 && !!reg2) {
+        // abc < arc < agc < apc
+        var ch1 = scr1[1];
+        var ch2 = scr2[1];
+        if (ch1 != ch2) {
+            return 'brgp'.indexOf(ch1) < 'brgp'.indexOf(ch2);
+        }
+    }
+
+    if (task1['ctitle'] != tasks2['ctitle']) {
+        return task1['ctitle'] < task2['ctitle'];
+    }
+
+    return task1['char'] < task2['char'];
+}
+
+function appendTask(table, point, task, count) {
+    var $tr = $('<tr>').attr({class: 'dif_'+point});
     var $td, $a;
 
     // みんなは，「XSS」って，知ってるかな？
@@ -98,6 +123,19 @@ function appendTask($table, point, task) {
         $td.text('-');
     }
     $tr.append($td);
+
+    // Why do we add tasks one-by-one...?
+    if (0) {
+        $(table).append($tr);
+        return;
+    }
+
+    var timer = setInterval(function() {
+        if ($(table+'>tr').length < count) return;
+        clearInterval(timer);
+
+        $(table).append($tr);
+    }, 10);
 };
 
 function setTable() {
@@ -171,11 +209,8 @@ function prettifyUser(who, name) {
             if (html !== null) {
                 // これが null だった場合たぶん存在しないユーザなので
                 // 何かしらの例外処理をやるかもです
-                var style = $(html).attr('style');
-                var class_ = $(html).attr('class');
-                
-                if (style === undefined) style = '';
-                if (class_ === undefined) class_ = '';
+                var style = $(html).attr('style') || '';
+                var class_ = $(html).attr('class') || '';
 
                 if (class_.match(/user-\w+/)) {
                   $a.attr({class: class_});
@@ -201,6 +236,7 @@ function prettifyUser(who, name) {
 
 var timerSet = false;
 $(window).on('resize', function() {
+    // ??? setInterval?
     if (timerSet !== false) {
         clearTimeout(timerSet);
     }
@@ -305,6 +341,7 @@ $(window).on("load", function() {
         RIVAL_SUBMITTED: 1<<3,
     };
 
+    var count = 0;
     $.getJSON(
         url, {q: query, format: 'json'},
         function(data) {
@@ -386,7 +423,6 @@ $(window).on("load", function() {
             var numRivalAC = 0;
             var numRivalNotAC = 0;
             var numRivalUnsubmitted = 0;
-
             $.each(data, function(point, tasks) {
                 var iPt = Math.floor(point/100)-1;
 
@@ -421,8 +457,8 @@ $(window).on("load", function() {
                 }
 
                 $.each(tasks, function(i, task) {
-                    setTimeout(function(point, task_) {
-                        var pid = task_['screen_name'];
+                    setTimeout(function(point, task, count) {
+                        var pid = task['screen_name'];
 
                         if (pid.match(/abc\d+/)) {
                             if (!showABC) return;
@@ -487,7 +523,7 @@ $(window).on("load", function() {
                             // AC 非表示の場合は，表示はしないけど
                             // 諸々のカウントはすることにしています
                             appendTask(
-                                $('#mainconttable>tbody'), point, task_
+                                '#mainconttable>tbody', point, task, count
                             );
                         }
 
@@ -530,18 +566,20 @@ $(window).on("load", function() {
                             'rgba(' + ptColor + ','
                                 + countRivalAC[iPt] / countAll[iPt] + ')'
                         );
-                    }.bind(null, point, task), 0);
+                    }.bind(null, point, task, count), 0);
+                    // console.log(task['screen_name']+' '+(tasks.length-i));
                     // 問題の処理おわり
 
+                    if (!(HideAC && setUserAC.has(task['screen_name']))) {
+                        ++count;
+                    }
                 });  // その得点における全問題の処理おわり
-
-                // あれ？ そういえば camelCase と snake_case が混在していますね
-                // そのうち（たぶん前者に）統一します
             });  // 全問題の処理おわり
         }
     }).done(function() {
-        // setTimeout しないで生で書くとうまくいかない
-        setTimeout(function() {
+        var timer = setInterval(function() {
+            if ($('#mainconttable>tbody>tr').length < count) return;
+            clearInterval(timer);
 
             for (var i=1; i<=MAX_D; ++i) {
                 var point = 100*i;
@@ -564,7 +602,7 @@ $(window).on("load", function() {
             }
 
             $("#mainconttable").tablesorter();
-        }, 0);
+        }, 10);
     })});
 
     // こういうのいらないですか？
