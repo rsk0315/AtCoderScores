@@ -429,20 +429,22 @@ $(window).on("load", function() {
                 }
 
                 $.each(tasks, function(i, task) {
+                    var pid = task['screen_name'];
+
+                    if (pid.match(/abc\d+/)) {
+                        if (!showABC) return;
+                    } else if (pid.match(/arc\d+/)) {
+                        if (!showARC) return;
+                    } else if (pid.match(/agc\d+/)) {
+                        if (!showAGC) return;
+                    } else if (pid.match(/apc\d+/)) {
+                        if (!showAPC) return;
+                    } else {
+                        if (!showOther) return;
+                    }
+
                     setTimeout(function(point, task, count) {
                         var pid = task['screen_name'];
-
-                        if (pid.match(/abc\d+/)) {
-                            if (!showABC) return;
-                        } else if (pid.match(/arc\d+/)) {
-                            if (!showARC) return;
-                        } else if (pid.match(/agc\d+/)) {
-                            if (!showAGC) return;
-                        } else if (pid.match(/apc\d+/)) {
-                            if (!showAPC) return;
-                        } else {
-                            if (!showOther) return;
-                        }
 
                         var idUser = 'prog_user_' + point;
                         var idRival = 'prog_rival_' + point;
@@ -555,6 +557,7 @@ $(window).on("load", function() {
         }
     }).done(function() {
         var timer = setInterval(function() {
+            console.log($('#mainconttable>tbody>tr').length+' '+count);
             if ($('#mainconttable>tbody>tr').length < count) return;
             clearInterval(timer);
 
@@ -570,6 +573,7 @@ $(window).on("load", function() {
                 var elUser = document.getElementById(idUser);
                 var elRival = document.getElementById(idRival);
 
+                console.log(point+' '+elWhole.innerHTML);
                 if (elWhole.innerHTML == "0") {
                     elHead.style.display = 'none';
                     elWhole.style.display = 'none';
