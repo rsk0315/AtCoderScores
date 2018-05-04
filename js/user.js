@@ -29,7 +29,7 @@ function jumpProcess() {
     window.location.href = "index.html?" + $.param(QueryObj);
 }
 
-function appendTask(table, point, task, count) {
+function appendTask(table, point, task, count, status) {
     var $tr = $('<tr>').attr({class: 'dif_'+point});
     var $td, $a;
 
@@ -44,6 +44,7 @@ function appendTask(table, point, task, count) {
 
     // 問題名とリンク
     $td = $('<td>').attr({class: task['screen_name']});
+    $td.addClass(status);
     $a = $('<a>').text(task['ctitle']+': '+task['char']).attr({
         href: task['trad_url']
     });
@@ -57,6 +58,7 @@ function appendTask(table, point, task, count) {
 
     // writer さんたち．このリンクも beta にした方がいいのかしら．
     $td = $('<td>').attr({class: task['screen_name']});
+    $td.addClass(status);
     $.each(task['writers'], function(i, writer) {
         var name = writer[0], color = writer[1];
         if (name == '' || name === null)
@@ -89,12 +91,19 @@ function appendTask(table, point, task, count) {
 
     // 部分点
     $td = $('<td>').attr({class: task['screen_name']});
+    $td.addClass(status);
     if (task['partial'] !== null) {
         $td.text(task['partial'])
     } else {
         $td.text('-');
     }
     $tr.append($td);
+
+    // もし問題の順番がおかしくなる案件が観測された場合には
+    // この 2 行をコメントアウトします．こっちの方が速く
+    // 動作しているっぽいので現状こっちで様子を見ます．
+    $(table).append($tr);
+    return;
 
     var timer = setInterval(function() {
         if ($(table+'>tr').length < count) return;
@@ -481,28 +490,33 @@ $(window).on("load", function() {
                                 .innerHTML = ++numRivalUnsubmitted;
                         }
 
+                        var st = null;
+                        if (state & STATE_FLAGS.USER_AC) {
+                            // 他の class になっていないはずなので
+                            // removeClass していません（まずい？）
+                            // $('td.'+pid).addClass('success');
+                            st = 'success';
+                            ++countUserAC[iPt];
+                        } else if (state & STATE_FLAGS.RIVAL_AC) {
+                            // $('td.'+pid).addClass('danger');
+                            st = 'danger';
+                        } else if (state & STATE_FLAGS.USER_SUBMITTED) {
+                            // $('td.'+pid).addClass('warning');
+                            st = 'warning';
+                        } else /* if (state & STATE_FLAGS.RIVAL_SUBMITTED) */ {
+                            // 自分は未提出 && ライバルは提出（未 AC）
+                            // みたいな場合はどうしますか？
+                            // Problems は黄色にしていたようななかったような
+                        }
+
                         if (!(HideAC && (state & STATE_FLAGS.USER_AC))) {
                             // 問題を追加するよ
                             // AC 非表示の場合は，表示はしないけど
                             // 諸々のカウントはすることにしています
                             appendTask(
-                                '#mainconttable>tbody', point, task, count
+                                '#mainconttable>tbody', point, task, count,
+                                st
                             );
-                        }
-
-                        if (state & STATE_FLAGS.USER_AC) {
-                            // 他の class になっていないはずなので
-                            // removeClass していません（まずい？）
-                            $('td.'+pid).addClass('success');
-                            ++countUserAC[iPt];
-                        } else if (state & STATE_FLAGS.RIVAL_AC) {
-                            $('td.'+pid).addClass('danger');
-                        } else if (state & STATE_FLAGS.USER_SUBMITTED) {
-                            $('td.'+pid).addClass('warning');
-                        } else /* if (state & STATE_FLAGS.RIVAL_SUBMITTED) */ {
-                            // 自分は未提出 && ライバルは提出（未 AC）
-                            // みたいな場合はどうしますか？
-                            // Problems は黄色にしていたようななかったような
                         }
 
                         if (state & STATE_FLAGS.RIVAL_AC) {
