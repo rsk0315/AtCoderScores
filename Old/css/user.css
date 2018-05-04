@@ -61,37 +61,3 @@ body{padding-top: 70px;} */
 .mask_2300{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
 .mask_2400{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
 .mask_2500{background-color:rgba(246, 206, 206, 1); font-weight:bold; text-align:center;}
-
-.ac_count_id {
-    font-weight: bold;
-    text-align: center;
-    width: 10%;
-}
-
-.ac_count_ac {
-    font-weight: bold;
-    text-align: center;
-    width: 30%;
-}
-
-.ac_count_not_ac {
-    font-weight: bold;
-    text-align: center;
-    width: 30%;
-}
-
-.ac_count_unsubmitted {
-    font-weight: bold;
-    text-align: center;
-    width: 30%;
-}
-
-#ac_count_user_name{font-weight:bold; text-align:center; vertical-align:middle}
-#num_user_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_user_not_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_user_unsubmitted{font-weight:bold; text-align:center; font-size:large;}
-
-#ac_count_rival_name{font-weight:bold; text-align:center; vertical-align:middle}
-#num_rival_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_rival_not_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_rival_unsubmitted{font-weight:bold; text-align:center; font-size:large;}
