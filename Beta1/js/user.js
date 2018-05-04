@@ -240,8 +240,6 @@ $(window).on("load", function() {
 
     UserName  = isEmpty(UserName)  ? ""          : selectorEscape(UserName);
     RivalName = isEmpty(RivalName) ? ""          : selectorEscape(RivalName);
-    // HideAC    = isEmpty(HideAC)    ? "off"       : selectorEscape(HideAC);
-    // HideAC    = (!isEmpty(HideAC));
     // .../index.html でアクセスしたときは false になっていてほしい
     HideAC    = (HideAC == "on");
     lb        = isEmpty(lb)        ? 100         : parseInt(selectorEscape(lb));
