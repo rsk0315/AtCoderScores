@@ -30,8 +30,6 @@ function jumpProcess() {
 }
 
 function appendTask($table, point, task) {
-    // $table.append('<tr class="dif_'+point+'">');
-    // var $tr = $table.find('tr:last');
     var $tr = $('<tr>').attr({
         class: 'dif_'+point,
     });
@@ -175,7 +173,15 @@ function prettifyUser(who, name) {
                 // 何かしらの例外処理をやるかもです
                 var style = $(html).attr('style');
                 var class_ = $(html).attr('class');
-                $a.attr({style: style, class: class_});
+                
+                if (style === undefined) style = '';
+                if (class_ === undefined) class_ = '';
+
+                if (class_.match(/user-\w+/)) {
+                  $a.attr({class: class_});
+                } else if (style.match(/color:#[\dA-Fa-f]{3}[\dA-Fa-f]{3}?/)) {
+                  $a.attr({style: style});
+                }
             }
             $('#prog_'+who+'_name').html($a);
             $('#ac_count_'+who+'_name').html($a.clone());
