@@ -96,12 +96,6 @@ function appendTask(table, point, task, count) {
     }
     $tr.append($td);
 
-    // Why do we add tasks one-by-one...?
-    if (0) {
-        $(table).append($tr);
-        return;
-    }
-
     var timer = setInterval(function() {
         if ($(table+'>tr').length < count) return;
         clearInterval(timer);
