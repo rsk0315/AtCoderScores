@@ -29,34 +29,6 @@ function jumpProcess() {
     window.location.href = "index.html?" + $.param(QueryObj);
 }
 
-function taskLessThan(task1, task2) {
-    // XXX
-    var scr1 = task1['screen_name'];
-    var scr2 = task2['screen_name'];
-    var reg1 = scr1.match(/a[brgp]c\d+/);
-    var reg2 = scr2.match(/a[brgp]c\d+/);
-
-    if (!reg1 ^ !reg2) {
-        // a[brgp]c < other
-        return !!reg1;
-    }
-
-    if (!!reg1 && !!reg2) {
-        // abc < arc < agc < apc
-        var ch1 = scr1[1];
-        var ch2 = scr2[1];
-        if (ch1 != ch2) {
-            return 'brgp'.indexOf(ch1) < 'brgp'.indexOf(ch2);
-        }
-    }
-
-    if (task1['ctitle'] != tasks2['ctitle']) {
-        return task1['ctitle'] < task2['ctitle'];
-    }
-
-    return task1['char'] < task2['char'];
-}
-
 function appendTask(table, point, task, count) {
     var $tr = $('<tr>').attr({class: 'dif_'+point});
     var $td, $a;
