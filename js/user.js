@@ -473,12 +473,12 @@ $(window).on("load", function() {
 
                     // 点数が指定範囲外であれば最初から書かないことにしましょう
                     if (!(lb <= point && point <= ub) || tasks.length == 0) {
-                        setTimeout(function(elHead, elWhole, elUser, elRival) {
-                            elHead.style.display = 'none';
-                            elWhole.style.display = 'none';
-                            elUser.style.display = 'none';
-                            elRival.style.display = 'none';
-                        }.bind(null, elHead, elWhole, elUser, elRival), 0);
+                        // setTimeout(function(elHead, elWhole, elUser, elRival) {
+                        //     elHead.style.display = 'none';
+                        //     elWhole.style.display = 'none';
+                        //     elUser.style.display = 'none';
+                        //     elRival.style.display = 'none';
+                        // }.bind(null, elHead, elWhole, elUser, elRival), 0);
                         return;
                     }
 
@@ -600,6 +600,13 @@ $(window).on("load", function() {
                             elUser.innerHTML = countUserAC[iPt];
                             elRival.innerHTML = countRivalAC[iPt];
 
+                            if (totalWhole == 0) {
+                                elHead.style.display = '';
+                                elWhole.style.display = '';
+                                elUser.style.display = '';
+                                elRival.style.display = '';
+                            }
+
                             totalWhole += parseInt(point);
                             document.getElementById('prog_whole_total')
                                 .innerHTML = totalWhole;
@@ -631,26 +638,27 @@ $(window).on("load", function() {
                 if ($('#mainconttable>tbody>tr').length < count) return;
                 clearInterval(timer);
 
-                for (var i=1; i<=MAX_D; ++i) {
-                    var point = 100*i;
-                    var idHead = 'prog_head_' + point;
-                    var idWhole = 'prog_whole_' + point;
-                    var idUser = 'prog_user_' + point;
-                    var idRival = 'prog_rival_' + point;
+                // 後から隠すの，見栄えが悪いかもしれませんね
+                // for (var i=1; i<=MAX_D; ++i) {
+                //     var point = 100*i;
+                //     var idHead = 'prog_head_' + point;
+                //     var idWhole = 'prog_whole_' + point;
+                //     var idUser = 'prog_user_' + point;
+                //     var idRival = 'prog_rival_' + point;
 
-                    var elHead = document.getElementById(idHead);
-                    var elWhole = document.getElementById(idWhole);
-                    var elUser = document.getElementById(idUser);
-                    var elRival = document.getElementById(idRival);
+                //     var elHead = document.getElementById(idHead);
+                //     var elWhole = document.getElementById(idWhole);
+                //     var elUser = document.getElementById(idUser);
+                //     var elRival = document.getElementById(idRival);
 
-                    // console.log(point+' '+elWhole.innerHTML);
-                    if (elWhole.innerHTML == "0") {
-                        elHead.style.display = 'none';
-                        elWhole.style.display = 'none';
-                        elUser.style.display = 'none';
-                        elRival.style.display = 'none';
-                    }
-                }
+                //     // console.log(point+' '+elWhole.innerHTML);
+                //     if (elWhole.innerHTML == "0") {
+                //         elHead.style.display = 'none';
+                //         elWhole.style.display = 'none';
+                //         elUser.style.display = 'none';
+                //         elRival.style.display = 'none';
+                //     }
+                // }
 
                 $("#mainconttable").tablesorter();
             }, 10);
