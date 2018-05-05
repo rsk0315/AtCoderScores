@@ -483,6 +483,9 @@ $(window).on("load", function() {
 
                     // 冷静に考えてこういうお気持ちは別ファイルに書くべきだね．
 
+                    // テーブルの諸々を動的にやることで 100 点刻みでない問題に
+                    // 対してもロバスト（）になれる気がしてきた
+
                     var iPt = Math.floor(point/100)-1;
 
                     var idHead = 'prog_head_' + point;
