@@ -79,27 +79,27 @@
             </p>
             <div class="filters">
               <div>
-                <input name="filter_abc" type="checkbox">
+                <input name="show_abc" type="checkbox">
                 AtCoder Beginner Contest
               </div>
 
               <div>
-                <input name="filter_arc" type="checkbox">
+                <input name="show_arc" type="checkbox">
                 AtCoder Regular Contest
               </div>
 
               <div>
-                <input name="filter_agc" type="checkbox">
+                <input name="show_agc" type="checkbox">
                 AtCoder Grand Contest
               </div>
 
               <div>
-                <input name="filter_apc" type="checkbox">
+                <input name="show_apc" type="checkbox">
                 AtCoder Petrozavodsk Contest
               </div>
 
               <div style="margin-top: 5px">
-                <input name="filter_other" type="checkbox">
+                <input name="show_other" type="checkbox">
                 その他
               </div>
             </div>
@@ -169,9 +169,14 @@
               <span style="font-size: large">その他</span>
             </p>
             <div class="filters">
-              <div class="filter_not_ac">
-                <input type="checkbox" name="form_not_ac">
+              <div class="hide_ac">
+                <input type="checkbox" name="hide_ac">
                 AC していない問題のみ表示
+              </div>
+
+              <div class="show_upcoming">
+                <input type="checkbox" name="show_upcoming">
+                開催前のコンテストの問題も表示
               </div>
             </div>
 
