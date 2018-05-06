@@ -383,7 +383,7 @@ $(window).on("load", function() {
             }).done(function(data) {
                 var links = data.query.results.result;
                 var tradURL = /https:\/\/([\w-]+)\.contest\.atcoder\.jp/;
-                var BetaURL = /https:\/\/beta\.atcoder\.jp\/contests\/([w-]+)/;
+                var BetaURL = /https:\/\/beta\.atcoder\.jp\/contests\/([\w-]+)/;
                 $.each(links.split('\n'), function(i, link) {
                     var href = $(link).attr('href');
                     var prefix = (
