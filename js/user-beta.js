@@ -15,8 +15,8 @@
   XSS には気をつけてくださいね．
 */
 
-function removeWeirdChars(s) {
-    return s.replace(/[^\w-]+/g, '');
+function removeWeirdChars(s, r=/[^\w-]+/g) {
+    return s.replace(r, '');
 }
 
 function isEmpty(s) {
@@ -30,6 +30,9 @@ function jumpProcess() {
         ubound: $('#difficulty_max').val(),
         user_name: removeWeirdChars($('input[name=form_username]').val()),
         rival_name: removeWeirdChars($('input[name=form_rivalname]').val()),
+        writers: removeWeirdChars(
+            $('input[name=form_writer]').val(), /[^\w|-]+/g
+        ),
         hide_ac: $('input[name=hide_ac]:checked').val(),
 
         show_abc: $('input[name=show_abc]:checked').val(),
@@ -43,9 +46,6 @@ function jumpProcess() {
 }
 
 function colorForPoint(point) {
-    // XXX
-    // return 'mask_'+point;
-
     if (point <= 100) {
         return 'point_gray';
     } else if (point <= 200) {
@@ -314,15 +314,18 @@ $(window).on('load', function() {
     var params = $.url(currentURL).param();
     var userName, rivalName, hideAC, lb, ub;
     var showABC, showARC, showAGC, showAPC, showOther, showUpcoming;
+    var writers;
 
     userName = params.user_name;
     rivalName = params.rival_name;
+    writers = params.writers;
     hideAC = params.hide_ac;
     lb = params.lbound;
     ub = params.ubound;
 
     userName = isEmpty(userName)? '':removeWeirdChars(userName);
     rivalName = isEmpty(rivalName)? '':removeWeirdChars(rivalName);
+    writers = isEmpty(writers)? '':removeWeirdChars(writers, /[^\w|-]+/g);
     hideAC = (hideAC == 'on');  // */index.html では false
     showUpcoming = (params.show_upcoming == 'on');
     lb = isEmpty(lb)? 0:parseInt(removeWeirdChars(lb));
@@ -337,6 +340,7 @@ $(window).on('load', function() {
     // パース結果をフォームに反映・保存
     $('input[name=form_username]').val(userName);
     $('input[name=form_rivalname]').val(rivalName);
+    $('input[name=form_writer]').val(writers);
     $('input[name=hide_ac]').prop('checked', hideAC);
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
@@ -458,6 +462,15 @@ $(window).on('load', function() {
         var tasks = Array();
         var axcRE = /a([brgp])c\d+/;
         // console.log(dataSC[0]);
+
+        var setShowingWriters = null;
+        if (!isEmpty(writers)) {
+            setShowingWriters = new Set();
+            $.each(writers.split(/[,|]/g), function(i, writer) {
+                setShowingWriters.add(writer.toLowerCase());
+            });
+        }
+
         $.each(dataSC[0], function(i, task) {
             // コンテストの種類で弾きます
             var contestScreenName = task['contestScreenName'];
@@ -489,7 +502,13 @@ $(window).on('load', function() {
             // いいえ，ここでは弾きません
 
             // TODO writer で弾きます
-            {
+            if (setShowingWriters !== null) {
+                var cap = task['writers'].filter(
+                    writer => setShowingWriters.has(writer[0].toLowerCase())
+                );
+                console.log(cap);
+                if (cap.length == 0)
+                    return;
             }
 
             // ...
@@ -626,7 +645,7 @@ $(window).on('load', function() {
 
     $('#difficulty_submit').click(jumpProcess);
 
-    $.each(['username', 'rivalname'], function(i, who) {
+    $.each(['username', 'rivalname', 'writer'], function(i, who) {
         $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
             if (e.keyCode == 13) {
                 jumpProcess();
