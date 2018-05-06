@@ -44,7 +44,32 @@ function jumpProcess() {
 
 function colorForPoint(point) {
     // XXX
-    return 'mask_'+point;
+    // return 'mask_'+point;
+
+    if (point <= 100) {
+        return 'point_gray';
+    } else if (point <= 200) {
+        return 'point_brown';
+    } else if (point <= 300) {
+        return 'point_green';
+    } else if (point <= 400) {
+        return 'point_cyan';
+    } else if (point <= 600) {
+        return 'point_blue';
+    } else if (point <= 800) {
+        return 'point_yellow';
+    } else if (point <= 1100) {
+        return 'point_orange';
+    } else if (point <= 1500) {
+        return 'point_red';
+    } else if (point <= 1900) {
+        return 'point_silver';
+    } else if (point <= 3000) {
+        return 'point_gold';
+    } else {
+        console.log('tsurai');
+        return 'point_tsurai';
+    }
 }
 
 function appendTask(tbody, task, count, status) {
@@ -147,7 +172,7 @@ $(window).on('resize', function() {
 
     // setInterval だとだめな気がする．timerSet のスコープ的な意味で
     timerSet = setTimeout(function() {
-        setTable();
+        makeScrollableTable();
     }, 200);
 })
 
@@ -159,6 +184,7 @@ var YQL_JSON_BASE = (
     'https://query.yahooapis.com/v1/public/yql?callback=?'
 );
 
+var hasAlerted = false;
 function prettifyUserName(who, name) {
     // one of えびちゃんこだわりポイント
 
@@ -211,6 +237,29 @@ function prettifyUserName(who, name) {
             // アラートでも出しときますか？ さすがにうるさい？
             console.log('User not found.');
         } else {
+            // $a.text($(userAttr).text());
+            if (name != $(userAttr).text()) {
+                // 大文字と小文字を間違っていた場合，正しい方に飛ばしましょう
+
+                // user と rival の両方を間違った場合は二回ジャンプしますが，
+                // case-insensitive な人間に対する慈悲はありません．
+                // 非同期で通信しているため，他方がどうかを気にしようとすると
+                // 面倒なことになります．それよりも case-sensitive な人間に
+                // なってもらう方がお互いのためです．
+                // Atcoder scores ではないんですよ．
+                $('input[name=form_'+who+'name]').val($(userAttr).text());
+                if (!hasAlerted) {
+                    // 警告は一度だけです．
+                    hasAlerted = true;
+                    alert(
+                        'ユーザ名の大文字小文字を修正して再読み込みします．'
+                            + '無限に再読み込みされるようなことがあれば'
+                            + 'ご報告ください．すみません．'
+                    );
+                    jumpProcess();
+                }
+            }
+
             // null.match がアなので
             var style = $(userAttr).attr('style') || '';
             var class_ = $(userAttr).attr('class') || '';
@@ -227,6 +276,8 @@ function prettifyUserName(who, name) {
 
         // FIXME ユーザ入力が TSuTa_j とかだった場合に Tsuta_J に
         // 直す処理をできるはずなので，そのうちやります．
+        // やりました．無限ループになることはないはずですが，
+        // なった場合はこれをやめます．
         $progName.html($a);
         $acCountName.html($a.clone());
 
@@ -256,7 +307,7 @@ $(window).on('load', function() {
 
     // ここちょっとその場しのぎ感がありますよね．
     // まぁ 2500 点問題が出たら考えます
-    const MAX_D = 24;  // 最大点数わる100．2400 点が現状最高なので．
+    const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜
 
     // URL パラメータをパース
     var currentURL = $(location).attr('search');
@@ -274,8 +325,8 @@ $(window).on('load', function() {
     rivalName = isEmpty(rivalName)? '':removeWeirdChars(rivalName);
     hideAC = (hideAC == 'on');  // */index.html では false
     showUpcoming = (params.show_upcoming == 'on');
-    lb = isEmpty(lb)? 100:parseInt(removeWeirdChars(lb));
-    ub = isEmpty(ub)? MAX_D*100:parseInt(removeWeirdChars(ub));
+    lb = isEmpty(lb)? 0:parseInt(removeWeirdChars(lb));
+    ub = isEmpty(ub)? UB_MAX:parseInt(removeWeirdChars(ub));
 
     showABC = (params.show_abc != '');  // */index.html では true
     showARC = (params.show_arc != '');
@@ -333,7 +384,7 @@ $(window).on('load', function() {
             cache: false,
         }),
         // 開催前のコンテスト確認．なんで data: {...} で投げないんですか？
-        // XXX
+        // FIXME?
         $.ajax({
             type: 'GET',
             dataType: 'json',
@@ -363,7 +414,7 @@ $(window).on('load', function() {
                 }
                 setUpcoming.add(contestScreenName);
             });
-            // 詰まりました
+            // 詰め終わりました
         }
 
         // 次に，AC した問題とかを調べます．
@@ -398,9 +449,7 @@ $(window).on('load', function() {
                 }
             });
         }
-        // 調べました
-
-        // console.log(setUserAC);
+        // 調べ終わりました
 
         // 問題のリストアップをする前に，リスト全部を一度なめます
         // 各種フィルタをかけて，生き残った問題の点数の種類を知りたいです
@@ -448,13 +497,15 @@ $(window).on('load', function() {
 
             // 試練に耐え抜いた子たちです
             // console.log(task);
-            points.add(point);
+            points.add(parseInt(point));
             tasks.push(task);
         });
 
         {
             // 点数テーブルを書きます．set の順番がアなので困ります
-            var pointList = Array.from(points).sort();
+            var pointList = Array.from(points).sort(function(x, y) {
+                return x-y;
+            });
             $.each(pointList, function(i, point) {
                 // console.log(point);
 
@@ -575,11 +626,13 @@ $(window).on('load', function() {
 
     $('#difficulty_submit').click(jumpProcess);
 
-    $(document).on('keypress', 'input[name=form_username]', function(e) {
-        if (e.keyCode == 13) {
-            jumpProcess();
-        } else {
-            $.noop();
-        }
+    $.each(['username', 'rivalname'], function(i, who) {
+        $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
+            if (e.keyCode == 13) {
+                jumpProcess();
+            } else {
+                $.noop();
+            }
+        });
     });
 });  
