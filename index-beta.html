@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AtCoder Scores</title>
+
+    <!-- Bootstrap の CSS 読み込み -->
+    <link href="./css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- jQuery 読み込み -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+
+    <!-- Bootstrap の JS 読み込み -->
+    <script src="./js/bootstrap.min.js"></script>
+
+    <!-- tablesorter の CSS/JS 読み込み -->
+    <link href="./themes/blue/style.css" rel="stylesheet" media="print, projection, screen">
+    <script src="./js/jquery.tablesorter.min.js"></script>
+
+    <!-- bootstrap-select の CSS/JS 読み込み -->
+    <link href="./css/bootstrap-select.min.css" rel="stylesheet">
+    <script src="./js/bootstrap-select.min.js"></script>
+
+    <!-- purl の JS 読み込み -->
+    <script src="./js/purl.js"></script>
+
+    <!-- ユーザー CSS/JS 読み込み -->
+    <link href="./css/user.css" rel="stylesheet">
+    <script src="./js/user-beta.js"></script>
+  </head>
+
+  <body>
+    <!-- navigation -->
+    <nav class="navbar navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="./index.html">AtCoder Scores</a>
+        </div>
+
+        <ul class="nav navbar-nav">
+          <li><a href="./about.html">このページについて</a></li>
+          <li><a href="./contact.html">お問い合わせ</a></li>
+        </ul>
+      </div>
+    </nav>
+    <!-- navigation end -->
+
+    <!-- header -->
+    <div class="container">
+      <div class="page-header">
+        <h1>AtCoder Scores</h1>
+      </div>
+      <p class="description"><a href="http://atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を点数順に並べる非公式サイトです．</p>
+
+      <p>ユーザ名を指定すると進捗を表示します．</p>
+
+      <div class="header-form form-group">
+        <div class="form-inline">
+          User：<input type="text" name="form_username" class="form-control">
+          Rival：<input type="text" name="form_rivalname" class="form-control">
+        </div>
+
+        <!-- filters -->
+        <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
+             後々ちゃんと勉強したいです．えびより -->
+        <div class="panel panel-default" style="margin-top: 10px">
+          <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="true">
+            <h3 class="panel-title">
+              絞り込み
+              <span class="glyphicon pull-right"></span>
+            </h3>
+          </div>
+
+          <div id="collapse-filter" class="panel-body panel-collapse collapse in">
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">コンテスト</span>
+            </p>
+            <div class="filters">
+              <div>
+                <input name="show_abc" type="checkbox">
+                AtCoder Beginner Contest
+              </div>
+
+              <div>
+                <input name="show_arc" type="checkbox">
+                AtCoder Regular Contest
+              </div>
+
+              <div>
+                <input name="show_agc" type="checkbox">
+                AtCoder Grand Contest
+              </div>
+
+              <div>
+                <input name="show_apc" type="checkbox">
+                AtCoder Petrozavodsk Contest
+              </div>
+
+              <div style="margin-top: 5px">
+                <input name="show_other" type="checkbox">
+                その他
+              </div>
+            </div>
+            
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">点数</span>
+            </p>
+
+            <div class="form-inline">
+              <select id="difficulty_min" class="selectpicker" data-size="8">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+                <option value="1000">1000</option>
+                <option value="1100">1100</option>
+                <option value="1200">1200</option>
+                <option value="1300">1300</option>
+                <option value="1400">1400</option>
+                <option value="1500">1500</option>
+                <option value="1600">1600</option>
+                <option value="1700">1700</option>
+                <option value="1800">1800</option>
+                <option value="1900">1900</option>
+                <option value="2000">2000</option>
+                <option value="2100">2100</option>
+                <option value="2200">2200</option>
+                <option value="2300">2300</option>
+                <option value="2400">2400</option>
+              </select>
+              から
+              <select id="difficulty_max" class="selectpicker" data-size="8">
+                <option value="100">100</option>
+                <option value="200">200</option>
+                <option value="300">300</option>
+                <option value="400">400</option>
+                <option value="500">500</option>
+                <option value="600">600</option>
+                <option value="700">700</option>
+                <option value="800">800</option>
+                <option value="900">900</option>
+                <option value="1000">1000</option>
+                <option value="1100">1100</option>
+                <option value="1200">1200</option>
+                <option value="1300">1300</option>
+                <option value="1400">1400</option>
+                <option value="1500">1500</option>
+                <option value="1600">1600</option>
+                <option value="1700">1700</option>
+                <option value="1800">1800</option>
+                <option value="1900">1900</option>
+                <option value="2000">2000</option>
+                <option value="2100">2100</option>
+                <option value="2200">2200</option>
+                <option value="2300">2300</option>
+                <option value="2400">2400</option>
+              </select>
+            </div>
+
+            <div class="show_upcoming">
+                <input type="checkbox" name="include_partial" disabled>
+                部分点が範囲に含まれる問題も表示（実装予定）
+            </div>
+            
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">writer</span>
+            </p>
+            <div class="filters">
+              <div class="hide_ac">
+                <input type="text" name="form_writer" class="form-control" value="実装予定" disabled>
+              </div>
+
+            <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">その他</span>
+            </p>
+            <div class="filters">
+              <div class="hide_ac">
+                <input type="checkbox" name="hide_ac">
+                AC していない問題のみ表示
+              </div>
+
+              <div class="show_upcoming">
+                <input type="checkbox" name="show_upcoming">
+                開催前のコンテストの問題へのリンクも表示
+              </div>
+            </div>
+            
+            </div>
+          </div>
+          <!-- filters end -->
+
+        </div>
+        <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
+      </div>
+      <!-- header end -->
+
+      <!-- AOJ-ICPC みたいなやつ -->
+      <div class="scroll" style="margin-bottom: 10px">
+        <table id="progresstable" class="table table-condensed" style="display:none; table-layout: auto; width: 150%; overflow-x: scroll">
+          <thead>
+            <tr>
+              <th style="font-weight:bold;text-align:center;">ID</th>
+              <th style="font-weight:bold;text-align:center;">POINTS</th>
+              <!-- <th id="prog_head_100" class="mask_100">100</th> -->
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr id="progress_whole">
+              <td style="font-weight:bold;text-align:center;">TOTAL</td>
+              <td id="prog_whole_total" style="font-weight:bold;text-align:center;">0</td>
+              <!-- <td id="prog_whole_100" class="mask_100">0</td> -->
+            </tr>
+
+            <tr id="progress_user" style="display:none;">
+              <td id="prog_user_name" style="font-weight:bold;text-align:center;">User</td>
+              <td id="prog_user_total" style="font-weight:bold;text-align:center;">0</td>
+              <!-- <td id="prog_user_100" class="mask_100">0</td> -->
+            </tr>
+
+            <tr id="progress_rival" style="display:none">
+              <td id="prog_rival_name" style="font-weight:bold;text-align:center;">Rival</td>
+              <td id="prog_rival_total" style="font-weight:bold;text-align:center;">0</td>
+              <!-- <td id="prog_rival_100" class="mask_100">0</td> -->
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- AOJ-ICPC みたいなやつ end -->
+
+      <table id="ac_count" class="table table-condensed" style="display:none; table-layout: auto; white-space: nowrap">
+        <thead>
+          <tr>
+            <th class="ac_count_id">ID</th>
+            <th class="ac_count_ac">AC 済み</th>
+            <th class="ac_count_not_ac">挑戦中</th>
+            <th class="ac_count_unsubmitted">未提出</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <tr id="ac_count_user">
+            <td id="ac_count_user_name">User</td>
+            <td id="num_user_ac">0</td>
+            <td id="num_user_not_ac">0</td>
+            <td id="num_user_unsubmitted">0</td>
+          </tr>
+
+          <tr id="ac_count_rival">
+            <td id="ac_count_rival_name">Rival</td>
+            <td id="num_rival_ac">0</td>
+            <td id="num_rival_not_ac">0</td>
+            <td id="num_rival_unsubmitted">0</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <table id="mainconttable" class="table table-striped table-hover table-condensed tablesorter">
+        <thead>
+          <tr>
+            <th style="text-align:center; width:10%;">得点</th>
+            <th style="width: 55%;">問題</th>
+            <th style="width: 25%;">writer</th>
+            <th style="width: 10%;">部分点</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          <!-- 仕様を変えてみました．どうですか？ -->
+        </tbody>
+      </table>
+    </div>
+  </body>
+</html>
+

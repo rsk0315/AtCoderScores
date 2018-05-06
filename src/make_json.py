@@ -534,22 +534,38 @@ def main():
     ]
 
     tasks.sort()
-    task_dict = {i: [] for i in range(100, 2500, 100)}
-    for t in tasks:
-        if t.fscore not in task_dict:
-            task_dict[t.fscore] = []
+    # task_dict = {i: [] for i in range(100, 2500, 100)}
+    # for t in tasks:
+    #     if t.fscore not in task_dict:
+    #         task_dict[t.fscore] = []
 
-        task_dict[t.fscore].append({
-            'ctitle': t.ctitle,
-            'char': t.char,
-            'screen_name': (t.prefix+'_'+t.scr_char),
-            'trad_url': t.trad_url,
-            'beta_url': t.beta_url,
+    #     task_dict[t.fscore].append({
+    #         'ctitle': t.ctitle,
+    #         'char': t.char,
+    #         'screen_name': (t.prefix+'_'+t.scr_char),
+    #         'trad_url': t.trad_url,
+    #         'beta_url': t.beta_url,
+    #         'writers': [(w.name, w.color) for w in t.writers],
+    #         'partial': t.pscore,
+    #     })
+
+    # print(json.dumps(task_dict))
+
+    res = []
+    for t in tasks:
+        res.append({
+            'fullScore': t.fscore,
+            'partialScore': t.pscore,
+            'contestTitle': t.ctitle,
+            'contestScreenName': t.scr_name,
+            'taskChar': t.char,
+            'taskScreenName': (t.prefix+'_'+t.scr_char),
+            'traditionalURL': t.trad_url,
+            'betaURL': t.beta_url,
             'writers': [(w.name, w.color) for w in t.writers],
-            'partial': t.pscore,
         })
 
-    print(json.dumps(task_dict))
+    json.dump(res, fp=sys.stdout, indent=4);
 
 
 if __name__ == '__main__':
