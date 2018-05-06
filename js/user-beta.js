@@ -534,11 +534,18 @@ $(window).on('load', function() {
                         .attr('class', colorForPoint(point))
                 );
 
-                $.each(['whole', 'user', 'rival'], function(j, id_) {
+                $('#progress_whole').append(
+                    $('<td>').text('0')
+                        .attr('id', 'prog_whole_'+point)
+                        .attr('class', colorForPoint(point))
+                );
+
+                $.each(['user', 'rival'], function(j, id_) {
                     $('#progress_'+id_).append(
                         $('<td>').text('0')
                             .attr('id', 'prog_'+id_+'_'+point)
                             .attr('class', colorForPoint(point))
+                            .css('background-color', 'transparent')
                     );
                 });
             });
