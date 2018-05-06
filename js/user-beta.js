@@ -44,7 +44,7 @@ function jumpProcess() {
 
         include_partial: $('input[name=include_partial]:checked').val(),
     };
-    window.location.href = 'index-beta.html?' + $.param(queryObj);
+    window.location.href = 'index.html?' + $.param(queryObj);
 }
 
 function colorForPoint(point) {
@@ -403,7 +403,7 @@ $(window).on('load', function() {
         // 私のつくった JSON（私ではなく私のスクリプトが，ですね）
         $.ajax({
             dataType: 'json',
-            url: './tasks-beta.json',
+            url: './tasks.json',
             mimeType: 'application/json',
             data: {},
         })
