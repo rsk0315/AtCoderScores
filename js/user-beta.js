@@ -41,6 +41,8 @@ function jumpProcess() {
         show_apc: $('input[name=show_apc]:checked').val(),
         show_other: $('input[name=show_other]:checked').val(),
         show_upcoming: $('input[name=show_upcoming]:checked').val(),
+
+        include_partial: $('input[name=include_partial]:checked').val(),
     };
     window.location.href = 'index-beta.html?' + $.param(queryObj);
 }
@@ -315,6 +317,7 @@ $(window).on('load', function() {
     var userName, rivalName, hideAC, lb, ub;
     var showABC, showARC, showAGC, showAPC, showOther, showUpcoming;
     var writers;
+    var includePartial;
 
     userName = params.user_name;
     rivalName = params.rival_name;
@@ -328,6 +331,7 @@ $(window).on('load', function() {
     writers = isEmpty(writers)? '':removeWeirdChars(writers, /[^\w|-]+/g);
     hideAC = (hideAC == 'on');  // */index.html では false
     showUpcoming = (params.show_upcoming == 'on');
+    includePartial = (params.include_partial == 'on');
     lb = isEmpty(lb)? 0:parseInt(removeWeirdChars(lb));
     ub = isEmpty(ub)? UB_MAX:parseInt(removeWeirdChars(ub));
 
@@ -351,6 +355,8 @@ $(window).on('load', function() {
     $('input[name=show_apc]').prop('checked', showAPC);
     $('input[name=show_other]').prop('checked', showOther);
     $('input[name=show_upcoming]').prop('checked', showUpcoming);
+
+    $('input[name=include_partial]').prop('checked', includePartial);
 
     $('.selectpicker').selectpicker('refresh');
 
@@ -493,7 +499,18 @@ $(window).on('load', function() {
             // console.log('? '+point);
             if (!(lb <= point && point <= ub)) {
                 // TODO 部分点を許容して云々する場合はそうします
-                return;
+                if (!includePartial)
+                    return
+
+                var partial = task['partialScore'];
+                if (partial === null)
+                    return;
+
+                var validPartial = partial.match(/\d+/g).filter(
+                    score => (lb <= parseInt(score) && parseInt(score) <= ub)
+                );
+                if (validPartial.length == 0)
+                    return;
             }
 
             // // AC 済を弾きます
@@ -506,7 +523,7 @@ $(window).on('load', function() {
                 var cap = task['writers'].filter(
                     writer => setShowingWriters.has(writer[0].toLowerCase())
                 );
-                console.log(cap);
+                // console.log(cap);
                 if (cap.length == 0)
                     return;
             }
