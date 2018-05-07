@@ -1,0 +1,3 @@
+.collapse-heading { cursor: pointer;}
+.collapse-heading span.pull-right:before { content: "\e113";}
+.collapse-heading.collapsed span.pull-right:before { content: "\e114";}

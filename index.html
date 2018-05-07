@@ -11,6 +11,7 @@
 
     <!-- jQuery 読み込み -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> -->
 
     <!-- Bootstrap の JS 読み込み -->
     <script src="./js/bootstrap.min.js"></script>
@@ -29,6 +30,9 @@
     <!-- ユーザー CSS/JS 読み込み -->
     <link href="./css/user.css" rel="stylesheet">
     <script src="./js/user.js"></script>
+
+    <!-- 各種何かしらのことをする CSS 読み込み -->
+    <link href="./css/base.css" rel="stylesheet">
   </head>
 
   <body>
@@ -172,10 +176,9 @@
             </div>
             
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: large">writer</span>
+              <span style="font-size: large">writer</span> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="縦棒（<code>|</code>）区切りで指定したユーザの少なくとも一人が writer に含まれる項目に絞り込みます．case-insensitive です．"></span>
             </p>
-            <div class="filters">
-              縦棒（<code>|</code>）区切りで指定した writer の少なくとも一人が含まれる項目のみ表示します．case-insensitive です．<!-- ここの説明はマウスオーバーの？マークくんに入れたいです．明日調べます -->
+            <div class="filters">              
               <div class="show_writer">
                 <input type="text" name="form_writer" class="form-control">
               </div>

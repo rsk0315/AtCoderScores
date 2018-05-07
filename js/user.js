@@ -310,6 +310,12 @@ $(window).on('load', function() {
         makeScrollableTable();
     }, 0);
 
+    $('.panel-heading').on('click', function() {
+        $($(this).data('target')).collapse('toggle');
+    });
+
+    $('[data-toggle=tooltip]').tooltip();
+
     // ここちょっとその場しのぎ感がありますよね．
     // まぁ 2500 点問題が出たら考えます
     const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜（手のひら返し）
