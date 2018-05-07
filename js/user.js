@@ -284,7 +284,11 @@ function prettifyUserName(who, name) {
                     $('#warning').append(
                         $('<li>').text(
                             'ユーザ名の表記の誤りを検出しました．'
-                        ).append($('<button>').text('訂正して再読み込み').on('click', jumpProcess))
+                        ).append(
+                            $('<button>')
+                                .text('訂正して再読み込み')
+                                .on('click', jumpProcess)
+                        )
                     )
                     // jumpProcess();
                 }
