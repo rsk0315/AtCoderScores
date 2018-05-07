@@ -281,12 +281,12 @@ function prettifyUserName(who, name) {
                 if (!hasAlerted) {
                     // 警告は一度だけです．
                     hasAlerted = true;
-                    alert(
-                        'ユーザ名の大文字小文字を修正して再読み込みします．'
-                            + '無限に再読み込みされるようなことがあれば'
-                            + 'ご報告ください．すみません．'
-                    );
-                    jumpProcess();
+                    $('#warning').append(
+                        $('<li>').text(
+                            'ユーザ名の表記の誤りを検出しました．'
+                        ).append($('<button>').text('訂正して再読み込み').on('click', jumpProcess))
+                    )
+                    // jumpProcess();
                 }
             }
 
