@@ -104,7 +104,16 @@ body{padding-top: 70px;} */
 #num_user_not_ac{font-weight:bold; text-align:center; font-size:large;}
 #num_user_unsubmitted{font-weight:bold; text-align:center; font-size:large;}
 
-#ac_count_rival_name{font-weight:bold; text-align:center; vertical-align:middle}
-#num_rival_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_rival_not_ac{font-weight:bold; text-align:center; font-size:large;}
-#num_rival_unsubmitted{font-weight:bold; text-align:center; font-size:large;}
+/* #ac_count_rival_name{font-weight:bold; text-align:center; vertical-align:middle} */
+/* #num_rival_ac{font-weight:bold; text-align:center; font-size:large;} */
+/* #num_rival_not_ac{font-weight:bold; text-align:center; font-size:large;} */
+/* #num_rival_unsubmitted{font-weight:bold; text-align:center; font-size:large;} */
+
+/* ライバルは複数あるため */
+.prog_rival_name{font-weight:bold; text-align:center;}
+.prog_rival_total{font-weight:bold; text-align:center;}
+
+.ac_count_rival_name{font-weight:bold; text-align:center; vertical-align:middle;}
+.num_rival_ac{font-weight:bold; text-align:center; font-size:large;}
+.num_rival_not_ac{font-weight:bold; text-align:center; font-size:large;}
+.num_rival_unsubmitted{font-weight:bold; text-align:center; font-size:large;}

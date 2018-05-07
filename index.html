@@ -58,13 +58,40 @@
       </div>
       <p class="description"><a href="https://beta.atcoder.jp/">AtCoder</a> の（重み付き配点に対応した AGC 001 以降の）問題を点数順に並べる非公式サイトです．</p>
 
-      <p>ユーザ名を指定すると進捗を表示します．</p>
+      <!-- <p>ユーザ名を指定すると進捗を表示します．</p> -->
 
       <div class="header-form form-group">
-        <div class="form-inline">
-          User：<input type="text" name="form_username" class="form-control">
-          Rival：<input type="text" name="form_rivalname" class="form-control">
+        <!-- <div class="form-inline"> -->
+        <!--   User：<input type="text" name="form_username" class="form-control"> -->
+        <!--   Rival：<input type="text" name="form_rivalname" class="form-control"> -->
+        <!-- </div> -->
+        <div class="panel panel-default" style="margin-top: 10px">
+          <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-prog" aria-expanded="true">
+            <h3 class="panel-title">
+              進捗確認
+              <span class="glyphicon pull-right"></span>
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="ユーザ名を指定すると進捗を表示します．大文字小文字を間違った場合は勝手に訂正されます．" />
+            </h3>
+          </div>
+
+          <div id="collapse-prog" class="panel-body panel-collapse collapse in">
+            <p class="prog-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">挑戦者</span> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="通常は，あなた自身の AtCoder ID を入力します．指定できるユーザは一人のみです．" 
+            </p>
+            <div>
+              <input name="form_username" class="form-control" placeholder="rsk0315">
+            </div>
+
+            <p class="prog-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
+              <span style="font-size: large">対戦相手</span> <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="通常は，あなたがライバル視しているユーザの AtCoder ID を入力します．カンマ（<code>,</code>）区切りで複数指定することも可能です．" />
+            </p>
+            <div>
+              <!-- 勝手に名前借りてすみません！ 許してください！ なんでも許してください！ -->
+              <input name="form_rivalname" class="form-control" placeholder="Tsuta_J, TAB, ...">
+            </div>
+          </div>
         </div>
+
 
         <!-- filters -->
         <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
@@ -180,7 +207,7 @@
             </p>
             <div class="filters">              
               <div class="show_writer">
-                <input type="text" name="form_writer" class="form-control">
+                <input type="text" name="form_writer" class="form-control" placeholder="tourist|...">
               </div>
 
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
@@ -208,6 +235,11 @@
       </div>
       <!-- header end -->
 
+      <ul id="warning" style="color:#F66A6A; font-weight: bold; margin-bottom: 10px">
+      </ul>
+      <ul id="error" style="color:#F66A6A; font-weight: bold; margin-bottom: 10px">
+      </ul>
+
       <!-- AOJ-ICPC みたいなやつ -->
       <div class="scroll" style="margin-bottom: 10px">
         <table id="progresstable" class="table table-condensed" style="display:none; table-layout: auto; width: 150%; overflow-x: scroll">
@@ -232,11 +264,11 @@
               <!-- <td id="prog_user_100" class="mask_100">0</td> -->
             </tr>
 
-            <tr id="progress_rival" style="display:none">
-              <td id="prog_rival_name" style="font-weight:bold;text-align:center;">Rival</td>
-              <td id="prog_rival_total" style="font-weight:bold;text-align:center;">0</td>
-              <!-- <td id="prog_rival_100" class="mask_100">0</td> -->
-            </tr>
+            <!-- <tr id="progress_rival" style="display:none"> -->
+            <!--   <td id="prog_rival_name" style="font-weight:bold;text-align:center;">Rival</td> -->
+            <!--   <td id="prog_rival_total" style="font-weight:bold;text-align:center;">0</td> -->
+            <!--   <\!-- <td id="prog_rival_100" class="mask_100">0</td> -\-> -->
+            <!-- </tr> -->
           </tbody>
         </table>
       </div>
@@ -260,12 +292,12 @@
             <td id="num_user_unsubmitted">0</td>
           </tr>
 
-          <tr id="ac_count_rival">
-            <td id="ac_count_rival_name">Rival</td>
-            <td id="num_rival_ac">0</td>
-            <td id="num_rival_not_ac">0</td>
-            <td id="num_rival_unsubmitted">0</td>
-          </tr>
+          <!-- <tr id="ac_count_rival"> -->
+          <!--   <td id="ac_count_rival_name">Rival</td> -->
+          <!--   <td id="num_rival_ac">0</td> -->
+          <!--   <td id="num_rival_not_ac">0</td> -->
+          <!--   <td id="num_rival_unsubmitted">0</td> -->
+          <!-- </tr> -->
         </tbody>
       </table>
 

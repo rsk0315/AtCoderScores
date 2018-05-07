@@ -24,18 +24,26 @@ function removeWeirdChars(s, r=/[^\w-]+/g) {
 
 function isEmpty(s) {
     // JS わからんのでアレなんですけど，冗長だったりしますか
-    return (s === undefined || s === null || s == '' /* || s == [] */);
+    return (s === undefined || s === null || s == '' || s == []);
 }
 
 function jumpProcess() {
+    // あれ？ ここではそのまま .val() を投げるだけで
+    // 後でよしなにやってもらえますか？
     var queryObj = {
         lbound: $('#difficulty_min').val(),
         ubound: $('#difficulty_max').val(),
-        user_name: removeWeirdChars($('input[name=form_username]').val()),
-        rival_name: removeWeirdChars($('input[name=form_rivalname]').val()),
-        writers: removeWeirdChars(
-            $('input[name=form_writer]').val(), /[^\w|-]+/g
-        ),
+        user_name: $('input[name=form_username]').val(),
+        rival_name: $('input[name=form_rivalname]').val(),
+        writers: $('input[name=form_writer]').val(),
+        // user_name: removeWeirdChars(
+        //     $('input[name=form_username]').val(), /[^\w,-]+|,.*/g
+        // ),
+        // rival_name: $('input[name=form_rivalname]').val()
+        //     .replace(/[^\w,-]/g, '').match(/\w+/g).join(', '),
+        // writers: removeWeirdChars(
+        //     $('input[name=form_writer]').val(), /[^\w|-]+/g
+        // ),
         hide_ac: $('input[name=hide_ac]:checked').val(),
 
         show_abc: $('input[name=show_abc]:checked').val(),
@@ -193,7 +201,7 @@ var hasAlerted = false;
 function prettifyUserName(who, name) {
     // one of えびちゃんこだわりポイント
 
-    // who: "user" または "rival"
+    // who: "user" または "rival\d+"
     // name: "rsk0315" みたいなの
 
     var cacheExpires = 30 * 60 * 1000;  // ms
@@ -240,7 +248,11 @@ function prettifyUserName(who, name) {
         if (userAttr === null) {
             // 存在しないと思われるユーザに対する処理，どうしましょう
             // アラートでも出しときますか？ さすがにうるさい？
-            console.log('User not found.');
+            // console.log(name);
+            // console.log('User not found.');
+            $('#warning').append(
+                $('<li>').text(name+' は存在しないユーザ名ではありませんか？')
+            );
         } else {
             // $a.text($(userAttr).text());
             if (name != $(userAttr).text()) {
@@ -252,7 +264,20 @@ function prettifyUserName(who, name) {
                 // 面倒なことになります．それよりも case-sensitive な人間に
                 // なってもらう方がお互いのためです．
                 // Atcoder scores ではないんですよ．
-                $('input[name=form_'+who+'name]').val($(userAttr).text());
+
+                // // XXX 複数人やるようになったのでこれではだめです
+                // $('input[name=form_'+who+'name]').val($(userAttr).text());
+                if (who == 'user') {
+                    $('input[name=form_username]').val($(userAttr).text());
+                } else {
+                    // console.log($('input[name=form_rivalname]'));
+                    $('input[name=form_rivalname]').val(
+                        $('input[name=form_rivalname]').val().replace(
+                            RegExp('\\b'+name+'\\b'), $(userAttr).text()
+                        )
+                    );
+                }
+
                 if (!hasAlerted) {
                     // 警告は一度だけです．
                     hasAlerted = true;
@@ -323,26 +348,49 @@ $(window).on('load', function() {
     // URL パラメータをパース
     var currentURL = $(location).attr('search');
     var params = $.url(currentURL).param();
-    var userName, rivalName, hideAC, lb, ub;
+    var userName, rivalNames, hideAC, lb, ub;
     var showABC, showARC, showAGC, showAPC, showOther, showUpcoming;
     var writers;
     var includePartial;
 
     userName = params.user_name;
-    rivalName = params.rival_name;
+    rivalNames = params.rival_name;
     writers = params.writers;
     hideAC = params.hide_ac;
     lb = params.lbound;
     ub = params.ubound;
 
-    userName = isEmpty(userName)? '':removeWeirdChars(userName);
-    rivalName = isEmpty(rivalName)? '':removeWeirdChars(rivalName);
-    writers = isEmpty(writers)? '':removeWeirdChars(writers, /[^\w|-]+/g);
+    userName = isEmpty(userName)? '':removeWeirdChars(
+        // , を使ってしまった人がアにならないように，, より左だけを持ってきます
+        userName, /[^\w,-]+|,.*/g
+    );
+    var rivals = (
+        isEmpty(rivalNames)?
+            [] : rivalNames.replace(/[^\w,-]/g, '').match(/\w+/g)
+    );
+    // 'foo,,bar,F?O?O,baz' みたいなクエリは 'foo, bar, baz' に直したいです
+    // if (rivals.length > 0)
+    {
+        var setRivals = new Set();
+        var tmp = Array();
+        var userNameLC = userName.toLowerCase();
+        $.each(rivals, function(i, rivalName) {
+            if (rivalName.toLowerCase() == userNameLC)
+                return;
+            if (setRivals.has(rivalName.toLowerCase()))
+                return;
+
+            tmp.push(rivalName);
+            setRivals.add(rivalName.toLowerCase());
+        });
+        rivals = tmp;
+    }
+    writers = isEmpty(writers)? '' : removeWeirdChars(writers, /[^\w|-]+/g);
     hideAC = (hideAC == 'on');  // */index.html では false
     showUpcoming = (params.show_upcoming == 'on');
     includePartial = (params.include_partial == 'on');
-    lb = isEmpty(lb)? 0:parseInt(removeWeirdChars(lb));
-    ub = isEmpty(ub)? UB_MAX:parseInt(removeWeirdChars(ub));
+    lb = isEmpty(lb)? 0 : parseInt(removeWeirdChars(lb));
+    ub = isEmpty(ub)? UB_MAX : parseInt(removeWeirdChars(ub));
 
     showABC = (params.show_abc != '');  // */index.html では true
     showARC = (params.show_arc != '');
@@ -352,7 +400,7 @@ $(window).on('load', function() {
 
     // パース結果をフォームに反映・保存
     $('input[name=form_username]').val(userName);
-    $('input[name=form_rivalname]').val(rivalName);
+    $('input[name=form_rivalname]').val(rivals.join(', '));
     $('input[name=form_writer]').val(writers);
     $('input[name=hide_ac]').prop('checked', hideAC);
     $('#difficulty_min').val(lb);
@@ -375,13 +423,65 @@ $(window).on('load', function() {
         ub = tmp;
     }
 
+    // ライバル達用のテーブルをつくっちゃいましょう
+    // ついでにいろいろ用意します
+    var rivalIndex = {};
+    // if (rivals.length > 0)
+    {
+        $.each(rivals, function(i, name) {
+            rivalIndex[name.toLowerCase()] = i;
+
+            {
+                var $tr = $('<tr>').attr({
+                    class: 'progress_rival',
+                    id: 'progress_rival'+i,
+                });
+                $tr.append($('<td>').text(name).attr({
+                    class: 'prog_rival_name',
+                    id: 'prog_rival'+i+'_name',
+                }));
+                $tr.append($('<td>').text('0').attr({
+                    class: 'prog_rival_total',
+                    id: 'prog_rival'+i+'_total',
+                }));
+                $('#progresstable>tbody').append($tr);
+            }
+
+            {
+                var $tr = $('<tr>').attr({
+                    class: 'ac_count_rival',
+                    id: 'ac_count_rival'+i,
+                });
+                $tr.append($('<td>').text(name).attr({
+                    class: 'ac_count_rival_name',
+                    id: 'ac_count_rival'+i+'_name',
+                }));
+                $tr.append($('<td>').text('0').attr({
+                    class: 'num_rival_ac',
+                    id: 'num_rival'+i+'_ac',
+                }));
+                $tr.append($('<td>').text('0').attr({
+                    class: 'num_rival_not_ac',
+                    id: 'num_rival'+i+'_not_ac',
+                }));
+                $tr.append($('<td>').text('0').attr({
+                    class: 'num_rival_unsubmitted',
+                    id: 'num_rival'+i+'_unsubmitted',
+                }));
+                $('#ac_count>tbody').append($tr);
+            }
+        });
+    }
+                
+
     // べっ，別に API のことなんて好きじゃないんだからっ（ぺちんぺちん）
     var cacheExpires = 300 * 1000;  // ms
     var curTime = Math.floor(Date.now()/cacheExpires);  // これ関数化すべきかも
     var queryAP = (
         'select * from json where '
             + 'url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user='
-            + userName + '&rivals=' + rivalName + '&tsurai=' + curTime + '"'
+            + userName + '&rivals=' + rivals.join(',')
+            + '&tsurai=' + curTime + '"'
     );
 
     // 開催前のコンテストを調べてあげよー！
@@ -393,6 +493,8 @@ $(window).on('load', function() {
             + contestXpath + '"&tsurai=' + curTime
     );
 
+    // console.log(YQL_JSON_BASE);
+    // console.log(queryAP);
     $.when(
         // AtCoder Problems の API
         $.ajax({
@@ -441,9 +543,18 @@ $(window).on('load', function() {
         var setUserNotAC = new Set();
         var setRivalAC = new Set();
         var setRivalNotAC = new Set();
+        var setEachRivalAC = Array();
+        var setEachRivalNotAC = Array();
+        // if (rivals.length > 0)
+        {
+            $.each(rivalIndex, function(i, name) {
+                setEachRivalAC.push(new Set());
+                setEachRivalNotAC.push(new Set());
+            });
+        }
+
         if (dataAP[0].query.results !== null) {
             var userNameLC = userName.toLowerCase();
-            var rivalNameLC = rivalName.toLowerCase();
             $(dataAP[0].query.results.json.json).each(function() {
                 var pid = this.problem_id;
 
@@ -456,17 +567,70 @@ $(window).on('load', function() {
                             setUserNotAC.add(pid);
                         }
                     }
+                    return;
+                }
+                // if (rivals.length == 0)
+                //     return;
+
+                var index = rivalIndex[this.user_id.toLowerCase()];
+                if (this.result == 'AC') {
+                    setRivalAC.add(pid);
+                    setRivalNotAC.delete(pid);
+                    setEachRivalAC[index].add(pid);
+                    setEachRivalNotAC[index].delete(pid);
                 } else {
-                    if (this.user_id.toLowerCase() == rivalNameLC) {
-                        setRivalAC.add(pid);
-                        setRivalNotAC.delete(pid);
-                    } else /* if (this.result != 'CE') */ {
-                        if (!setRivalNotAC.has(pid)) {
-                            setRivalNotAC.add(pid);
-                        }
+                    if (!setRivalAC.has(pid)) {
+                        setRivalNotAC.add(pid);
+                    }
+                    if (!setEachRivalAC[index].has(pid)) {
+                        setEachRivalNotAC[index].add(pid);
                     }
                 }
+                // } else {
+                //     // if (this.user_id.toLowerCase() == rivalNameLC)
+                //     // なんかライバルは提出するだけで AC の判定になって
+                //     // いたんですが（）．対戦相手に有利な理不尽バトル漫画かな？
+                //     if (this.result == 'AC') {
+                //         setRivalAC.add(pid);
+                //         setRivalNotAC.delete(pid);
+                //     } else /* if (this.result != 'CE') */ {
+                //         if (!setRivalNotAC.has(pid)) {
+                //             // ここの分岐もおかしいね（ア
+                //             setRivalNotAC.add(pid);
+                //         }
+                //     }
             });
+        } else if (!(isEmpty(userName) && isEmpty(rivals))) {
+            $('#error').append(
+                $('<li>').text('進捗状況を正しく取得できませんでした．')
+            );
+
+            var invalid = $('#warning>li:contains(存在しないユーザ名)');
+            var users = rivals.length;
+            if (!isEmpty(userName))
+                ++users;
+
+            if (invalid.length < users) {
+                $('#error').append(
+                    $('<ul>').css('font-weight', 'normal')
+                        .append(
+                            $('<li>').text(
+                                'おそらく AtCoder Problems さんの API は'
+                                    + '正常なのですが，それを取得するための'
+                                    + 'YQL の不具合でこけています．ユーザ名の'
+                                    +' 組み合わせをご報告いただけると'
+                                    + '捗るかもしれません．'
+                            )
+                        )
+                        .append(
+                            $('<li>').text(
+                                'あるいは正常に虚無が'
+                                    + '返ってきただけかもしれません．'
+                            )
+                        )
+                );
+            }
+            // console.log(dataAP);
         }
         // 調べ終わりました
 
@@ -476,12 +640,11 @@ $(window).on('load', function() {
         var points = new Set();
         var tasks = Array();
         var axcRE = /a([brgp])c\d+/;
-        // console.log(dataSC[0]);
 
         var setShowingWriters = null;
         if (!isEmpty(writers)) {
             setShowingWriters = new Set();
-            $.each(writers.split(/[,|]/g), function(i, writer) {
+            $.each(writers.split(/\|/g), function(i, writer) {
                 setShowingWriters.add(writer.toLowerCase());
             });
         }
@@ -527,9 +690,6 @@ $(window).on('load', function() {
             //     return;
             // いいえ，ここでは弾きません
 
-            // TODO writer で弾きます
-            // TODO をつぶしたら TODO のコメントも消してって
-            // いっつも言ってるよね？（ひゃい）
             if (setShowingWriters !== null) {
                 var cap = task['writers'].filter(
                     writer => setShowingWriters.has(writer[0].toLowerCase())
@@ -565,10 +725,23 @@ $(window).on('load', function() {
                         .attr('class', colorForPoint(point))
                 );
 
-                $.each(['user', 'rival'], function(j, id_) {
-                    $('#progress_'+id_).append(
+                $('#progress_user').append(
+                    $('<td>').text('0')
+                        .attr('id', 'prog_user_'+point)
+                        .attr('class', colorForPoint(point))
+                        .css('background-color', 'transparent')
+                );
+
+                // if (rivals.length == 0)
+                //     return;
+
+                $.each($('tr.progress_rival'), function(i, $tr) {
+                    var id = $tr.id;
+                    var suffix = id.replace(/progress_/, '');
+                    // if (suffix == 'whole') return;
+                    $('#'+id).append(
                         $('<td>').text('0')
-                            .attr('id', 'prog_'+id_+'_'+point)
+                            .attr('id', 'prog_'+suffix+'_'+point)
                             .attr('class', colorForPoint(point))
                             .css('background-color', 'transparent')
                     );
@@ -610,27 +783,63 @@ $(window).on('load', function() {
                     selectAndAdd('#num_user_unsubmitted', 1);
                 }
 
-                if (setRivalAC.has(pid)) {
-                    selectAndAdd('#prog_rival_'+point, 1);
-                    selectAndAdd('#prog_rival_total', point);
-                    selectAndAdd('#num_rival_ac', 1);
-                } else if (setRivalNotAC.has(pid)) {
-                    selectAndAdd('#num_rival_not_ac', 1);
-                } else {
-                    selectAndAdd('#num_rival_unsubmitted', 1);
+                // if (setRivalAC.has(pid)) {
+                //     selectAndAdd('#prog_rival_'+point, 1);
+                //     selectAndAdd('#prog_rival_total', point);
+                //     selectAndAdd('#num_rival_ac', 1);
+                // } else if (setRivalNotAC.has(pid)) {
+                //     selectAndAdd('#num_rival_not_ac', 1);
+                // } else {
+                //     selectAndAdd('#num_rival_unsubmitted', 1);
+                // }
+
+                // if (rivals.length > 0)
+                {
+                    $.each($('tr.progress_rival'), function(j, $tr) {
+                        var id = $tr.id;
+                        var suffix = id.replace(/progress_/, '');
+
+                        if (setEachRivalAC[j].has(pid)) {
+                            selectAndAdd('#prog_'+suffix+'_'+point, 1);
+                            selectAndAdd('#prog_'+suffix+'_total', point);
+                            selectAndAdd('#num_'+suffix+'_ac', 1);
+                        } else if (setEachRivalNotAC[j].has(pid)) {
+                            selectAndAdd('#num_'+suffix+'_not_ac', 1);
+                        } else {
+                            selectAndAdd('#num_'+suffix+'_unsubmitted', 1);
+                        }
+                    });
                 }
 
                 var ptColor = window.getComputedStyle(
                     document.getElementById('prog_whole_'+point)
                 ).backgroundColor.match(/\d+/g).join(',');
 
-                $.each(['user', 'rival'], function(j, name) {
+                {
                     var alpha = $('prog_whole_'+point).text() == '0'? 0:(
-                        parseInt($('#prog_'+name+'_'+point).text())
+                        parseInt($('#prog_user_'+point).text())
                             / parseInt($('#prog_whole_'+point).text())
                     );
 
-                    $('#prog_'+name+'_'+point).css(
+                    $('#prog_user_'+point).css(
+                        'background-color',
+                        'rgba(' + ptColor + ',' + alpha + ')'
+                    );
+                }
+
+                // if (rivals.length == 0)
+                //     return;
+
+                $.each($('tr.progress_rival'), function(j, $tr) {
+                    var id = $tr.id;
+                    var suffix = id.replace(/progress_/, '');
+
+                    var alpha = $('prog_whole_'+point).text() == '0'? 0:(
+                        parseInt($('#prog_'+suffix+'_'+point).text())
+                            / parseInt($('#prog_whole_'+point).text())
+                    );
+
+                    $('#prog_'+suffix+'_'+point).css(
                         'background-color',
                         'rgba(' + ptColor + ',' + alpha + ')'
                     );
@@ -647,7 +856,7 @@ $(window).on('load', function() {
     });
 
 
-    if (!isEmpty(userName) || !isEmpty(rivalName)) {
+    if (!isEmpty(userName) || !isEmpty(rivals)) {
         $('#progresstable').attr('style', 'display: table');
         // $('#ac_count').attr('style', 'display: table');
         $('#ac_count').css({
@@ -667,19 +876,23 @@ $(window).on('load', function() {
         $('#ac_count_user').attr('style', 'display: table-row');
     }
 
-
-    if (isEmpty(rivalName)) {
+    if (isEmpty(rivals)) {
         $('.result_rival').css('display', 'none');
-        $('#progress_rival').attr('style', 'display: none');
-        $('#ac_count_rival').attr('style', 'display: none');
+        $('.progress_rival').attr('style', 'display: none');
+        $('.ac_count_rival').attr('style', 'display: none');
     } else {
-        prettifyUserName('rival', rivalName);
+        // if (rivals.length > 0)
+        {
+            $.each(rivals, function(i, name) {
+                prettifyUserName('rival'+i, name);
+            });
+        }
         $('.result_rival').css('display', 'block');
-        $('#progress_rival').attr('style', 'display: table-row');
-        $('#ac_count_rival').attr('style', 'display: table-row');
+        $('.progress_rival').attr('style', 'display: table-row');
+        $('.ac_count_rival').attr('style', 'display: table-row');
     }
 
-    $('#difficulty_submit').click(jumpProcess);
+    $('#difficulty_submit').on('click', jumpProcess);
 
     $.each(['username', 'rivalname', 'writer'], function(i, who) {
         // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
