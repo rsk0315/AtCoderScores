@@ -13,6 +13,9 @@
   79 文字以下を目安にしましょう．
 
   XSS には気をつけてくださいね．
+
+  パラメータを追加するときは jumpProcess のところと
+  $(window).on('load', ...) のところにも変更を入れてくださいね．
 */
 
 function removeWeirdChars(s, r=/[^\w-]+/g) {
@@ -309,7 +312,7 @@ $(window).on('load', function() {
 
     // ここちょっとその場しのぎ感がありますよね．
     // まぁ 2500 点問題が出たら考えます
-    const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜
+    const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜（手のひら返し）
 
     // URL パラメータをパース
     var currentURL = $(location).attr('search');
@@ -519,11 +522,12 @@ $(window).on('load', function() {
             // いいえ，ここでは弾きません
 
             // TODO writer で弾きます
+            // TODO をつぶしたら TODO のコメントも消してって
+            // いっつも言ってるよね？（ひゃい）
             if (setShowingWriters !== null) {
                 var cap = task['writers'].filter(
                     writer => setShowingWriters.has(writer[0].toLowerCase())
                 );
-                // console.log(cap);
                 if (cap.length == 0)
                     return;
             }
@@ -543,8 +547,6 @@ $(window).on('load', function() {
                 return x-y;
             });
             $.each(pointList, function(i, point) {
-                // console.log(point);
-
                 $('#progresstable>thead>tr').append(
                     $('<th>').text(point)
                         .attr('id', 'prog_head_'+point)
@@ -641,7 +643,11 @@ $(window).on('load', function() {
 
     if (!isEmpty(userName) || !isEmpty(rivalName)) {
         $('#progresstable').attr('style', 'display: table');
-        $('#ac_count').attr('style', 'display: table');
+        // $('#ac_count').attr('style', 'display: table');
+        $('#ac_count').css({
+            display: 'table',
+            'white-space': 'nowrap',
+        });
     }
 
     if (isEmpty(userName)) {
@@ -670,6 +676,7 @@ $(window).on('load', function() {
     $('#difficulty_submit').click(jumpProcess);
 
     $.each(['username', 'rivalname', 'writer'], function(i, who) {
+        // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
         $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
             if (e.keyCode == 13) {
                 jumpProcess();
