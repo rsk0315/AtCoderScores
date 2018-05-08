@@ -349,6 +349,10 @@ class Post(object):
 
         # warn(self.index)
         # warn(scores)
+        if len(scores) > 2:
+            warn('three or more contests in post', self.index)
+            return []
+
         if len(scores) > 1:
             if 'abc' in cdicts[0]['scrname'] and 'arc' in cdicts[1]['scrname']:
                 if scores[0][0][0] > scores[1][0][0]:
