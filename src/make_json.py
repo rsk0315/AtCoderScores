@@ -225,6 +225,7 @@ contest_category = {
         (None, None),
 }
 
+
 def warn(*value):
     print('\x1b[1;35m', end='', file=sys.stderr)
     print(*value, end='', file=sys.stderr)
@@ -268,7 +269,7 @@ class PostCollector(object):
                 a for a in top_page.soup.find_all('a', href=self.POST_RE)
                 if '告' in a.text
             ]
-            
+
             if not links:
                 break
 
@@ -337,7 +338,7 @@ class Post(object):
         self.cdicts = cdicts = cdicts[0] + cdicts[1]
 
         if not cdicts:
-            warn('Contest not found in post', index)
+            warn('Contest not found in post', self.index)
             return []
 
         writers = self.parse_writers(body.text) or self.ask_writers()
@@ -677,7 +678,7 @@ def main():
             'writers': [(w.name, w.color) for w in t.writers],
         })
 
-    json.dump(res, fp=sys.stdout, indent=4);
+    json.dump(res, fp=sys.stdout, indent=4)
 
 
 if __name__ == '__main__':
