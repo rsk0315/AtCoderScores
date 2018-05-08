@@ -75,8 +75,6 @@ task_prefixes = {
         'ddcc_2016_qual',
     'dwacon2017-prelims':
         'dwango2017qual',
-    'yahoo-procon2017-qual':
-        'yahoo_procon2017_qual',
     'code-festival-2017-quala':
         'code_festival_2017_quala',
     'tenka1-2017':
@@ -129,6 +127,103 @@ task_prefixes = {
         'njpc2017',
 }
 
+# どう考えてもこの設計は悪っぽい
+contest_category = {
+    'tenka1-2016-quala':
+        ('tenka1', 'qual'),
+    'tenka1-2016-final-open':
+        ('tenka1', 'final'),
+    'yahoo-procon2017-final-open':
+        ('yahoo', 'final'),
+    'yahoo-procon2017-qual':
+        ('yahoo', 'qual'),
+    'mujin-pc-2017':
+        (None, None),
+    'dwacon2017-honsen':
+        ('dwango', 'final'),
+    'dwacon2017-prelims':
+        ('dwango', 'qual'),
+    'cf16-final-open':
+        ('codefestival', 'final'),
+    'cf16-exhibition-open':
+        ('codefestival', None),
+    'cf16-tournament-round1-open':
+        ('codefestival', None),
+    'cf16-tournament-round2-open':
+        ('codefestival', None),
+    'cf16-tournament-round3-open':
+        ('codefestival', None),
+    'cf16-relay-open':
+        ('codefestival', None),
+    'cf16-exhibition-final-open':
+        ('codefestival', None),
+    'ddcc2016-qual':
+        ('ddcc', 'qual'),
+    'ddcc2016-final':
+        ('ddcc', 'final'),
+    'code-festival-2016-qualc':
+        ('codefestival', 'qual'),
+    'code-festival-2016-qualb':
+        ('codefestival', 'qual'),
+    'code-festival-2016-quala':
+        ('codefestival', 'qual'),
+    'tenka1-2016-qualb':
+        ('tenka1', 'qual'),
+    'cf16-final-open':
+        ('codefestival', 'final'),
+    'dwacon2017-prelims':
+        ('dwango', 'qual'),
+    'code-festival-2017-quala':
+        ('codefestival', 'qual'),
+    'tenka1-2017':
+        ('tenka1', None),
+    'tenka1-2017-beginner':
+        ('tenka1', None),
+    'ddcc2017-qual':
+        ('ddcc', 'qual'),
+    'ddcc2017-final':
+        ('ddcc', 'final'),
+    'code-festival-2017-qualb':
+        ('codefestival', 'qual'),
+    'code-festival-2017-qualc':
+        ('codefestival', 'qual'),
+    'cf17-final-open':
+        ('codefestival', 'final'),
+    'cf17-exhibition-open':
+        ('codefestival', None),
+    'cf17-tournament-round1-open':
+        ('codefestival', None),
+    'cf17-tournament-round2-open':
+        ('codefestival', None),
+    'cf17-tournament-round3-open':
+        ('codefestival', None),
+    'cf17-relay-open':
+        ('codefestival', None),
+    'code-thanks-festival-2017-open':
+        ('codefestival', None),
+    'colopl2018-qual':
+        ('colocon', 'qual'),
+    'dwacon2018-prelims':
+        ('dwango', 'qual'),
+    'colopl2018-final-open':
+        ('colocon', 'final'),
+    'soundhound2018':
+        (None, None),
+    'dwacon2018-final-open':
+        ('dwango', 'final'),
+    'yahoo-procon2018-qual':
+        ('yahoo', 'qual'),
+    'yahoo-procon2018-final':
+        ('yahoo', 'final'),
+    's8pc-3':
+        ('s8pc', None),
+    's8pc-4':
+        ('s8pc', None),
+    's8pc-5':
+        ('s8pc', None),
+    'njpc2017':
+        (None, None),
+}
 
 def warn(*value):
     print('\x1b[1;35m', end='', file=sys.stderr)
@@ -457,10 +552,12 @@ class Task(object):
                 self.scr_name[1].upper(), self.scr_name[3:6]
             )
             self.ctype = CONTEST_TYPES[self.scr_name[:3]]
+            self.ccat = (self.scr_name[:3], None)
 
         else:
             self.prefix = task_prefixes[self.scr_name]
             self.ctype = CONTEST_TYPES['other']
+            self.ccat = contest_category[self.scr_name]
             if self.prefix == 'asaporo':
                 if 'round1' in self.scr_name:
                     self.scr_char = {'A': 'c', 'B': 'f'}[self.char]
@@ -568,6 +665,7 @@ def main():
             'partialScore': t.pscore,
             'contestTitle': t.ctitle,
             'contestScreenName': t.scr_name,
+            'contestCategory': t.ccat,
             'taskChar': t.char,
             'taskScreenName': (t.prefix+'_'+t.scr_char),
             'traditionalURL': t.trad_url,
