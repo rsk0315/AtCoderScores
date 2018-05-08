@@ -50,7 +50,20 @@ function jumpProcess() {
         show_arc: $('input[name=show_arc]:checked').val(),
         show_agc: $('input[name=show_agc]:checked').val(),
         show_apc: $('input[name=show_apc]:checked').val(),
-        show_other: $('input[name=show_other]:checked').val(),
+
+        show_codefes: $('input[name=show_codefes]:checked').val(),
+        show_dwango: $('input[name=show_dwango]:checked').val(),
+        show_yahoo: $('input[name=show_yahoo]:checked').val(),
+        show_tenka1: $('input[name=show_tenka1]:checked').val(),
+        show_ddcc: $('input[name=show_ddcc]:checked').val(),
+        show_colocon: $('input[name=show_colocon]:checked').val(),
+        show_s8pc: $('input[name=show_s8pc]:checked').val(),
+        show_uncategorized: $('input[name=show_uncategorized]:checked').val(),
+
+        show_qual: $('input[name=show_qual]:checked').val(),
+        show_final: $('input[name=show_final]:checked').val(),
+        show_other_type: $('input[name=show_other_type]:checked').val(),
+
         show_upcoming: $('input[name=show_upcoming]:checked').val(),
 
         include_partial: $('input[name=include_partial]:checked').val(),
@@ -345,6 +358,69 @@ $(window).on('load', function() {
 
     $('[data-toggle=tooltip]').tooltip();
 
+    $('ul input:checkbox').on('change', function() {
+        // console.log($(this));
+        var checked = $(this).is(':checked');
+        // find でやると再帰的にぐわ〜ってなって計算量がやばいことに
+        // なりそうで怖かった．children がたくさんあってつらいけど
+        $(this).parent('li').children('ul').children('li')
+            .children('input:checkbox').each(function(i, checkbox) {
+                // 自分より下のチェックボックスに伝播する
+                $(checkbox).prop('checked', checked);
+            });
+
+        var $parent = $(this).parent('li').parent('ul').parent('li')
+            .children('input:checkbox');
+        var $child = $(this);
+
+        var allOf = checked;
+        var noneOf = !allOf;
+        while ($parent.length == 1) {
+            $child.parent('li').parent('ul').children('li')
+                .children('input:checkbox').each(function(i, checkbox) {
+                    if ($(checkbox).is(':checked')) {
+                        noneOf = false;
+                    } else {
+                        allOf = false;
+                    }
+                    if ($(checkbox).is(':indeterminate')) {
+                        allOf = noneOf = false;
+                    }
+                });
+
+            // まとめてぐわ〜ってしたかったにょに．:indetermindate が
+            // 機能してくれない
+            // var $tmp = $child.parent('li').parent('ul').children('li');
+            // if ($tmp.children('input:checkbox:indeterminate').length > 0) {
+            //     allOf = noneOf = false;
+            // } else if ($tmp.children('input:checkbox:checked').length > 0) {
+            //     noneOf = false;
+            //     if ($tmp.children('input:checkbox:not(checked)').length > 0) {
+            //         allOf = false;
+            //     }
+            // } else {
+            //     allOf = false;
+            // }
+
+            if (allOf) {
+                $parent.prop('checked', true);
+                $parent.prop('indeterminate', false);
+            } else if (noneOf) {
+                $parent.prop('checked', false);
+                $parent.prop('indeterminate', false);
+            } else {            
+                $parent.prop('checked', false);
+                $parent.prop('indeterminate', true);
+            }
+
+            $child = $parent;
+            $parent = $parent.parent('li').parent('ul').parent('li')
+                .children('input:checkbox');
+            // console.log(allOf+' '+noneOf);
+        }
+    });
+            
+
     // ここちょっとその場しのぎ感がありますよね．
     // まぁ 2500 点問題が出たら考えます
     const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜（手のひら返し）
@@ -353,7 +429,10 @@ $(window).on('load', function() {
     var currentURL = $(location).attr('search');
     var params = $.url(currentURL).param();
     var userName, rivalNames, hideAC, lb, ub;
-    var showABC, showARC, showAGC, showAPC, showOther, showUpcoming;
+    var showABC, showARC, showAGC, showAPC, /* showOther, */ showUpcoming;
+    var showCodeFes, showDwango, showColocon, showTenka1, showDDCC;
+    var showColocon, showS8pc, showUncat;
+    var showQual, showFinal, showOtherType;
     var writers;
     var includePartial;
 
@@ -400,7 +479,29 @@ $(window).on('load', function() {
     showARC = (params.show_arc != '');
     showAGC = (params.show_agc != '');
     showAPC = (params.show_apc != '');
-    showOther = (params.show_other != '');
+
+    showCodeFes = (params.show_codefes != '');
+    showDwango = (params.show_dwango != '');
+    showYahoo = (params.show_yahoo != '');
+    showTenka1 = (params.show_tenka1 != '');
+    showDDCC = (params.show_ddcc != '');
+    showColocon = (params.show_colocon != '');
+    showS8pc = (params.show_s8pc != '');
+    showUncat = (params.show_uncategorized != '');
+    // 世界一実装が下手か？
+    // まとめて入れて連想配列みたいに取り出すのがいいのかな
+    var allOf = (
+        showCodeFes && showDwango && showYahoo && showTenka1
+            && showDDCC && showColocon && showS8pc && showUncat
+    );
+    var noneOf = !(
+        showCodeFes || showDwango || showYahoo || showTenka1
+            || showDDCC || showColocon || showS8pc || showUncat
+    );
+
+    showQual = (params.show_qual != '');
+    showFinal = (params.show_final != '');
+    showOtherType = (params.show_other_type != '');
 
     // パース結果をフォームに反映・保存
     $('input[name=form_username]').val(userName);
@@ -414,7 +515,34 @@ $(window).on('load', function() {
     $('input[name=show_arc]').prop('checked', showARC);
     $('input[name=show_agc]').prop('checked', showAGC);
     $('input[name=show_apc]').prop('checked', showAPC);
-    $('input[name=show_other]').prop('checked', showOther);
+    if (showABC && showARC && showAGC && showAPC) {
+        $('input[name=show_axc]').prop('checked', true);
+    } else if (!(showABC || showARC || showAGC || showAPC)) {
+        $('input[name=show_axc]').prop('checked', false);
+    } else {
+        $('input[name=show_axc]').prop('indeterminate', true);
+    }
+
+    $('input[name=show_codefes]').prop('checked', showCodeFes);
+    $('input[name=show_dwango]').prop('checked', showDwango);
+    $('input[name=show_yahoo]').prop('checked', showYahoo);
+    $('input[name=show_tenka1]').prop('checked', showTenka1);
+    $('input[name=show_ddcc]').prop('checked', showDDCC);
+    $('input[name=show_colocon]').prop('checked', showColocon);
+    $('input[name=show_s8pc]').prop('checked', showS8pc);
+    $('input[name=show_uncategorized]').prop('checked', showUncat);
+    if (allOf) {
+        $('input[name=show_other]').prop('checked', true);
+    } else if (noneOf) {
+        $('input[name=show_other]').prop('checked', false);
+    } else {
+        $('input[name=show_other]').prop('indeterminate', true);
+    }
+
+    $('input[name=show_qual]').prop('checked', showQual);
+    $('input[name=show_final]').prop('checked', showFinal);
+    $('input[name=show_other_type]').prop('checked', showOtherType);
+
     $('input[name=show_upcoming]').prop('checked', showUpcoming);
 
     $('input[name=include_partial]').prop('checked', includePartial);
@@ -655,16 +783,38 @@ $(window).on('load', function() {
 
         $.each(dataSC[0], function(i, task) {
             // コンテストの種類で弾きます
+            var conCat = task['contestCategory'][0];
+            var conQF = task['contestCategory'][1];
+            // console.log(task['taskScreenName']+' '+conCat+' '+conQF);
+
+            if (!showABC && conCat == 'abc') return;
+            if (!showARC && conCat == 'arc') return;
+            if (!showAGC && conCat == 'agc') return;
+            if (!showAPC && conCat == 'apc') return;
+            if (!showCodeFes && conCat == 'codefestival') return;
+            if (!showDwango && conCat == 'dwango') return;
+            if (!showYahoo && conCat == 'yahoo') return;
+            if (!showTenka1 && conCat == 'tenka1') return;
+            if (!showDDCC && conCat == 'ddcc') return;
+            if (!showColocon && conCat == 'colocon') return;
+            if (!showS8pc && conCat == 's8pc') return;
+            if (!showUncat && conCat === null) return;
+
+            if (!showQual && conQF == 'qual') return;
+            if (!showFinal && conQF == 'final') return;
+            if (!showOtherType && conQF === null) return;
+
+
             var contestScreenName = task['contestScreenName'];
-            var kind = contestScreenName.match(axcRE);
-            if (kind !== null) {
-                if (kind[1] == 'b' && !showABC) return;
-                if (kind[1] == 'r' && !showARC) return;
-                if (kind[1] == 'g' && !showAGC) return;
-                if (kind[1] == 'p' && !showAPC) return;
-            } else if (!showOther) {
-                return;
-            }
+            // var kind = contestScreenName.match(axcRE);
+            // if (kind !== null) {
+            //     if (kind[1] == 'b' && !showABC) return;
+            //     if (kind[1] == 'r' && !showARC) return;
+            //     if (kind[1] == 'g' && !showAGC) return;
+            //     if (kind[1] == 'p' && !showAPC) return;
+            // } else if (!showOther) {
+            //     return;
+            // }
 
             // 開催前コンテストを弾きます
             if (!showUpcoming && setUpcoming.has(contestScreenName))
@@ -710,6 +860,10 @@ $(window).on('load', function() {
             points.add(parseInt(point));
             tasks.push(task);
         });
+
+        if (tasks.length < 1) {
+            $('#warning').append($('<li>').text('該当する項目はありません．'));
+        }
 
         {
             // 点数テーブルを書きます．set の順番がアなので困ります

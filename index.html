@@ -100,32 +100,41 @@
 
           <div id="collapse-filter" class="panel-body panel-collapse collapse in">
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: large">コンテスト</span>
+              <span style="font-size: large">コンテスト種別</span>
             </p>
             <div class="filters">
-              <div>
-                <input name="show_abc" type="checkbox">
-                AtCoder Beginner Contest
-              </div>
-
-              <div>
-                <input name="show_arc" type="checkbox">
-                AtCoder Regular Contest
-              </div>
-
-              <div>
-                <input name="show_agc" type="checkbox">
-                AtCoder Grand Contest
-              </div>
-
-              <div>
-                <input name="show_apc" type="checkbox">
-                AtCoder Petrozavodsk Contest
-              </div>
-
               <div style="margin-top: 5px">
-                <input name="show_other" type="checkbox">
-                その他
+                <label for="filter_contests">コンテスト名</label>
+                <ul id="filter_contests">
+                  <li><input type="checkbox" name="show_axc"> AtCoder * Contest
+                    <ul>
+                      <li><input name="show_abc" type="checkbox"> Beginner</li>
+                      <li><input name="show_arc" type="checkbox"> Regular</li>
+                      <li><input name="show_agc" type="checkbox"> Grand</li>
+                      <li><input name="show_apc" type="checkbox"> Petrozavodsk</li>
+                    </ul>
+                  </li>
+                  <li><input type="checkbox" name="show_other"> それ以外 <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="企業コンテストや非公式コンテストのうち，普段のコンテストの配点に近いものです．複数回開催されたものは個別項目があります．"></span>
+                    <ul>
+                      <li><input type="checkbox" name="show_codefes"> CODEFESTIVAL</li>
+                      <li><input type="checkbox" name="show_dwango"> ドワンゴからの挑戦状</li>
+                      <li><input type="checkbox" name="show_yahoo"> みんなのプロコン</li>
+                      <li><input type="checkbox" name="show_tenka1"> 天下一プログラマーコンテスト</li>
+                      <li><input type="checkbox" name="show_ddcc"> DISCO presents ディスカバリーチャンネル コードコンテスト</li>
+                      <li><input type="checkbox" name="show_colocon"> COLOCON</li>
+                      <li><input type="checkbox" name="show_s8pc"> square869120Contest</li>
+                      <li><input type="checkbox" name="show_uncategorized"> その他</li>
+                    </ul>
+                  </li>
+                </ul>
+                
+                <label for="filter_contests">カテゴリ</label>
+                <ul id="filter_contests">
+                  <li><input name="show_qual" type="checkbox"> 予選</li>
+                  <li><input name="show_final" type="checkbox"> 本戦</li>
+                  <li><input type="checkbox" name="show_other_type"> それ以外 <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="一回勝負のものや通常のコンテストなどが含まれます．"></span></li>
+                </ul>
+
               </div>
             </div>
             
