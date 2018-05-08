@@ -540,7 +540,7 @@ class Contest(object):
 class Task(object):
     def __init__(self, char, scr_char, score, cdict, writers, index):
         # ARC 058 C (arc058_a) みたいなの，アなんですけど，
-        # char には 'C'，scr_char には 'a' が入っています 
+        # char には 'C'，scr_char には 'a' が入っています
         self.char = char
         self.scr_char = scr_char
         self.fscore, self.pscore = score  # (full score, partial score)
@@ -595,18 +595,6 @@ class Task(object):
                 self.ctitle = re.sub(
                     r'Qualification (?:Round|Qual)', '予選', self.ctitle
                 )
-
-    # def __str__(self):
-    #     return (
-    #         '          <tr class="dif_{0.fscore}">\n'
-    #         + '            <td class="mask_{0.fscore}">{0.fscore}</td>\n'
-    #         + '            <td class="{0.prefix}_{0.scr_char}"><a href="https://{0.scr_name}.contest.atcoder.jp/tasks/{0.prefix}_{0.scr_char}">{0.ctitle}: {0.char}</a> <a href="https://beta.atcoder.jp/contests/{0.scr_name}/tasks/{0.prefix}_{0.scr_char}">[beta]</a></td>\n'
-    #         + '            <td class="{0.prefix}_{0.scr_char}">'
-    #         + ', '.join(w.to_html() for w in self.writers)
-    #         + '</td>\n'
-    #         + '            <td class="{0.prefix}_{0.scr_char}">{0.pscore}</td>\n'
-    #         + '          </tr>'
-    #     ).format(self)
 
     @property
     def trad_url(self):
