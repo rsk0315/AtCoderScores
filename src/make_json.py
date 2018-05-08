@@ -225,6 +225,12 @@ contest_category = {
         (None, None),
 }
 
+correct_names = {
+    'degwer': 'DEGwer',
+    'e869120': 'E869120',
+    'hec': 'Hec',
+}
+
 
 def warn(*value):
     print('\x1b[1;35m', end='', file=sys.stderr)
@@ -675,7 +681,10 @@ def main():
             'taskScreenName': (t.prefix+'_'+t.scr_char),
             'traditionalURL': t.trad_url,
             'betaURL': t.beta_url,
-            'writers': [(w.name, w.color) for w in t.writers],
+            'writers': [
+                (correct_names.get(w.name.lower(), w.name), w.color)
+                for w in t.writers
+            ],
         })
 
     json.dump(res, fp=sys.stdout, indent=4)
