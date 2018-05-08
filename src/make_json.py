@@ -119,6 +119,14 @@ task_prefixes = {
         'yahoo_procon2018_qual',
     'yahoo-procon2018-final':
         'yahoo_procon2018_final',
+    's8pc-3':
+        's8pc_3',
+    's8pc-4':
+        's8pc_4',
+    's8pc-5':
+        's8pc_5',
+    'njpc2017':
+        'njpc2017',
 }
 
 
@@ -196,7 +204,7 @@ class PostCollector(object):
         # つらいことがあったファイルやバックアップは除外するよ
         indices = [
             i for i in ls
-            if '-'+i not in ls and i[0] != '-' and i[-1] != '~'
+            if ('-'+i not in ls) and (i[0] != '-') and (i[-1] != '~')
         ]
 
         self.posts = []
@@ -244,6 +252,8 @@ class Post(object):
             # ask whether we should generate a patch file
             pass
 
+        # warn(self.index)
+        # warn(scores)
         if len(scores) > 1:
             if 'abc' in cdicts[0]['scrname'] and 'arc' in cdicts[1]['scrname']:
                 if scores[0][0][0] > scores[1][0][0]:
@@ -394,10 +404,10 @@ class Score(object):
     # [^...]の中で丸括弧をエスケープしているのはエディタのハイライトが
     # 理由なのでそのままにしておいてください．えびより
     RE = re.compile(
-        r'''\d+00\ *(?:\([^\)]+\))?    # score and partial scores
+        r'''\d+0\ *(?:\([^\)]+\))?     # score and partial scores
         (?:
             \ *[, -]\ *                # separator
-            \d+00\ *(?:\([^\)]+\))?    # score and partial scores
+            \d+0\ *(?:\([^\)]+\))?     # score and partial scores
         )+''', flags=re.VERBOSE
     )
     PART_RE = re.compile(r'(\d+) *(?:\(([^\)]+)\))?')

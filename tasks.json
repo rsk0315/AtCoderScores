@@ -1134,6 +1134,22 @@
     {
         "fullScore": 100,
         "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "A",
+        "taskScreenName": "njpc2017_a",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_a",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_a",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 100,
+        "partialScore": null,
         "contestTitle": "SoundHound Inc. Programming Contest 2018 (\u6625)",
         "contestScreenName": "soundhound2018",
         "taskChar": "A",
@@ -2577,6 +2593,26 @@
     },
     {
         "fullScore": 200,
+        "partialScore": "100",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "A",
+        "taskScreenName": "s8pc_5_a",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_a",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_a",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
+            ]
+        ]
+    },
+    {
+        "fullScore": 200,
         "partialScore": null,
         "contestTitle": "\u307f\u3093\u306a\u306e\u30d7\u30ed\u30b3\u30f3 2018 \u4e88\u9078",
         "contestScreenName": "yahoo-procon2018-qual",
@@ -2608,6 +2644,46 @@
             [
                 "yutaka1999",
                 "user-red"
+            ]
+        ]
+    },
+    {
+        "fullScore": 250,
+        "partialScore": "150",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "A",
+        "taskScreenName": "s8pc_3_a",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_a",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_a",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 250,
+        "partialScore": "130",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "A",
+        "taskScreenName": "s8pc_4_a",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_a",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_a",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
             ]
         ]
     },
@@ -3834,6 +3910,22 @@
     {
         "fullScore": 300,
         "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "B",
+        "taskScreenName": "njpc2017_b",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_b",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_b",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 300,
+        "partialScore": null,
         "contestTitle": "Tenka1 Programmer Contest",
         "contestScreenName": "tenka1-2017",
         "taskChar": "C",
@@ -3848,6 +3940,46 @@
             [
                 "hasi",
                 "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 300,
+        "partialScore": "120",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "B",
+        "taskScreenName": "s8pc_3_b",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_b",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_b",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 300,
+        "partialScore": "70, 210",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "B",
+        "taskScreenName": "s8pc_5_b",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_b",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_b",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
@@ -3896,6 +4028,26 @@
             [
                 "",
                 null
+            ]
+        ]
+    },
+    {
+        "fullScore": 350,
+        "partialScore": "120+90",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "B",
+        "taskScreenName": "s8pc_4_b",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_b",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_b",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
             ]
         ]
     },
@@ -4821,6 +4973,26 @@
     },
     {
         "fullScore": 400,
+        "partialScore": "50, 220",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "C",
+        "taskScreenName": "s8pc_3_c",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_c",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_c",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 400,
         "partialScore": null,
         "contestTitle": "\u307f\u3093\u306a\u306e\u30d7\u30ed\u30b3\u30f3 \u4e88\u9078",
         "contestScreenName": "yahoo-procon2017-qual",
@@ -5465,6 +5637,22 @@
     },
     {
         "fullScore": 500,
+        "partialScore": "400",
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "C",
+        "taskScreenName": "njpc2017_c",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_c",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_c",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 500,
         "partialScore": null,
         "contestTitle": "Tenka1 Programmer Contest",
         "contestScreenName": "tenka1-2017",
@@ -5480,6 +5668,46 @@
             [
                 "hasi",
                 "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 500,
+        "partialScore": "100+[90, 290]",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "C",
+        "taskScreenName": "s8pc_4_c",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_c",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_c",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 500,
+        "partialScore": "90, 190",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "C",
+        "taskScreenName": "s8pc_5_c",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_c",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_c",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
@@ -5902,6 +6130,22 @@
     {
         "fullScore": 600,
         "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "D",
+        "taskScreenName": "njpc2017_d",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_d",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_d",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 600,
+        "partialScore": null,
         "contestTitle": "SoundHound Inc. Programming Contest 2018 (\u6625)",
         "contestScreenName": "soundhound2018",
         "taskChar": "D",
@@ -5912,6 +6156,46 @@
             [
                 "hogloid",
                 "user-red"
+            ]
+        ]
+    },
+    {
+        "fullScore": 600,
+        "partialScore": "[50, 130]+[120, 270]",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "D",
+        "taskScreenName": "s8pc_3_d",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_d",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_d",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 600,
+        "partialScore": "120+160",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "D",
+        "taskScreenName": "s8pc_5_d",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_d",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_d",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
@@ -6802,6 +7086,22 @@
     {
         "fullScore": 700,
         "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "E",
+        "taskScreenName": "njpc2017_e",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_e",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_e",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 700,
+        "partialScore": null,
         "contestTitle": "\u5929\u4e0b\u4e00\u30d7\u30ed\u30b0\u30e9\u30de\u30fc\u30b3\u30f3\u30c6\u30b9\u30c82016\u672c\u6226\uff08\u30aa\u30fc\u30d7\u30f3\u30b3\u30f3\u30c6\u30b9\u30c8\uff09",
         "contestScreenName": "tenka1-2016-final-open",
         "taskChar": "C",
@@ -7241,6 +7541,38 @@
     },
     {
         "fullScore": 800,
+        "partialScore": "600",
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "F",
+        "taskScreenName": "njpc2017_f",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_f",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_f",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 800,
+        "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "G",
+        "taskScreenName": "njpc2017_g",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_g",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_g",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 800,
         "partialScore": null,
         "contestTitle": "Tenka1 Programmer Contest",
         "contestScreenName": "tenka1-2017",
@@ -7256,6 +7588,46 @@
             [
                 "hasi",
                 "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 800,
+        "partialScore": "190+220",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "D",
+        "taskScreenName": "s8pc_4_d",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_d",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_d",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 800,
+        "partialScore": "40, 200, 390",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "E",
+        "taskScreenName": "s8pc_5_e",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_e",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_e",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
@@ -7308,6 +7680,26 @@
             [
                 "",
                 null
+            ]
+        ]
+    },
+    {
+        "fullScore": 850,
+        "partialScore": "160, 400",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "E",
+        "taskScreenName": "s8pc_3_e",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_e",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_e",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
             ]
         ]
     },
@@ -8350,6 +8742,62 @@
     {
         "fullScore": 1000,
         "partialScore": null,
+        "contestTitle": "NJPC 2017",
+        "contestScreenName": "njpc2017",
+        "taskChar": "H",
+        "taskScreenName": "njpc2017_h",
+        "traditionalURL": "https://njpc2017.contest.atcoder.jp/tasks/njpc2017_h",
+        "betaURL": "https://beta.atcoder.jp/contests/njpc2017/tasks/njpc2017_h",
+        "writers": [
+            [
+                "",
+                null
+            ]
+        ]
+    },
+    {
+        "fullScore": 1000,
+        "partialScore": "120+[90, 350, 510]",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "E",
+        "taskScreenName": "s8pc_4_e",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_e",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_e",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1000,
+        "partialScore": "[60, 120]+250",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "F",
+        "taskScreenName": "s8pc_5_f",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_f",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_f",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1000,
+        "partialScore": null,
         "contestTitle": "\u307f\u3093\u306a\u306e\u30d7\u30ed\u30b3\u30f3 2018 \u4e88\u9078",
         "contestScreenName": "yahoo-procon2018-qual",
         "taskChar": "E",
@@ -8676,6 +9124,26 @@
         ]
     },
     {
+        "fullScore": 1150,
+        "partialScore": "190+[170, 530]",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "F",
+        "taskScreenName": "s8pc_4_f",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_f",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_f",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
         "fullScore": 1200,
         "partialScore": null,
         "contestTitle": "ARC 068",
@@ -8908,6 +9376,46 @@
             [
                 "camypaper",
                 "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1200,
+        "partialScore": "[60, 460]+240",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "F",
+        "taskScreenName": "s8pc_3_f",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_f",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_f",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1200,
+        "partialScore": "80, 400",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "G",
+        "taskScreenName": "s8pc_5_g",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_g",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_g",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
@@ -9417,6 +9925,46 @@
     },
     {
         "fullScore": 1400,
+        "partialScore": "100+170+[230, 650]",
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "G",
+        "taskScreenName": "s8pc_3_g",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_g",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_g",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1400,
+        "partialScore": "210+320",
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "H",
+        "taskScreenName": "s8pc_5_h",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_h",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_h",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1400,
         "partialScore": null,
         "contestTitle": "\u307f\u3093\u306a\u306e\u30d7\u30ed\u30b3\u30f3 2018 \u6c7a\u52dd",
         "contestScreenName": "yahoo-procon2018-final",
@@ -9480,6 +10028,26 @@
             [
                 "",
                 null
+            ]
+        ]
+    },
+    {
+        "fullScore": 1450,
+        "partialScore": "170+310+380-1500",
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "G",
+        "taskScreenName": "s8pc_4_g",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_g",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_g",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
             ]
         ]
     },
@@ -9652,6 +10220,66 @@
             [
                 "",
                 null
+            ]
+        ]
+    },
+    {
+        "fullScore": 1500,
+        "partialScore": null,
+        "contestTitle": "square869120Contest #3",
+        "contestScreenName": "s8pc-3",
+        "taskChar": "H",
+        "taskScreenName": "s8pc_3_h",
+        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_h",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_h",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1500,
+        "partialScore": null,
+        "contestTitle": "square869120Contest #4",
+        "contestScreenName": "s8pc-4",
+        "taskChar": "H",
+        "taskScreenName": "s8pc_4_h",
+        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_h",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_h",
+        "writers": [
+            [
+                "E869120",
+                "user-yellow"
+            ],
+            [
+                "square1001",
+                "user-yellow"
+            ]
+        ]
+    },
+    {
+        "fullScore": 1500,
+        "partialScore": null,
+        "contestTitle": "square869120Contest #5",
+        "contestScreenName": "s8pc-5",
+        "taskChar": "I",
+        "taskScreenName": "s8pc_5_i",
+        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_i",
+        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_i",
+        "writers": [
+            [
+                "E869120",
+                "user-red"
+            ],
+            [
+                "square1001",
+                "user-orange"
             ]
         ]
     },
