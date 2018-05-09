@@ -407,16 +407,6 @@ $(window).on('load', function() {
 
     $('[data-toggle=tooltip]').tooltip();
 
-    // $.each(['username', 'rivalname', 'writer'], function(i, who) {
-    //     // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
-    //     $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
-    //         if (e.keyCode == 13) {
-    //             jumpProcess();
-    //         } else {
-    //             $.noop();
-    //         }
-    //     });
-    // });
     $('input').on('keypress', function(e) {
         if (e.keyCode == 13) {
             jumpProcess();
