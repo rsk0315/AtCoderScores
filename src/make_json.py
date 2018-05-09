@@ -144,37 +144,37 @@ contest_category = {
     'dwacon2017-prelims':
         ('dwango', 'qual'),
     'cf16-final-open':
-        ('codefestival', 'final'),
+        ('codefes', 'final'),
     'cf16-exhibition-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf16-tournament-round1-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf16-tournament-round2-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf16-tournament-round3-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf16-relay-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf16-exhibition-final-open':
-        ('codefestival', None),
+        ('codefes', None),
     'ddcc2016-qual':
         ('ddcc', 'qual'),
     'ddcc2016-final':
         ('ddcc', 'final'),
     'code-festival-2016-qualc':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'code-festival-2016-qualb':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'code-festival-2016-quala':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'tenka1-2016-qualb':
         ('tenka1', 'qual'),
     'cf16-final-open':
-        ('codefestival', 'final'),
+        ('codefes', 'final'),
     'dwacon2017-prelims':
         ('dwango', 'qual'),
     'code-festival-2017-quala':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'tenka1-2017':
         ('tenka1', None),
     'tenka1-2017-beginner':
@@ -184,23 +184,23 @@ contest_category = {
     'ddcc2017-final':
         ('ddcc', 'final'),
     'code-festival-2017-qualb':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'code-festival-2017-qualc':
-        ('codefestival', 'qual'),
+        ('codefes', 'qual'),
     'cf17-final-open':
-        ('codefestival', 'final'),
+        ('codefes', 'final'),
     'cf17-exhibition-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf17-tournament-round1-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf17-tournament-round2-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf17-tournament-round3-open':
-        ('codefestival', None),
+        ('codefes', None),
     'cf17-relay-open':
-        ('codefestival', None),
+        ('codefes', None),
     'code-thanks-festival-2017-open':
-        ('codefestival', None),
+        ('codefes', None),
     'colopl2018-qual':
         ('colocon', 'qual'),
     'dwacon2018-prelims':
