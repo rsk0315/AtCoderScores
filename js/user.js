@@ -499,6 +499,14 @@ $(window).on('load', function() {
         $('<option>').attr({value: UB_MAX}).text(UB_MAX)
     );
 
+    // <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" ="ユーザ名を指定すると進捗を表示します．大文字と小文字を間違った場合は訂正してあげます．" />
+    var $tooltip = $('<span>').attr({
+        class: 'glyphicon glyphicon-question-sign',
+        'aria-hidden': 'true',
+        'data-html': 'true',
+        'data-toggle': 'tooltip',
+        title: '',
+    });
 
     // URL パラメータをパース
     var currentURL = $(location).attr('search');
@@ -843,16 +851,28 @@ $(window).on('load', function() {
                 ++users;
 
             if (invalid.length < users) {
+                $tt = $tooltip.clone().attr({
+                    'data-original-title':
+                    'ユーザ一人だけでこれを超えるような状況になった場合は'
+                        + 'どうしたらいいんだろう．困りましたね．'
+                }).tooltip()
+                $tt.removeClass('glyphicon-question-sign')
+                $tt.addClass('glyphicon-exclamation-sign');
+
                 $('#error').append(
                     $('<ul>').css('font-weight', 'normal')
                         .append(
                             $('<li>').text(
+                                /*
                                 'おそらく AtCoder Problems さんの API は'
                                     + '正常なのですが，それを取得するための'
                                     + 'YQL の不具合でこけています．ユーザ名の'
                                     +' 組み合わせをご報告いただけると'
                                     + '捗るかもしれません．'
-                            )
+                                */
+                                'YQL が捌けるデータの上限（1536 kB くらい？）'
+                                    + 'を超えてしまっているかもしれません．'
+                            ).append($tt)
                         )
                         .append(
                             $('<li>').text(
@@ -860,6 +880,10 @@ $(window).on('load', function() {
                                     + '返ってきただけかもしれません．'
                             )
                         )
+
+                    // ここ，存在しないユーザとか提出のないユーザとか，
+                    // 各種コーナーケースの処理が実質不可能なので，
+                    // 考えられる理由を全て述べることにします． 
                 );
             }
         }
