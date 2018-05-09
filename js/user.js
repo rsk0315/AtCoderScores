@@ -66,6 +66,11 @@ function jumpProcess() {
             queryObj['lbound'] = lbound;
         if (ubound != UB_MAX)
             queryObj['ubound'] = ubound;
+
+        // まずいですよ！
+        // if (String(lbound)+String(ubound) == '114514') {
+        //     alert('先輩！？ 何してんすか！');
+        // }
     }
     {
         // デフォルト値を動的につくるもの
