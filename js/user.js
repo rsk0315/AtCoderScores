@@ -732,6 +732,7 @@ $(window).on('load', function() {
     // べっ，別に API のことなんて好きじゃないんだからっ（ぺちんぺちん）
     var cacheExpires = 300 * 1000;  // ms
     var curTime = Math.floor(Date.now()/cacheExpires);  // これ関数化すべきかも
+    // json.result, json.user_id, json.problem_id だけとればいいけどそれでもだめ
     var queryAP = (
         'select * from json where '
             + 'url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user='
