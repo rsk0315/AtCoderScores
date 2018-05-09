@@ -263,33 +263,32 @@ function prettifyUserName(who, name) {
     // クエリ文字列ってちゃんとパーセントエンコードしなきゃまずいですか？
     // 適当にエンコードしたら落ちたんですけど
     var imageXpath = "//img[contains(@src, '/public/img/icon/crown')]";
-    var imageURL = 'https://atcoder.jp/user/' + name;
+    var imageURL = 'https://atcoder.jp/user/' + name + '?tsurai=' + curTime;
     var imageYQL = (
-        YQL_HTML_BASE + '&q='
-            + 'select * from htmlstring where '
+        'select * from htmlstring where '
             + 'url="' + imageURL + '" and xpath="' + imageXpath + '"'
-            + '&tsurai=' + curTime
     );
     var imageName = null;
 
     var userXpath = "//a[@class='username']/span";
     var userYQL = (
-        YQL_HTML_BASE + '&q='
-            + 'select * from htmlstring where '
-            + 'url="https://atcoder.jp/user/' + name
-            + '" and xpath="' + userXpath + '"' + '&tsurai=' + curTime
+        'select * from htmlstring where '
+            + 'url="https://atcoder.jp/user/' + name + '?tsurai=' + curTime
+            + '" and xpath="' + userXpath + '"'
     );
 
     $.when(
         $.ajax({
             type: 'GET',
-            url: imageYQL,
+            url: YQL_HTML_BASE,
+            data: {q: imageYQL},
             dataType: 'json',
             cache: false,
         }),
         $.ajax({
             type: 'GET',
-            url: userYQL,
+            url: YQL_HTML_BASE,
+            data: {q: userYQL},
             dataType: 'json',
             cache: false,
         })
@@ -667,10 +666,9 @@ $(window).on('load', function() {
     // 開催前のコンテストを調べてあげよー！
     var contestXpath = "//div[@id='collapse-contest']/div[2]//tr//td[2]//a";
     var queryUC = (
-        YQL_HTML_BASE + '&q='
-            + 'select * from htmlstring where '
-            + 'url="https://atcoder.jp/?lang=ja" and xpath="'
-            + contestXpath + '"&tsurai=' + curTime
+        'select * from htmlstring where '
+            + 'url="https://atcoder.jp/?lang=ja&tsurai=' + curTime + '"'
+            + 'and xpath="' + contestXpath + '"'
     );
 
     $.when(
@@ -687,7 +685,8 @@ $(window).on('load', function() {
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: queryUC,
+            url: YQL_HTML_BASE,
+            data: {q: queryUC},
         }),
         // 私のつくった JSON（私ではなく私のスクリプトが，ですね）
         $.ajax({
