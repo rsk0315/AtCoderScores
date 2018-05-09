@@ -27,42 +27,60 @@ function isEmpty(s) {
     return (s === undefined || s === null || s == '' || s == []);
 }
 
+var contestTags = [
+    'abc', 'arc', 'agc', 'apc',
+    'codefes', 'dwango', 'yahoo', 'tenka1', 'ddcc', 'colocon', 's8pc',
+    'uncategorized'
+];
+var contestTypes = ['qual', 'final', 'other_type'];
+
 function jumpProcess() {
     // あれ？ ここではそのまま .val() を投げるだけで
     // 後でよしなにやってもらえますか？
+
+    var showContests = '';
+    $.each(contestTags, function(i, name) {
+        if ($('input[name=show_'+name+']:checked').val()) {
+            if (showContests != '') showContests += ',';
+            showContests += name;
+        }
+    });
+
+    var showTypes = '';
+    $.each(contestTypes, function(i, name) {
+        if ($('input[name=show_'+name+']:checked').val()) {
+            if (showTypes != '') showTypes += ',';
+            showTypes += name;
+        }
+    });
+
     var queryObj = {
         lbound: $('#difficulty_min').val(),
         ubound: $('#difficulty_max').val(),
         user_name: $('input[name=form_username]').val(),
         rival_name: $('input[name=form_rivalname]').val(),
         writers: $('input[name=form_writer]').val(),
-        // user_name: removeWeirdChars(
-        //     $('input[name=form_username]').val(), /[^\w,-]+|,.*/g
-        // ),
-        // rival_name: $('input[name=form_rivalname]').val()
-        //     .replace(/[^\w,-]/g, '').match(/\w+/g).join(', '),
-        // writers: removeWeirdChars(
-        //     $('input[name=form_writer]').val(), /[^\w|-]+/g
-        // ),
         hide_ac: $('input[name=hide_ac]:checked').val(),
 
-        show_abc: $('input[name=show_abc]:checked').val(),
-        show_arc: $('input[name=show_arc]:checked').val(),
-        show_agc: $('input[name=show_agc]:checked').val(),
-        show_apc: $('input[name=show_apc]:checked').val(),
+        // show_abc: $('input[name=show_abc]:checked').val(),
+        // show_arc: $('input[name=show_arc]:checked').val(),
+        // show_agc: $('input[name=show_agc]:checked').val(),
+        // show_apc: $('input[name=show_apc]:checked').val(),
 
-        show_codefes: $('input[name=show_codefes]:checked').val(),
-        show_dwango: $('input[name=show_dwango]:checked').val(),
-        show_yahoo: $('input[name=show_yahoo]:checked').val(),
-        show_tenka1: $('input[name=show_tenka1]:checked').val(),
-        show_ddcc: $('input[name=show_ddcc]:checked').val(),
-        show_colocon: $('input[name=show_colocon]:checked').val(),
-        show_s8pc: $('input[name=show_s8pc]:checked').val(),
-        show_uncategorized: $('input[name=show_uncategorized]:checked').val(),
+        show_contests: showContests,
+        // show_codefes: $('input[name=show_codefes]:checked').val(),
+        // show_dwango: $('input[name=show_dwango]:checked').val(),
+        // show_yahoo: $('input[name=show_yahoo]:checked').val(),
+        // show_tenka1: $('input[name=show_tenka1]:checked').val(),
+        // show_ddcc: $('input[name=show_ddcc]:checked').val(),
+        // show_colocon: $('input[name=show_colocon]:checked').val(),
+        // show_s8pc: $('input[name=show_s8pc]:checked').val(),
+        // show_uncategorized: $('input[name=show_uncategorized]:checked').val(),
 
-        show_qual: $('input[name=show_qual]:checked').val(),
-        show_final: $('input[name=show_final]:checked').val(),
-        show_other_type: $('input[name=show_other_type]:checked').val(),
+        show_type: showTypes,
+        // show_qual: $('input[name=show_qual]:checked').val(),
+        // show_final: $('input[name=show_final]:checked').val(),
+        // show_other_type: $('input[name=show_other_type]:checked').val(),
 
         show_upcoming: $('input[name=show_upcoming]:checked').val(),
 
@@ -429,10 +447,8 @@ $(window).on('load', function() {
     var currentURL = $(location).attr('search');
     var params = $.url(currentURL).param();
     var userName, rivalNames, hideAC, lb, ub;
-    var showABC, showARC, showAGC, showAPC, /* showOther, */ showUpcoming;
-    var showCodeFes, showDwango, showColocon, showTenka1, showDDCC;
-    var showColocon, showS8pc, showUncat;
-    var showQual, showFinal, showOtherType;
+    var showUpcoming;
+    var showContests, showTypes;
     var writers;
     var includePartial;
 
@@ -452,7 +468,6 @@ $(window).on('load', function() {
             [] : rivalNames.replace(/[^\w,-]/g, '').match(/\w+/g)
     );
     // 'foo,,bar,F?O?O,baz' みたいなクエリは 'foo, bar, baz' に直したいです
-    // if (rivals.length > 0)
     {
         var setRivals = new Set();
         var tmp = Array();
@@ -475,33 +490,57 @@ $(window).on('load', function() {
     lb = isEmpty(lb)? 0 : parseInt(removeWeirdChars(lb));
     ub = isEmpty(ub)? UB_MAX : parseInt(removeWeirdChars(ub));
 
-    showABC = (params.show_abc != '');  // */index.html では true
-    showARC = (params.show_arc != '');
-    showAGC = (params.show_agc != '');
-    showAPC = (params.show_apc != '');
+    showContests = params.show_contests;
 
-    showCodeFes = (params.show_codefes != '');
-    showDwango = (params.show_dwango != '');
-    showYahoo = (params.show_yahoo != '');
-    showTenka1 = (params.show_tenka1 != '');
-    showDDCC = (params.show_ddcc != '');
-    showColocon = (params.show_colocon != '');
-    showS8pc = (params.show_s8pc != '');
-    showUncat = (params.show_uncategorized != '');
-    // 世界一実装が下手か？
-    // まとめて入れて連想配列みたいに取り出すのがいいのかな
-    var allOf = (
-        showCodeFes && showDwango && showYahoo && showTenka1
-            && showDDCC && showColocon && showS8pc && showUncat
-    );
-    var noneOf = !(
-        showCodeFes || showDwango || showYahoo || showTenka1
-            || showDDCC || showColocon || showS8pc || showUncat
-    );
+    var allOfOtherContests, noneOfOtherContests;
+    var setShowContests = new Set();
+    var setAllContests = new Set();
+    $.each(contestTags, function(i, name) {
+        setAllContests.add(name);
+    });
+    if (showContests === undefined) {
+        // defaults to all contests
+        $.each(contestTags, function(i, name) {
+            setShowContests.add(name);
+        });
+        allOfOtherContests = true;
+        noneOfOtherContests = false;
+    } else {
+        showContests = showContests.replace(/[^\w,-]+/g, '');
+        $.each(showContests.split(','), function(i, name) {
+            // 存在しないコンテスト名が入っても問題ないよね（たぶん）
+            setShowContests.add(name);
+        });
+        allOfOtherContests = true;
+        noneOfOtherContests = true;
+        // ループが回らないとアになるけど，回るため．
+        $.each(contestTags, function(i, name) {
+            if (name.match(/a[brgp]c/)) return;
+            if (setShowContests.has(name)) {
+                noneOfOtherContests = false;
+            } else {
+                allOfOtherContests = false;
+            }
+        });
+    }
+    
+    showTypes = params.show_type;
 
-    showQual = (params.show_qual != '');
-    showFinal = (params.show_final != '');
-    showOtherType = (params.show_other_type != '');
+    var setShowTypes = new Set();
+    if (showTypes === undefined) {
+        $.each(contestTypes, function(i, name) {
+            setShowTypes.add(name);
+        });
+    } else {
+        showTypes = showTypes.replace(/[^\w,]+/g, '');
+        $.each(showTypes.split(','), function(i, name) {
+            setShowTypes.add(name);
+        });
+    }
+
+    // showQual = (params.show_qual != '');
+    // showFinal = (params.show_final != '');
+    // showOtherType = (params.show_other_type != '');
 
     // パース結果をフォームに反映・保存
     $('input[name=form_username]').val(userName);
@@ -511,37 +550,43 @@ $(window).on('load', function() {
     $('#difficulty_min').val(lb);
     $('#difficulty_max').val(ub);
 
-    $('input[name=show_abc]').prop('checked', showABC);
-    $('input[name=show_arc]').prop('checked', showARC);
-    $('input[name=show_agc]').prop('checked', showAGC);
-    $('input[name=show_apc]').prop('checked', showAPC);
-    if (showABC && showARC && showAGC && showAPC) {
-        $('input[name=show_axc]').prop('checked', true);
-    } else if (!(showABC || showARC || showAGC || showAPC)) {
-        $('input[name=show_axc]').prop('checked', false);
-    } else {
-        $('input[name=show_axc]').prop('indeterminate', true);
-    }
-
-    $('input[name=show_codefes]').prop('checked', showCodeFes);
-    $('input[name=show_dwango]').prop('checked', showDwango);
-    $('input[name=show_yahoo]').prop('checked', showYahoo);
-    $('input[name=show_tenka1]').prop('checked', showTenka1);
-    $('input[name=show_ddcc]').prop('checked', showDDCC);
-    $('input[name=show_colocon]').prop('checked', showColocon);
-    $('input[name=show_s8pc]').prop('checked', showS8pc);
-    $('input[name=show_uncategorized]').prop('checked', showUncat);
-    if (allOf) {
+    $.each(contestTags, function(i, name) {
+        if (setShowContests.has(name)) {
+            $('input[name=show_'+name+']').prop('checked', true);
+        }
+    });
+    if (allOfOtherContests) {
         $('input[name=show_other]').prop('checked', true);
-    } else if (noneOf) {
+    } else if (noneOfOtherContests) {
         $('input[name=show_other]').prop('checked', false);
     } else {
         $('input[name=show_other]').prop('indeterminate', true);
     }
 
-    $('input[name=show_qual]').prop('checked', showQual);
-    $('input[name=show_final]').prop('checked', showFinal);
-    $('input[name=show_other_type]').prop('checked', showOtherType);
+    {
+        var allOf = true;
+        var noneOf = true;
+        $.each(['b', 'r', 'g', 'p'], function(i, ch) {
+            if (setShowContests.has('a'+ch+'c')) {
+                noneOf = false;
+            } else {
+                allOf = false;
+            }
+        });
+        
+        if (allOf) {
+            $('input[name=show_axc]').prop('checked', true);
+        } else if (noneOf) {
+            $('input[name=show_axc]').prop('checked', false);
+        } else {
+            $('input[name=show_axc]').prop('indeterminate', true);
+        }
+    }
+
+    $('input[name=show_qual]').prop('checked', setShowTypes.has('qual'));
+    $('input[name=show_final]').prop('checked', setShowTypes.has('final'));
+    $('input[name=show_other_type]')
+        .prop('checked', setShowTypes.has('other_type'));
 
     $('input[name=show_upcoming]').prop('checked', showUpcoming);
 
@@ -787,24 +832,34 @@ $(window).on('load', function() {
             var conCat = task['contestCategory'][0];
             var conQF = task['contestCategory'][1];
             // console.log(task['taskScreenName']+' '+conCat+' '+conQF);
+            if (conCat === null)
+                conCat = 'uncategorized';
+            if (conQF === null)
+                conQF = 'other_type';
 
-            if (!showABC && conCat == 'abc') return;
-            if (!showARC && conCat == 'arc') return;
-            if (!showAGC && conCat == 'agc') return;
-            if (!showAPC && conCat == 'apc') return;
-            if (!showCodeFes && conCat == 'codefestival') return;
-            if (!showDwango && conCat == 'dwango') return;
-            if (!showYahoo && conCat == 'yahoo') return;
-            if (!showTenka1 && conCat == 'tenka1') return;
-            if (!showDDCC && conCat == 'ddcc') return;
-            if (!showColocon && conCat == 'colocon') return;
-            if (!showS8pc && conCat == 's8pc') return;
-            if (!showUncat && conCat === null) return;
+            // if (!showABC && conCat == 'abc') return;
+            // if (!showARC && conCat == 'arc') return;
+            // if (!showAGC && conCat == 'agc') return;
+            // if (!showAPC && conCat == 'apc') return;
+            // if (!showCodeFes && conCat == 'codefes') return;
+            // if (!showDwango && conCat == 'dwango') return;
+            // if (!showYahoo && conCat == 'yahoo') return;
+            // if (!showTenka1 && conCat == 'tenka1') return;
+            // if (!showDDCC && conCat == 'ddcc') return;
+            // if (!showColocon && conCat == 'colocon') return;
+            // if (!showS8pc && conCat == 's8pc') return;
+            // if (!showUncat && conCat === null) return;
+            if (!setShowContests.has(conCat))
+                return;
+            // if (conCat === null && !setShowContests.has('uncategorized'))
+            //     return;
 
-            if (!showQual && conQF == 'qual') return;
-            if (!showFinal && conQF == 'final') return;
-            if (!showOtherType && conQF === null) return;
+            // if (!showQual && conQF == 'qual') return;
+            // if (!showFinal && conQF == 'final') return;
+            // if (!showOtherType && conQF === null) return;
 
+            if (!setShowTypes.has(conQF))
+                return;
 
             var contestScreenName = task['contestScreenName'];
             // var kind = contestScreenName.match(axcRE);
