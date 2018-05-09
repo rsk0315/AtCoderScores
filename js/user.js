@@ -38,20 +38,6 @@ function jumpProcess() {
     // あれ？ ここではそのまま .val() を投げるだけで
     // 後でよしなにやってもらえますか？
 
-    // var queryObj = {
-    //     lbound: $('#difficulty_min').val(),
-    //     ubound: $('#difficulty_max').val(),
-    //     user_name: $('input[name=form_username]').val(),
-    //     rival_name: $('input[name=form_rivalname]').val(),
-    //     writers: $('input[name=form_writer]').val(),
-    //     hide_ac: $('input[name=hide_ac]:checked').val(),
-
-    //     show_contests: showContests,
-    //     show_type: showTypes,
-
-    //     show_upcoming: $('input[name=show_upcoming]:checked').val(),
-    //     include_partial: $('input[name=include_partial]:checked').val(),
-    // };
     var queryObj = {};
     // パラメータ，冗長になりすぎる気がするので，デフォルトのものと
     // 同じときは省略することにしちゃいましょう．
@@ -177,6 +163,7 @@ function appendTask(tbody, task, count, status) {
         // 準拠したいと思います．
         var $td = $tdCommon.clone();
         // ここちゃんとエスケープするべきかもしれません？
+        // そんなことないか
         $('<a>').text(task['contestTitle']+': '+task['taskChar'])
             .attr({href: task['traditionalURL']})
             .appendTo($td);
@@ -274,6 +261,7 @@ function prettifyUserName(who, name) {
     var curTime = Math.floor(Date.now()/cacheExpires);
 
     // クエリ文字列ってちゃんとパーセントエンコードしなきゃまずいですか？
+    // 適当にエンコードしたら落ちたんですけど
     var imageXpath = "//img[contains(@src, '/public/img/icon/crown')]";
     var imageURL = 'https://atcoder.jp/user/' + name;
     var imageYQL = (
@@ -314,8 +302,6 @@ function prettifyUserName(who, name) {
         if (userAttr === null) {
             // 存在しないと思われるユーザに対する処理，どうしましょう
             // アラートでも出しときますか？ さすがにうるさい？
-            // console.log(name);
-            // console.log('User not found.');
             $('#warning').append(
                 $('<li>').text(name+' は存在しないユーザ名ではありませんか？')
             );
@@ -331,12 +317,9 @@ function prettifyUserName(who, name) {
                 // なってもらう方がお互いのためです．
                 // Atcoder scores ではないんですよ．
 
-                // // XXX 複数人やるようになったのでこれではだめです
-                // $('input[name=form_'+who+'name]').val($(userAttr).text());
                 if (who == 'user') {
                     $('input[name=form_username]').val($(userAttr).text());
                 } else {
-                    // console.log($('input[name=form_rivalname]'));
                     $('input[name=form_rivalname]').val(
                         $('input[name=form_rivalname]').val().replace(
                             RegExp('\\b'+name+'\\b'), $(userAttr).text()
@@ -356,7 +339,6 @@ function prettifyUserName(who, name) {
                                 .on('click', jumpProcess)
                         )
                     )
-                    // jumpProcess();
                 }
             }
 
@@ -374,14 +356,9 @@ function prettifyUserName(who, name) {
         var $progName = $('#prog_'+who+'_name');
         var $acCountName = $('#ac_count_'+who+'_name');
 
-        // FIXME ユーザ入力が TSuTa_j とかだった場合に Tsuta_J に
-        // 直す処理をできるはずなので，そのうちやります．
-        // やりました．無限ループになることはないはずですが，
-        // なった場合はこれをやめます．
         $progName.html($a);
         $acCountName.html($a.clone());
 
-        // imageName ???
         var imgTag = dataImage[0].query.results.result;
         if (!isEmpty(imgTag)) {
             imageName = imgTag.match(/crown\d+\.gif/)[0];
@@ -412,7 +389,6 @@ $(window).on('load', function() {
     $('[data-toggle=tooltip]').tooltip();
 
     $('ul input:checkbox').on('change', function() {
-        // console.log($(this));
         var checked = $(this).is(':checked');
         // find でやると再帰的にぐわ〜ってなって計算量がやばいことに
         // なりそうで怖かった．children がたくさんあってつらいけど
@@ -469,13 +445,10 @@ $(window).on('load', function() {
             $child = $parent;
             $parent = $parent.parent('li').parent('ul').parent('li')
                 .children('input:checkbox');
-            // console.log(allOf+' '+noneOf);
         }
     });
             
 
-    // ここちょっとその場しのぎ感がありますよね．
-    // まぁ 2500 点問題が出たら考えます
     const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜（手のひら返し）
 
     // URL パラメータをパース
@@ -573,10 +546,6 @@ $(window).on('load', function() {
         });
     }
 
-    // showQual = (params.show_qual != '');
-    // showFinal = (params.show_final != '');
-    // showOtherType = (params.show_other_type != '');
-
     // パース結果をフォームに反映・保存
     $('input[name=form_username]').val(userName);
     $('input[name=form_rivalname]').val(rivals.join(', '));
@@ -638,7 +607,6 @@ $(window).on('load', function() {
     // ライバル達用のテーブルをつくっちゃいましょう
     // ついでにいろいろ用意します
     var rivalIndex = {};
-    // if (rivals.length > 0)
     {
         $.each(rivals, function(i, name) {
             rivalIndex[name.toLowerCase()] = i;
@@ -705,8 +673,6 @@ $(window).on('load', function() {
             + contestXpath + '"&tsurai=' + curTime
     );
 
-    // console.log(YQL_JSON_BASE);
-    // console.log(queryAP);
     $.when(
         // AtCoder Problems の API
         $.ajax({
@@ -757,7 +723,6 @@ $(window).on('load', function() {
         var setRivalNotAC = new Set();
         var setEachRivalAC = Array();
         var setEachRivalNotAC = Array();
-        // if (rivals.length > 0)
         {
             $.each(rivalIndex, function(i, name) {
                 setEachRivalAC.push(new Set());
@@ -782,8 +747,8 @@ $(window).on('load', function() {
                     }
                     return;
                 }
-                // if (rivals.length == 0)
-                //     return;
+                if (rivals.length == 0)
+                    return;
 
                 var index = rivalIndex[this.user_id.toLowerCase()];
                 if (this.result == 'AC') {
@@ -799,19 +764,6 @@ $(window).on('load', function() {
                         setEachRivalNotAC[index].add(pid);
                     }
                 }
-                // } else {
-                //     // if (this.user_id.toLowerCase() == rivalNameLC)
-                //     // なんかライバルは提出するだけで AC の判定になって
-                //     // いたんですが（）．対戦相手に有利な理不尽バトル漫画かな？
-                //     if (this.result == 'AC') {
-                //         setRivalAC.add(pid);
-                //         setRivalNotAC.delete(pid);
-                //     } else /* if (this.result != 'CE') */ {
-                //         if (!setRivalNotAC.has(pid)) {
-                //             // ここの分岐もおかしいね（ア
-                //             setRivalNotAC.add(pid);
-                //         }
-                //     }
             });
         } else if (!(isEmpty(userName) && isEmpty(rivals))) {
             $('#error').append(
@@ -843,7 +795,6 @@ $(window).on('load', function() {
                         )
                 );
             }
-            // console.log(dataAP);
         }
         // 調べ終わりました
 
@@ -872,40 +823,12 @@ $(window).on('load', function() {
             if (conQF === null)
                 conQF = 'other_type';
 
-            // if (!showABC && conCat == 'abc') return;
-            // if (!showARC && conCat == 'arc') return;
-            // if (!showAGC && conCat == 'agc') return;
-            // if (!showAPC && conCat == 'apc') return;
-            // if (!showCodeFes && conCat == 'codefes') return;
-            // if (!showDwango && conCat == 'dwango') return;
-            // if (!showYahoo && conCat == 'yahoo') return;
-            // if (!showTenka1 && conCat == 'tenka1') return;
-            // if (!showDDCC && conCat == 'ddcc') return;
-            // if (!showColocon && conCat == 'colocon') return;
-            // if (!showS8pc && conCat == 's8pc') return;
-            // if (!showUncat && conCat === null) return;
             if (!setShowContests.has(conCat))
                 return;
-            // if (conCat === null && !setShowContests.has('uncategorized'))
-            //     return;
-
-            // if (!showQual && conQF == 'qual') return;
-            // if (!showFinal && conQF == 'final') return;
-            // if (!showOtherType && conQF === null) return;
-
             if (!setShowTypes.has(conQF))
                 return;
 
             var contestScreenName = task['contestScreenName'];
-            // var kind = contestScreenName.match(axcRE);
-            // if (kind !== null) {
-            //     if (kind[1] == 'b' && !showABC) return;
-            //     if (kind[1] == 'r' && !showARC) return;
-            //     if (kind[1] == 'g' && !showAGC) return;
-            //     if (kind[1] == 'p' && !showAPC) return;
-            // } else if (!showOther) {
-            //     return;
-            // }
 
             // 開催前コンテストを弾きます
             if (!showUpcoming && setUpcoming.has(contestScreenName))
@@ -913,7 +836,6 @@ $(window).on('load', function() {
 
             // 得点帯で弾きます
             var point = parseInt(task['fullScore']);
-            // console.log('? '+point);
             if (!(lb <= point && point <= ub)) {
                 // TODO 部分点を許容して云々する場合はそうします
                 if (!includePartial)
@@ -947,7 +869,6 @@ $(window).on('load', function() {
 
 
             // 試練に耐え抜いた子たちです
-            // console.log(task);
             points.add(parseInt(point));
             tasks.push(task);
         });
@@ -981,8 +902,8 @@ $(window).on('load', function() {
                         .css('background-color', 'transparent')
                 );
 
-                // if (rivals.length == 0)
-                //     return;
+                if (rivals.length == 0)
+                    return;
 
                 $.each($('tr.progress_rival'), function(i, $tr) {
                     var id = $tr.id;
@@ -1032,17 +953,6 @@ $(window).on('load', function() {
                     selectAndAdd('#num_user_unsubmitted', 1);
                 }
 
-                // if (setRivalAC.has(pid)) {
-                //     selectAndAdd('#prog_rival_'+point, 1);
-                //     selectAndAdd('#prog_rival_total', point);
-                //     selectAndAdd('#num_rival_ac', 1);
-                // } else if (setRivalNotAC.has(pid)) {
-                //     selectAndAdd('#num_rival_not_ac', 1);
-                // } else {
-                //     selectAndAdd('#num_rival_unsubmitted', 1);
-                // }
-
-                // if (rivals.length > 0)
                 {
                     $.each($('tr.progress_rival'), function(j, $tr) {
                         var id = $tr.id;
@@ -1076,8 +986,8 @@ $(window).on('load', function() {
                     );
                 }
 
-                // if (rivals.length == 0)
-                //     return;
+                if (rivals.length == 0)
+                    return;
 
                 $.each($('tr.progress_rival'), function(j, $tr) {
                     var id = $tr.id;
@@ -1107,7 +1017,6 @@ $(window).on('load', function() {
 
     if (!isEmpty(userName) || !isEmpty(rivals)) {
         $('#progresstable').attr('style', 'display: table');
-        // $('#ac_count').attr('style', 'display: table');
         $('#ac_count').css({
             display: 'table',
             'white-space': 'nowrap',
@@ -1130,12 +1039,9 @@ $(window).on('load', function() {
         $('.progress_rival').attr('style', 'display: none');
         $('.ac_count_rival').attr('style', 'display: none');
     } else {
-        // if (rivals.length > 0)
-        {
-            $.each(rivals, function(i, name) {
-                prettifyUserName('rival'+i, name);
-            });
-        }
+        $.each(rivals, function(i, name) {
+            prettifyUserName('rival'+i, name);
+        });
         $('.result_rival').css('display', 'block');
         $('.progress_rival').attr('style', 'display: table-row');
         $('.ac_count_rival').attr('style', 'display: table-row');
