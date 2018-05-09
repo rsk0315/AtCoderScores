@@ -1165,7 +1165,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "A",
@@ -1185,7 +1185,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2016-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1205,7 +1205,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1225,7 +1225,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2016-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1245,7 +1245,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1269,7 +1269,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1297,7 +1297,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "A",
@@ -1321,7 +1321,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -2949,7 +2949,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2016-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -2969,7 +2969,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -2989,7 +2989,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2016-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -3009,7 +3009,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -3033,7 +3033,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -3061,7 +3061,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "B",
@@ -3085,7 +3085,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -4685,7 +4685,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "B",
@@ -4705,7 +4705,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "A",
@@ -4725,7 +4725,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "C",
@@ -4745,7 +4745,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "D",
@@ -5929,7 +5929,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "C",
@@ -5949,7 +5949,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2016-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -5969,7 +5969,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2016-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -5989,7 +5989,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "B",
@@ -6009,7 +6009,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -6033,7 +6033,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -6057,7 +6057,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "E",
@@ -6797,7 +6797,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -6817,7 +6817,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -6837,7 +6837,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "C",
@@ -6857,7 +6857,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -6877,7 +6877,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "C",
@@ -6897,7 +6897,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "C",
@@ -6925,7 +6925,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "F",
@@ -7513,7 +7513,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "G",
@@ -7533,7 +7533,7 @@
         "contestTitle": "CODE THANKS FESTIVAL 2017",
         "contestScreenName": "code-thanks-festival-2017-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "H",
@@ -8473,7 +8473,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Elimination Tournament Round 1",
         "contestScreenName": "cf16-tournament-round1-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -8497,7 +8497,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Elimination Tournament Round 2",
         "contestScreenName": "cf16-tournament-round2-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -8521,7 +8521,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "D",
@@ -8541,7 +8541,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Tournament Round 3",
         "contestScreenName": "cf16-tournament-round3-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -8561,7 +8561,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -8581,7 +8581,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 1",
         "contestScreenName": "cf17-tournament-round1-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "C",
@@ -8601,7 +8601,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 2",
         "contestScreenName": "cf17-tournament-round2-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -8621,7 +8621,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "D",
@@ -8641,7 +8641,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -8665,7 +8665,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -8693,7 +8693,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -9225,7 +9225,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2016-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -9245,7 +9245,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2016-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "D",
@@ -9265,7 +9265,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 1",
         "contestScreenName": "cf17-tournament-round1-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "D",
@@ -9285,7 +9285,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 3",
         "contestScreenName": "cf17-tournament-round3-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "E",
@@ -10077,7 +10077,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 2",
         "contestScreenName": "cf17-tournament-round2-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -10569,7 +10569,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Elimination Tournament Round 1",
         "contestScreenName": "cf16-tournament-round1-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -10593,7 +10593,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "E",
@@ -10613,7 +10613,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "F",
@@ -10633,7 +10633,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "D",
@@ -10653,7 +10653,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "E",
@@ -10673,7 +10673,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "F",
@@ -10693,7 +10693,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "G",
@@ -10713,7 +10713,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Elimination Tournament Round 3",
         "contestScreenName": "cf17-tournament-round3-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "F",
@@ -10733,7 +10733,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Exhibition",
         "contestScreenName": "cf17-exhibition-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -10753,7 +10753,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "E",
@@ -10773,7 +10773,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "F",
@@ -10793,7 +10793,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "G",
@@ -11189,7 +11189,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -11537,7 +11537,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Elimination Tournament Round 2",
         "contestScreenName": "cf16-tournament-round2-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -11561,7 +11561,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2016-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -11581,7 +11581,7 @@
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2016-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -11877,7 +11877,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "G",
@@ -12257,7 +12257,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Tournament Round 3",
         "contestScreenName": "cf16-tournament-round3-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -12521,7 +12521,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Exhibition",
         "contestScreenName": "cf16-exhibition-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "A",
@@ -12545,7 +12545,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Exhibition",
         "contestScreenName": "cf16-exhibition-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -12569,7 +12569,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "H",
@@ -12589,7 +12589,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "I",
@@ -12609,7 +12609,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Grand Final",
         "contestScreenName": "cf16-exhibition-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "J",
@@ -12629,7 +12629,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Exhibition",
         "contestScreenName": "cf17-exhibition-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             null
         ],
         "taskChar": "B",
@@ -13001,7 +13001,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "H",
@@ -13021,7 +13021,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "H",
@@ -13041,7 +13041,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "I",
@@ -13061,7 +13061,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -13085,7 +13085,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 A",
         "contestScreenName": "code-festival-2017-quala",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "F",
@@ -13109,7 +13109,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -13137,7 +13137,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2017-qualb",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "F",
@@ -13165,7 +13165,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "E",
@@ -13369,7 +13369,7 @@
         "contestTitle": "CODE FESTIVAL 2017 \u4e88\u9078 C",
         "contestScreenName": "code-festival-2017-qualc",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "qual"
         ],
         "taskChar": "F",
@@ -13453,7 +13453,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "I",
@@ -13473,7 +13473,7 @@
         "contestTitle": "CODE FESTIVAL 2017 Final",
         "contestScreenName": "cf17-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "J",
@@ -13705,7 +13705,7 @@
         "contestTitle": "CODE FESTIVAL 2016 Final",
         "contestScreenName": "cf16-final-open",
         "contestCategory": [
-            "codefestival",
+            "codefes",
             "final"
         ],
         "taskChar": "J",
