@@ -487,8 +487,8 @@ $(window).on('load', function() {
     var writers;
     var includePartial;
 
-    userName = params.user_name;
-    rivalNames = params.rival_name;
+    userName = params.user;
+    rivalNames = params.rivals;
     writers = params.writers;
     hideAC = params.hide_ac;
     lb = params.lbound;
