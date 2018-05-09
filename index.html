@@ -91,14 +91,15 @@
         <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
              後々ちゃんと勉強したいです．えびより -->
         <div class="panel panel-default" style="margin-top: 10px">
-          <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="true">
+          <div class="panel-heading collapse-heading collapsed" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="false">
             <h3 class="panel-title">
               絞り込み
+              <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="コンテストの種類や得点帯などで絞り込むことができます．項目が多くなってきたのでデフォルトでは折りたたんでおくことにしました．"></span>
               <span class="glyphicon pull-right"></span>
             </h3>
           </div>
 
-          <div id="collapse-filter" class="panel-body panel-collapse collapse in">
+          <div id="collapse-filter" class="panel-body panel-collapse collapse" aria-expanded="false">
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
               <span style="font-size: large">コンテスト種別</span>
             </p>
@@ -144,65 +145,78 @@
 
             <div class="form-inline">
               <select id="difficulty_min" class="selectpicker" data-size="8">
-                <option value="0">0</option>
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
-                <option value="400">400</option>
-                <option value="500">500</option>
-                <option value="600">600</option>
-                <option value="700">700</option>
-                <option value="800">800</option>
-                <option value="900">900</option>
-                <option value="1000">1000</option>
-                <option value="1100">1100</option>
-                <option value="1200">1200</option>
-                <option value="1300">1300</option>
-                <option value="1400">1400</option>
-                <option value="1500">1500</option>
-                <option value="1600">1600</option>
-                <option value="1700">1700</option>
-                <option value="1800">1800</option>
-                <option value="1900">1900</option>
-                <option value="2000">2000</option>
-                <option value="2100">2100</option>
-                <option value="2200">2200</option>
-                <option value="2300">2300</option>
-                <option value="2400">2400</option>
+                <!-- <option value="0">0</option> -->
+                <!-- <option value="100">100</option> -->
+                <!-- <option value="200">200</option> -->
+                <!-- <option value="300">300</option> -->
+                <!-- <option value="400">400</option> -->
+                <!-- <option value="500">500</option> -->
+                <!-- <option value="600">600</option> -->
+                <!-- <option value="700">700</option> -->
+                <!-- <option value="800">800</option> -->
+                <!-- <option value="900">900</option> -->
+                <!-- <option value="1000">1000</option> -->
+                <!-- <option value="1100">1100</option> -->
+                <!-- <option value="1200">1200</option> -->
+                <!-- <option value="1300">1300</option> -->
+                <!-- <option value="1400">1400</option> -->
+                <!-- <option value="1500">1500</option> -->
+                <!-- <option value="1600">1600</option> -->
+                <!-- <option value="1700">1700</option> -->
+                <!-- <option value="1800">1800</option> -->
+                <!-- <option value="1900">1900</option> -->
+                <!-- <option value="2000">2000</option> -->
+                <!-- <option value="2100">2100</option> -->
+                <!-- <option value="2200">2200</option> -->
+                <!-- <option value="2300">2300</option> -->
+                <!-- <option value="2400">2400</option> -->
               </select>
               から
               <select id="difficulty_max" class="selectpicker" data-size="8">
-                <option value="100">100</option>
-                <option value="200">200</option>
-                <option value="300">300</option>
-                <option value="400">400</option>
-                <option value="500">500</option>
-                <option value="600">600</option>
-                <option value="700">700</option>
-                <option value="800">800</option>
-                <option value="900">900</option>
-                <option value="1000">1000</option>
-                <option value="1100">1100</option>
-                <option value="1200">1200</option>
-                <option value="1300">1300</option>
-                <option value="1400">1400</option>
-                <option value="1500">1500</option>
-                <option value="1600">1600</option>
-                <option value="1700">1700</option>
-                <option value="1800">1800</option>
-                <option value="1900">1900</option>
-                <option value="2000">2000</option>
-                <option value="2100">2100</option>
-                <option value="2200">2200</option>
-                <option value="2300">2300</option>
-                <option value="2400">2400</option>
-                <option value="1000000">1000000</option>
+                <!-- <option value="100">100</option> -->
+                <!-- <option value="200">200</option> -->
+                <!-- <option value="300">300</option> -->
+                <!-- <option value="400">400</option> -->
+                <!-- <option value="500">500</option> -->
+                <!-- <option value="600">600</option> -->
+                <!-- <option value="700">700</option> -->
+                <!-- <option value="800">800</option> -->
+                <!-- <option value="900">900</option> -->
+                <!-- <option value="1000">1000</option> -->
+                <!-- <option value="1100">1100</option> -->
+                <!-- <option value="1200">1200</option> -->
+                <!-- <option value="1300">1300</option> -->
+                <!-- <option value="1400">1400</option> -->
+                <!-- <option value="1500">1500</option> -->
+                <!-- <option value="1600">1600</option> -->
+                <!-- <option value="1700">1700</option> -->
+                <!-- <option value="1800">1800</option> -->
+                <!-- <option value="1900">1900</option> -->
+                <!-- <option value="2000">2000</option> -->
+                <!-- <option value="2100">2100</option> -->
+                <!-- <option value="2200">2200</option> -->
+                <!-- <option value="2300">2300</option> -->
+                <!-- <option value="2400">2400</option> -->
+                <!-- <option value="1000000">1000000</option> -->
               </select>
+
+              <div>
+                <label for="free-selection" style="margin-top: 10px">自由指定</label>
+                <div id="free-selection">
+                  <input type="text" id="free_min" class="form-control" style="width:20%" placeholder="240" disabled>
+                  から
+                  <input type="text" id="free_max" class="form-control" style="width:20%" placeholder="260" disabled>
+                  <input type="checkbox" name="enable_free" style="margin-left: 20px"> 自由指定を有効にする <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="100 点刻みでない問題に絞り込みたいときなどに便利です．"></span>
+                </div>
+              </div>
             </div>
 
-            <div class="include_partial">
+            <div class="include_partial" style="margin-top: 10px">
+              <label for="partial" style="margin-top: 10px">部分点</label>
+              <div id="partial">
                 <input type="checkbox" name="include_partial">
                 部分点が範囲に含まれる問題も表示
+              </div>
             </div>
             
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">

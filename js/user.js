@@ -34,6 +34,8 @@ var contestTags = [
 ];
 var contestTypes = ['qual', 'final', 'other_type'];
 
+var UB_MAX = 1000000;  // // 強気にいっちゃえ〜〜〜
+
 function jumpProcess() {
     // あれ？ ここではそのまま .val() を投げるだけで
     // 後でよしなにやってもらえますか？
@@ -45,9 +47,24 @@ function jumpProcess() {
         // デフォルト値が定数のもの
         var lbound = $('#difficulty_min').val();
         var ubound = $('#difficulty_max').val();
+        if ($('input[name=enable_free]').is(':checked')) {
+            var lbStr = $('#free_min').val().replace(/\s+/g, '');
+            var ubStr = $('#free_max').val().replace(/\s+/g, '');
+            console.log(lbStr+' '+ubStr);
+            if (lbStr.match(/\D/) || ubStr.match(/\D/)) {
+                alert('ぽまえ〜，絶対に悪意あるだろ〜');
+            }
+            
+            lbound = parseInt(lbStr.replace(/\D+/g, ''));
+            ubound = parseInt(ubStr.replace(/\D+/g, ''));
+            if (isNaN(lbound))
+                lbound = 0;
+            if (isNaN(ubound))
+                ubound = UB_MAX;
+        }
         if (lbound != 0)
             queryObj['lbound'] = lbound;
-        if (ubound != 1000000)
+        if (ubound != UB_MAX)
             queryObj['ubound'] = ubound;
     }
     {
@@ -381,11 +398,41 @@ $(window).on('load', function() {
         makeScrollableTable();
     }, 0);
 
+    // if ($(window).width() < 768) {
+    //     $('.panel-collapse').removeClass('in').collapse('hide');
+    // }
     $('.panel-heading').on('click', function() {
         $($(this).data('target')).collapse('toggle');
     });
 
     $('[data-toggle=tooltip]').tooltip();
+
+    // $.each(['username', 'rivalname', 'writer'], function(i, who) {
+    //     // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
+    //     $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
+    //         if (e.keyCode == 13) {
+    //             jumpProcess();
+    //         } else {
+    //             $.noop();
+    //         }
+    //     });
+    // });
+    $('input').on('keypress', function(e) {
+        if (e.keyCode == 13) {
+            jumpProcess();
+        } else {
+            $.noop();
+        }
+    });
+
+    $('input[name=enable_free]').on('change', function() {
+        var checked = $(this).is(':checked');
+        $('#difficulty_min').prop('disabled', checked);
+        $('#difficulty_max').prop('disabled', checked);
+        $('#free_min').prop('disabled', !checked);
+        $('#free_max').prop('disabled', !checked);
+        $('.selectpicker').selectpicker('refresh');
+    });
 
     $('ul input:checkbox').on('change', function() {
         var checked = $(this).is(':checked');
@@ -446,9 +493,17 @@ $(window).on('load', function() {
                 .children('input:checkbox');
         }
     });
-            
 
-    const UB_MAX = 1000000;  // 強気にいっちゃえ〜〜〜（手のひら返し）
+    $('#difficulty_min').append($('<option>').attr({value: 0}).text(0));
+    for (var i=100; i<=2400; i+=100) {
+        var $option = $('<option>').attr({value: i}).text(i);
+        $('#difficulty_min').append($option);
+        $('#difficulty_max').append($option.clone());
+    }
+    $('#difficulty_max').append(
+        $('<option>').attr({value: UB_MAX}).text(UB_MAX)
+    );
+
 
     // URL パラメータをパース
     var currentURL = $(location).attr('search');
@@ -466,10 +521,8 @@ $(window).on('load', function() {
     lb = params.lbound;
     ub = params.ubound;
 
-    userName = isEmpty(userName)? '':removeWeirdChars(
-        // , を使ってしまった人がアにならないように，, より左だけを持ってきます
-        userName, /[^\w,-]+|,.*/g
-    );
+    // , を使ってしまった人がアにならないように，, より左だけを持ってきます
+    userName = isEmpty(userName)? '':userName.replace(/[^\w,-]+|,.*/g, '');
     var rivals = (
         isEmpty(rivalNames)?
             [] : rivalNames.replace(/[^\w,-]/g, '').match(/\w+/g)
@@ -490,12 +543,12 @@ $(window).on('load', function() {
         });
         rivals = tmp;
     }
-    writers = isEmpty(writers)? '' : removeWeirdChars(writers, /[^\w|-]+/g);
+    writers = isEmpty(writers)? '' : writers.replace(/[^\w|-]+/g, '');
     hideAC = (hideAC == 'on');  // */index.html では false
     showUpcoming = (params.show_upcoming == 'on');
     includePartial = (params.include_partial == 'on');
-    lb = isEmpty(lb)? 0 : parseInt(removeWeirdChars(lb));
-    ub = isEmpty(ub)? UB_MAX : parseInt(removeWeirdChars(ub));
+    lb = isEmpty(lb)? 0 : parseInt(lb.replace(/\D+/, ''));
+    ub = isEmpty(ub)? UB_MAX : parseInt(ub.replace(/\D+/, ''));
 
     showContests = params.show_contests;
 
@@ -595,13 +648,33 @@ $(window).on('load', function() {
 
     $('input[name=include_partial]').prop('checked', includePartial);
 
-    $('.selectpicker').selectpicker('refresh');
-
     if (lb > ub) {
         var tmp = lb;
         lb = ub;
         ub = tmp;
     }
+    
+    var lbIsValid =
+        ($('#difficulty_min').children('option[value='+lb+']').length > 0);
+    var ubIsValid =
+        ($('#difficulty_max').children('option[value='+ub+']').length > 0)
+
+    if (lbIsValid && ubIsValid) {
+        $('#difficulty_min').selectpicker('val', lb);
+        $('#difficulty_max').selectpicker('val', ub);
+    } else {
+        $('#difficulty_min').selectpicker('val', 0);
+        $('#difficulty_max').selectpicker('val', UB_MAX);
+        $('#difficulty_min').prop('disabled', true);
+        $('#difficulty_max').prop('disabled', true);
+
+        $('input[name=enable_free]').prop('checked', true);
+        $('#free_min').val(lb);
+        $('#free_max').val(ub);
+        $('#free_min').prop('disabled', false);
+        $('#free_max').prop('disabled', false);
+    }
+    $('.selectpicker').selectpicker('refresh');
 
     // ライバル達用のテーブルをつくっちゃいましょう
     // ついでにいろいろ用意します
@@ -1048,14 +1121,14 @@ $(window).on('load', function() {
 
     $('#difficulty_submit').on('click', jumpProcess);
 
-    $.each(['username', 'rivalname', 'writer'], function(i, who) {
-        // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
-        $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
-            if (e.keyCode == 13) {
-                jumpProcess();
-            } else {
-                $.noop();
-            }
-        });
-    });
+    // $.each(['username', 'rivalname', 'writer'], function(i, who) {
+    //     // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
+    //     $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
+    //         if (e.keyCode == 13) {
+    //             jumpProcess();
+    //         } else {
+    //             $.noop();
+    //         }
+    //     });
+    // });
 });  
