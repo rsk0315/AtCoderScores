@@ -688,6 +688,7 @@ $(window).on('load', function() {
         if (dataAP[0].query.results !== null) {
             var userNameLC = userName.toLowerCase();
             $(dataAP[0].query.results.json.json).each(function() {
+                if (this.result == 'CE') return;
                 var pid = this.problem_id;
 
                 if (this.user_id.toLowerCase() == userNameLC) {
