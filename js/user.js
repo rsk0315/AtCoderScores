@@ -38,54 +38,89 @@ function jumpProcess() {
     // あれ？ ここではそのまま .val() を投げるだけで
     // 後でよしなにやってもらえますか？
 
-    var showContests = '';
-    $.each(contestTags, function(i, name) {
-        if ($('input[name=show_'+name+']:checked').val()) {
-            if (showContests != '') showContests += ',';
-            showContests += name;
-        }
-    });
+    // var queryObj = {
+    //     lbound: $('#difficulty_min').val(),
+    //     ubound: $('#difficulty_max').val(),
+    //     user_name: $('input[name=form_username]').val(),
+    //     rival_name: $('input[name=form_rivalname]').val(),
+    //     writers: $('input[name=form_writer]').val(),
+    //     hide_ac: $('input[name=hide_ac]:checked').val(),
 
-    var showTypes = '';
-    $.each(contestTypes, function(i, name) {
-        if ($('input[name=show_'+name+']:checked').val()) {
-            if (showTypes != '') showTypes += ',';
-            showTypes += name;
-        }
-    });
+    //     show_contests: showContests,
+    //     show_type: showTypes,
 
-    var queryObj = {
-        lbound: $('#difficulty_min').val(),
-        ubound: $('#difficulty_max').val(),
-        user_name: $('input[name=form_username]').val(),
-        rival_name: $('input[name=form_rivalname]').val(),
-        writers: $('input[name=form_writer]').val(),
-        hide_ac: $('input[name=hide_ac]:checked').val(),
+    //     show_upcoming: $('input[name=show_upcoming]:checked').val(),
+    //     include_partial: $('input[name=include_partial]:checked').val(),
+    // };
+    var queryObj = {};
+    // パラメータ，冗長になりすぎる気がするので，デフォルトのものと
+    // 同じときは省略することにしちゃいましょう．
+    {
+        // デフォルト値が定数のもの
+        var lbound = $('#difficulty_min').val();
+        var ubound = $('#difficulty_max').val();
+        if (lbound != 0)
+            queryObj['lbound'] = lbound;
+        if (ubound != 1000000)
+            queryObj['ubound'] = ubound;
+    }
+    {
+        // デフォルト値を動的につくるもの
+        var showContests = '';
+        var showAllContests = '';
+        $.each(contestTags, function(i, name) {
+            if (i > 0) showAllContests += ',';
+            showAllContests += name;
 
-        // show_abc: $('input[name=show_abc]:checked').val(),
-        // show_arc: $('input[name=show_arc]:checked').val(),
-        // show_agc: $('input[name=show_agc]:checked').val(),
-        // show_apc: $('input[name=show_apc]:checked').val(),
+            if ($('input[name=show_'+name+']:checked').val()) {
+                if (showContests != '') showContests += ',';
+                showContests += name;
+            }
+        });
 
-        show_contests: showContests,
-        // show_codefes: $('input[name=show_codefes]:checked').val(),
-        // show_dwango: $('input[name=show_dwango]:checked').val(),
-        // show_yahoo: $('input[name=show_yahoo]:checked').val(),
-        // show_tenka1: $('input[name=show_tenka1]:checked').val(),
-        // show_ddcc: $('input[name=show_ddcc]:checked').val(),
-        // show_colocon: $('input[name=show_colocon]:checked').val(),
-        // show_s8pc: $('input[name=show_s8pc]:checked').val(),
-        // show_uncategorized: $('input[name=show_uncategorized]:checked').val(),
+        var showTypes = '';
+        var showAllTypes = '';
+        $.each(contestTypes, function(i, name) {
+            if (i > 0) showAllTypes += ',';
+            showAllTypes += name;
 
-        show_type: showTypes,
-        // show_qual: $('input[name=show_qual]:checked').val(),
-        // show_final: $('input[name=show_final]:checked').val(),
-        // show_other_type: $('input[name=show_other_type]:checked').val(),
+            if ($('input[name=show_'+name+']:checked').val()) {
+                if (showTypes != '') showTypes += ',';
+                showTypes += name;
+            }
+        });
 
-        show_upcoming: $('input[name=show_upcoming]:checked').val(),
-
-        include_partial: $('input[name=include_partial]:checked').val(),
-    };
+        if (showContests != showAllContests)
+            queryObj['show_contests'] = showContests;
+        if (showTypes != showAllTypes)
+            queryObj['show_type'] = showTypes;
+    }
+    {
+        // デフォルト値が空のもの
+        var user = $('input[name=form_username]').val();
+        var rivals = $('input[name=form_rivalname]').val();
+        var writers = $('input[name=form_writer]').val();
+        if (!isEmpty(user))
+            queryObj['user'] = user;
+        if (!isEmpty(rivals))
+            queryObj['rivals'] = rivals;
+        if (!isEmpty(writers))
+            queryObj['writers'] = writers;
+    }
+    {
+        // デフォルト値が false のもの
+        // この判定で大丈夫ですか？ 一意になってるか不安なんですけど
+        if ($('input[name=hide_ac]').is(':checked'))
+            queryObj['hide_ac'] = 'on';
+        if ($('input[name=show_upcoming]').is(':checked'))
+            queryObj['show_upcoming'] = 'on';
+        if ($('input[name=include_partial]').is(':checked'))
+            queryObj['include_partial'] = 'on';
+    }
+    {
+        // デフォルト値が true のもの
+        // あれば
+    }
     window.location.href = 'index.html?' + $.param(queryObj);
 }
 
