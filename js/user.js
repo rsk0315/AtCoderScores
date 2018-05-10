@@ -50,7 +50,6 @@ function jumpProcess() {
         if ($('input[name=enable_free]').is(':checked')) {
             var lbStr = $('#free_min').val().replace(/\s+/g, '');
             var ubStr = $('#free_max').val().replace(/\s+/g, '');
-            console.log(lbStr+' '+ubStr);
             if (lbStr.match(/\D/) || ubStr.match(/\D/)) {
                 alert('ぽまえ〜，絶対に悪意あるだろ〜');
             }
@@ -732,12 +731,15 @@ $(window).on('load', function() {
     // べっ，別に API のことなんて好きじゃないんだからっ（ぺちんぺちん）
     var cacheExpires = 300 * 1000;  // ms
     var curTime = Math.floor(Date.now()/cacheExpires);  // これ関数化すべきかも
-    // json.result, json.user_id, json.problem_id だけとればいいけどそれでもだめ
+    // json.result, json.user_id, json.problem_id だけとればいいけど無意味
+    // json.result != "CE" に絞ってるのは 5000 件の上限が険しいため
+    // にゃーん．
     var queryAP = (
         'select * from json where '
             + 'url="http://beta.kenkoooo.com/atcoder/atcoder-api/results?user='
             + userName + '&rivals=' + rivals.join(',')
             + '&tsurai=' + curTime + '"'
+            + ' AND json.result != "CE"'
     );
 
     // 開催前のコンテストを調べてあげよー！
@@ -852,39 +854,47 @@ $(window).on('load', function() {
                 ++users;
 
             if (invalid.length < users) {
-                $tt = $tooltip.clone().attr({
-                    'data-original-title':
-                    'ユーザ一人だけでこれを超えるような状況になった場合は'
-                        + 'どうしたらいいんだろう．困りましたね．'
-                }).tooltip()
-                $tt.removeClass('glyphicon-question-sign')
-                $tt.addClass('glyphicon-exclamation-sign');
+                // var $tt = $tooltip.clone().attr({
+                //     'data-original-title':
+                //     'ユーザ一人だけでこれを超えるような状況になった場合は'
+                //         + 'どうしたらいいんだろう．困りましたね．'
+                // }).tooltip()
+                // $tt.removeClass('glyphicon-question-sign')
+                // $tt.addClass('glyphicon-exclamation-sign');
 
                 $('#error').append(
                     $('<ul>').css('font-weight', 'normal')
+                        // .append(
+                        //     $('<li>').text(
+                        //         /*
+                        //         'おそらく AtCoder Problems さんの API は'
+                        //             + '正常なのですが，それを取得するための'
+                        //             + 'YQL の不具合でこけています．ユーザ名の'
+                        //             +' 組み合わせをご報告いただけると'
+                        //             + '捗るかもしれません．'
+                        //         */
+                        //         'YQL が捌けるデータの上限（1536 kB）'
+                        //             + 'を超えてしまっているかもしれません．'
+                        //     ).append($tt)
+                        // )
                         .append(
                             $('<li>').text(
-                                /*
-                                'おそらく AtCoder Problems さんの API は'
-                                    + '正常なのですが，それを取得するための'
-                                    + 'YQL の不具合でこけています．ユーザ名の'
-                                    +' 組み合わせをご報告いただけると'
-                                    + '捗るかもしれません．'
-                                */
-                                'YQL が捌けるデータの上限（1536 kB くらい？）'
-                                    + 'を超えてしまっているかもしれません．'
-                            ).append($tt)
-                        )
-                        .append(
-                            $('<li>').text(
-                                'あるいは正常に虚無が'
-                                    + '返ってきただけかもしれません．'
+                                'AtCoder Problems のデータを直接持ってくるのが'
+                                    + '制約上できないため，別のサービスを'
+                                    + '間にかませてなんとかしているのですが，'
+                                    + 'そのサービスは 1536kB を超える JSON は'
+                                    + '処理してくれないみたいなのです．'
                             )
                         )
 
                     // ここ，存在しないユーザとか提出のないユーザとか，
                     // 各種コーナーケースの処理が実質不可能なので，
                     // 考えられる理由を全て述べることにします． 
+                ).append(
+                    $('<li>').text(
+                        'あるいは正常に虚無が'
+                            + '返ってきただけかもしれません．'
+                    )
                 );
             }
         }
