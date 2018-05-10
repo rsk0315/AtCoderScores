@@ -971,9 +971,23 @@ $(window).on('load', function() {
 
         {
             // 点数テーブルを書きます．set の順番がアなので困ります
-            var pointList = Array.from(points).sort(function(x, y) {
-                return x-y;
-            });
+            // var pointList = Array.from(points).sort(function(x, y) {
+            //     return x-y;
+            // });
+            // IE が Array.from 使えないってマジ？ 自分，対応やめていいっすか？
+            var pointList;
+            if (Array.from !== undefined) {
+                pointList = Array.from(points).sort(function(x, y) {
+                    return x-y;
+                });
+            } else {
+                pointList = Array();
+                $.each(points, function(i, point) {
+                    pointList.push(point);
+                });
+                pointList.sort();
+            }
+                
             $.each(pointList, function(i, point) {
                 $('#progresstable>thead>tr').append(
                     $('<th>').text(point)
