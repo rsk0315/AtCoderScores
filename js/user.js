@@ -985,7 +985,9 @@ $(window).on('load', function() {
                 points.forEach(function(point) {
                     pointList.push(point);
                 });
-                pointList.sort();
+                pointList.sort(function(x, y) {
+                    return x-y;
+                });
             }
                 
             $.each(pointList, function(i, point) {
