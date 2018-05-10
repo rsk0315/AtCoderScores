@@ -761,6 +761,10 @@ $(window).on('load', function() {
             'Content-Type': 'text/plain',
         }).done(function(data) {
             console.log(data);
+        }).fail(function(xhr, textStatus, errorThrown) {
+            console.log(xhr);
+            console.log(textStatus);
+            console.log(errorThrown);
         });
     }
 
