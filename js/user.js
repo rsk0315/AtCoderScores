@@ -982,7 +982,7 @@ $(window).on('load', function() {
                 });
             } else {
                 pointList = Array();
-                $.each(points, function(i, point) {
+                points.forEach(function(point) {
                     pointList.push(point);
                 });
                 pointList.sort();
