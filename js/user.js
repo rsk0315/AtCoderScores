@@ -18,9 +18,9 @@
   $(window).on('load', ...) のところにも変更を入れてくださいね．
 */
 
-function removeWeirdChars(s, r=/[^\w-]+/g) {
-    return s.replace(r, '');
-}
+// function removeWeirdChars(s, r=/[^\w-]+/g) {
+//     return s.replace(r, '');
+// }
 
 function isEmpty(s) {
     // JS わからんのでアレなんですけど，冗長だったりしますか
