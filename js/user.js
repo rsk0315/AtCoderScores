@@ -759,8 +759,7 @@ $(window).on('load', function() {
             data: {q: queryAP, format: 'json'},
             cache: false,
         }),
-        // 開催前のコンテスト確認．なんで data: {...} で投げないんですか？
-        // FIXME?
+        // 開催前のコンテスト確認
         $.ajax({
             type: 'GET',
             dataType: 'json',
