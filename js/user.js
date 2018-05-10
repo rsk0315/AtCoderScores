@@ -981,6 +981,14 @@ $(window).on('load', function() {
                     return x-y;
                 });
             } else {
+                $('#warning').append('<li>').text(
+                    'Internet Explorer をお使いの方へ．正しく動かなかったら'
+                        + 'ごめんなさい．えびより．'
+                    // むしろ Microsoft が謝ってほしい（傲慢）
+                    // Edge だと動くはずだから Edge を使ってほしい
+                    // あと IE 以外でこのメッセージが出た場合はごめんなさい
+                    // User Agent で判別するのはアになりがちなのでしません
+                );
                 pointList = Array();
                 points.forEach(function(point) {
                     pointList.push(point);
