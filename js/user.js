@@ -523,6 +523,10 @@ $(window).on('load', function() {
     lb = params.lbound;
     ub = params.ubound;
 
+    //*
+    var onDebug = false && (params.debug_mode !== undefined);
+    //*/
+
     // , を使ってしまった人がアにならないように，, より左だけを持ってきます
     userName = isEmpty(userName)? '':userName.replace(/[^\w,-]+|,.*/g, '');
     var rivals = (
@@ -750,6 +754,17 @@ $(window).on('load', function() {
             + 'and xpath="' + contestXpath + '"'
     );
 
+    if (onDebug) {
+        $.ajax({
+            type: 'GET',
+            url: 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315',
+            'Content-Type': 'text/plain',
+        }).done(function(data) {
+            console.log(data);
+        });
+    }
+
+
     $.when(
         // AtCoder Problems の API
         $.ajax({
@@ -889,13 +904,13 @@ $(window).on('load', function() {
                     // ここ，存在しないユーザとか提出のないユーザとか，
                     // 各種コーナーケースの処理が実質不可能なので，
                     // 考えられる理由を全て述べることにします． 
-                ).append(
-                    $('<li>').text(
-                        'あるいは正常に虚無が'
-                            + '返ってきただけかもしれません．'
-                    )
                 );
             }
+            $('#error').append(
+                $('<li>').text(
+                    'あるいは正常に虚無が返ってきただけかもしれません．'
+                )
+            );
         }
         // 調べ終わりました
 
