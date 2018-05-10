@@ -1085,7 +1085,7 @@ $(window).on('load', function() {
                     .slice(0, 3).join(',');
 
                 {
-                    var alpha = $('prog_whole_'+point).text() == '0'? 0:(
+                    var alpha = $('#prog_whole_'+point).text() == '0'? 0:(
                         parseInt($('#prog_user_'+point).text())
                             / parseInt($('#prog_whole_'+point).text())
                     );
@@ -1103,7 +1103,7 @@ $(window).on('load', function() {
                     var id = $tr.id;
                     var suffix = id.replace(/progress_/, '');
 
-                    var alpha = $('prog_whole_'+point).text() == '0'? 0:(
+                    var alpha = $('#prog_whole_'+point).text() == '0'? 0:(
                         parseInt($('#prog_'+suffix+'_'+point).text())
                             / parseInt($('#prog_whole_'+point).text())
                     );
