@@ -937,9 +937,9 @@ $(window).on('load', function() {
                 if (partial === null)
                     return;
 
-                var validPartial = partial.match(/\d+/g).filter(
-                    score => (lb <= parseInt(score) && parseInt(score) <= ub)
-                );
+                var validPartial = partial.match(/\d+/g).filter(function(score) {
+                    return (lb <= parseInt(score) && parseInt(score) <= ub);
+                });
                 if (validPartial.length == 0)
                     return;
             }
@@ -950,9 +950,9 @@ $(window).on('load', function() {
             // いいえ，ここでは弾きません
 
             if (setShowingWriters !== null) {
-                var cap = task['writers'].filter(
-                    writer => setShowingWriters.has(writer[0].toLowerCase())
-                );
+                var cap = task['writers'].filter(function(writer) {
+                    return setShowingWriters.has(writer[0].toLowerCase());
+                });
                 if (cap.length == 0)
                     return;
             }
