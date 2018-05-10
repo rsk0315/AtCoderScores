@@ -1076,9 +1076,13 @@ $(window).on('load', function() {
                     });
                 }
 
-                var ptColor = window.getComputedStyle(
-                    document.getElementById('prog_whole_'+point)
-                ).backgroundColor.match(/\d+/g).join(',');
+                // var ptColor = window.getComputedStyle(
+                //     document.getElementById('prog_whole_'+point)
+                // ).backgroundColor.match(/\d+/g).join(',');
+
+                var ptColor = $('.'+colorForPoint(point))
+                    .css('backgroundColor').match(/\d+/g)
+                    .slice(0, 3).join(',');
 
                 {
                     var alpha = $('prog_whole_'+point).text() == '0'? 0:(
