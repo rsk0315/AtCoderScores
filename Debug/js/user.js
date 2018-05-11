@@ -755,17 +755,29 @@ $(window).on('load', function() {
     );
 
     if (onDebug) {
-        $.ajax({
-            type: 'GET',
-            url: 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315',
-            'Content-Type': 'text/plain',
-        }).done(function(data) {
-            console.log(data);
-        }).fail(function(xhr, textStatus, errorThrown) {
-            console.log(xhr);
-            console.log(textStatus);
-            console.log(errorThrown);
-        });
+        // $.ajax({
+        //     type: 'GET',
+        //     url: 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315',
+        //     'Content-Type': 'text/plain',
+        // }).done(function(data) {
+        //     console.log(data);
+        // }).fail(function(xhr, textStatus, errorThrown) {
+        //     console.log(xhr);
+        //     console.log(textStatus);
+        //     console.log(errorThrown);
+        // });
+        // results in:
+        /*
+          Blocked loading mixed active content “http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315”[Learn More]
+        */
+
+        var xhr = new XMLHttpRequest();
+        var url = 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315';
+        xhr.open('GET', url, true);
+        xhr.onreadystatechange = function() {
+            console.log(xhr.responseText);
+        };
+        xhr.send();
     }
 
 
