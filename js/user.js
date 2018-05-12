@@ -283,13 +283,21 @@ function prettifyUserName(who, name) {
 
     // クエリ文字列ってちゃんとパーセントエンコードしなきゃまずいですか？
     // 適当にエンコードしたら落ちたんですけど
-    var imageXpath = "//img[contains(@src, '/public/img/icon/crown')]";
-    var imageURL = 'https://atcoder.jp/user/' + name + '?tsurai=' + curTime;
-    var imageYQL = (
+    var userURL = 'https://atcoder.jp/user/' + name + '?tsurai=' + curTime;
+
+    var crownXpath = "//img[contains(@src, '/public/img/icon/crown')]";
+    var crownYQL = (
         'select * from htmlstring where '
-            + 'url="' + imageURL + '" and xpath="' + imageXpath + '"'
+            + 'url="' + userURL + '" and xpath="' + crownXpath + '"'
     );
-    var imageName = null;
+
+    /*
+    var flagXpath = "//img[contains(@src, '/public/img/flag32/')]";
+    var flagYQL = (
+        'select * from htmlstring where '
+            + 'url="' + userURL + '" and xpath="' + flagXpath + '"'
+    );
+    */
 
     var userXpath = "//a[@class='username']/span";
     var userYQL = (
@@ -302,10 +310,19 @@ function prettifyUserName(who, name) {
         $.ajax({
             type: 'GET',
             url: YQL_HTML_BASE,
-            data: {q: imageYQL},
+            data: {q: crownYQL},
             dataType: 'json',
             cache: false,
         }),
+        /*
+        $.ajax({
+            type: 'GET',
+            url: YQL_HTML_BASE,
+            data: {q: flagYQL},
+            dataType: 'json',
+            cache: false,
+        }),
+        */
         $.ajax({
             type: 'GET',
             url: YQL_HTML_BASE,
@@ -313,12 +330,13 @@ function prettifyUserName(who, name) {
             dataType: 'json',
             cache: false,
         })
-    ).done(function(dataImage, dataUser) {
+    ).done(function(dataCrown, /* dataFlag, */ dataUser) {
         var userAttr = $.parseHTML(dataUser[0].query.results.result);
         userAttr = (userAttr && userAttr[0]);  // null[0] がアなので
 
-        var userURL = 'https://beta.atcoder.jp/user/' + name;
-        var $a = $('<a>').attr({href: userURL}).text(name);
+        var $a = $('<a>').attr({
+            href: 'https://beta.atcoder.jp/user/' + name
+        }).text(name);
         if (userAttr === null) {
             // 存在しないと思われるユーザに対する処理，どうしましょう
             // アラートでも出しときますか？ さすがにうるさい？
@@ -379,16 +397,40 @@ function prettifyUserName(who, name) {
         $progName.html($a);
         $acCountName.html($a.clone());
 
-        var imgTag = dataImage[0].query.results.result;
-        if (!isEmpty(imgTag)) {
-            imageName = imgTag.match(/crown\d+\.gif/)[0];
-        }
-
-        if (!isEmpty(imageName)) {
-            var $img = $('<img>').attr({src: './img/'+imageName});
+        /*
+        if (name == 'rsk0315') {
+            var $img = $('<img>').attr({
+                src: './img/user/rsk0315.png',
+                width: '16',
+                height: '16',
+            });
             $progName.prepend(' ').prepend($img);
             $acCountName.prepend(' ').prepend($img.clone());
         }
+        */
+
+        var imgCrown = dataCrown[0].query.results.result;
+        if (!isEmpty(imgCrown)) {
+            var crown = imgCrown.match(/crown\d+\.gif/)[0];
+            if (!isEmpty(crown)) {
+                var $img = $('<img>').attr({src: './img/crown/'+crown});
+                $progName.prepend(' ').prepend($img);
+                $acCountName.prepend(' ').prepend($img.clone());
+            }
+        }
+
+        /*
+        var imgFlag = dataFlag[0].query.results.result;
+        console.log(imgFlag);
+        if (!isEmpty(imgFlag)) {
+            var flag = imgFlag.match(/[A-Z]{2}\.png/)[0];
+            if (!isEmpty(flag)) {
+                var $img = $('<img>').attr({src: './img/flag/'+flag});
+                $progName.prepend(' ').prepend($img);
+                $acCountName.prepend(' ').prepend($img.clone());
+            }
+        }
+        */
     })
 }
 
