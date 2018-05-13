@@ -1006,7 +1006,10 @@ $(window).on('load', function() {
                 }
             } else {
                 if (conCat == 'arc' && task['common'] == 'b' && showAsABC) {
-                    return;
+                    // ABC 042: C (arc058_a)
+                    if (!setShowContests.has('abc')) {
+                        return;
+                    }
                 }
             }
             if (!setShowTypes.has(conQF))
