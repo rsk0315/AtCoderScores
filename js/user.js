@@ -998,11 +998,14 @@ $(window).on('load', function() {
                 conQF = 'other_type';
 
             if (!setShowContests.has(conCat)) {
-                if (setShowContests.has('abc') && task['common'] == 'b') {
-                    // ok
-                } else if (setShowContests.has('arc') && task['common'] == 'r') {
+                if (conCat == 'arc' && task['common'] == 'b'
+                    && showAsABC && setShowContests.has('abc')) {
                     // ok
                 } else {
+                    return;
+                }
+            } else {
+                if (conCat == 'arc' && task['common'] == 'b' && showAsABC) {
                     return;
                 }
             }
