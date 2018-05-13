@@ -984,6 +984,10 @@ $(window).on('load', function() {
         }
 
         $.each(dataSC[0], function(i, task) {
+            // 共通問題を弾きます
+            if (!showAsABC && task['common'] == 'b') return;
+            if (showAsABC && task['common'] == 'r') return;
+
             // コンテストの種類で弾きます
             var conCat = task['contestCategory'][0];
             var conQF = task['contestCategory'][1];
@@ -993,8 +997,15 @@ $(window).on('load', function() {
             if (conQF === null)
                 conQF = 'other_type';
 
-            if (!setShowContests.has(conCat))
-                return;
+            if (!setShowContests.has(conCat)) {
+                if (setShowContests.has('abc') && task['common'] == 'b') {
+                    // ok
+                } else if (setShowContests.has('arc') && task['common'] == 'r') {
+                    // ok
+                } else {
+                    return;
+                }
+            }
             if (!setShowTypes.has(conQF))
                 return;
 
@@ -1021,10 +1032,6 @@ $(window).on('load', function() {
                 if (validPartial.length == 0)
                     return;
             }
-
-            // 共通問題を弾きます
-            if (!showAsABC && task['common'] == 'b') return;
-            if (showAsABC && task['common'] == 'r') return;
 
             // // AC 済を弾きます
             // if (hideAC && setUserAC.has(task['taskScreenName']))
