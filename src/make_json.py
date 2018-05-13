@@ -369,14 +369,39 @@ class Post(object):
                 if scores[0][0][0] > scores[1][0][0]:
                     scores = scores[::-1]
 
+            if (
+                    'tenka1' in cdicts[0]['scrname']
+                    and 'tenka1' in cdicts[1]['scrname']
+            ):
+                if 'beginner' in cdicts[1]['scrname']:
+                    cdicts = cdicts[::-1]
+                if scores[0][0][0] > scores[1][0][0]:
+                    scores = scores[::-1]
+
+                return [
+                    Contest(
+                        cdicts[0], scores[0], self.index, writers,
+                        reg={2: ('tenka1_2017', 'c'), 3: ('tenka1_2017', 'd')},
+                    ),
+                    Contest(
+                        cdicts[1], scores[1], self.index, writers, 'CDEF',
+                        beg={0: None, 1: None}
+                    )
+                ]
+
             if 'abc' not in cdicts[0]['scrname']:
                 warn('two or more irregular contests in post', self.index)
                 return []
 
+            regp = cdicts[1]['scrname']
             return [
-                Contest(cdicts[0], scores[0][:2], self.index, writers),
                 Contest(
-                    cdicts[1], scores[1], self.index, writers, 'CDEF', 'abcd'
+                    cdicts[0], scores[0], self.index, writers,
+                    reg={2: (regp, 'a'), 3: (regp, 'b')}
+                ),
+                Contest(
+                    cdicts[1], scores[1], self.index, writers, 'CDEF', 'abcd',
+                    beg={0: None, 1: None}
                 )
             ]
 
@@ -457,16 +482,28 @@ class Post(object):
 
     def ask_scores(self):
         scores = []
-        for cdict in self.cdicts:
-            warn('Scores for {}?'.format(cdict['scrname']))
-            warn('e.g. 100-200-400(200)-600')
-            print('>', end=' ', file=sys.stderr, flush=True)
-            scores.append(
-                [
-                    (int(m.group(1)), m.group(2))
-                    for m in Score.PART_RE.finditer(input())
-                ]
-            )
+        # for cdict in self.cdicts:
+        #     warn('Scores for {}?'.format(cdict['scrname']))
+        #     warn('e.g. 100-200-400(200)-600')
+        #     print('>', end=' ', file=sys.stderr, flush=True)
+        #     scores.append(
+        #         [
+        #             (int(m.group(1)), m.group(2))
+        #             for m in Score.PART_RE.finditer(input())
+        #         ]
+        #     )
+        print(
+            'Score for',
+            *[cdict['scrname'] for cdict in self.cdicts],
+            end='?\n', file=sys.stderr
+        )
+        warn('e.g. 100-200-300-400 300-400-600(200)-800')
+        scores = [
+            [
+                (int(m.group(1)), m.group(2))
+                for m in Score.PART_RE.finditer(s)
+            ] for s in Score.RE.findall(input())
+        ]
 
         self.asked = True
         return scores
@@ -521,7 +558,8 @@ class Score(object):
 
 class Contest(object):
     def __init__(
-            self, cdict, scores, index, writers, charseq=None, scr_charseq=None
+            self, cdict, scores, index, writers, charseq=None,
+            scr_charseq=None, beg={}, reg={}
     ):
         self.cdict = cdict
         self.scores = scores
@@ -531,14 +569,37 @@ class Contest(object):
         self.scr_charseq = scr_charseq or self.charseq.lower()
         assert len(self.charseq) == len(self.scr_charseq) == len(scores)
 
-        self.tasks = [
-            Task(ch, sch, s, cdict, writers, index)
-            for ch, sch, s in zip(self.charseq, self.scr_charseq, scores)
-        ]
+        # self.tasks = [
+        #     Task(ch, sch, s, cdict, writers, index)
+        #     for ch, sch, s in zip(self.charseq, self.scr_charseq, scores)
+        # ]
+        it = enumerate(zip(self.charseq, self.scr_charseq, scores))
+        self.tasks = []
+        for i, (ch, sch, s) in it:
+            # FIXME ugly loop!
+            if i in beg:
+                # This task is in a regular contest
+                # this task is also in a beginner contest
+                task = Task(ch, sch, s, cdict, writers, index, com='r')
+            elif i in reg:
+                # This task is in a beginner contest, also in a regular one
+                task = Task(
+                    ch, reg[i][1], s, cdict, writers, index, prefix=reg[i][0],
+                    com='b'
+                )
+            else:
+                task = Task(ch, sch, s, cdict, writers, index)
+
+            self.tasks.append(task)
 
 
 class Task(object):
-    def __init__(self, char, scr_char, score, cdict, writers, index):
+    def __init__(
+            self, char, scr_char, score, cdict, writers, index, prefix=None,
+            com=None
+            # なんじゃこのひどい実装は．
+            # 実装の乱れは心の乱れ．
+    ):
         # ARC 058 C (arc058_a) みたいなの，アなんですけど，
         # char には 'C'，scr_char には 'a' が入っています
         self.char = char
@@ -549,6 +610,7 @@ class Task(object):
         self.url = cdict['url']
         self.writers = writers
         self.index = index
+        self.com = com
 
         if self.url[-1] != '/':
             self.url += '/'
@@ -558,15 +620,15 @@ class Task(object):
             self.pscore = None
 
         if re.match(r'a[bgpr]c\d{3}', self.scr_name):
-            self.prefix = self.scr_name
+            self.prefix = prefix or self.scr_name
             self.ctitle = 'A{}C {}'.format(
                 self.scr_name[1].upper(), self.scr_name[3:6]
             )
             self.ctype = CONTEST_TYPES[self.scr_name[:3]]
-            self.ccat = (self.scr_name[:3], None)
+            self.ccat = (self.prefix[:3], None)
 
         else:
-            self.prefix = task_prefixes[self.scr_name]
+            self.prefix = prefix or task_prefixes[self.scr_name]
             self.ctype = CONTEST_TYPES['other']
             self.ccat = contest_category[self.scr_name]
             if self.prefix == 'asaporo':
@@ -673,6 +735,7 @@ def main():
                 (correct_names.get(w.name.lower(), w.name), w.color)
                 for w in t.writers
             ],
+            'common': t.com,
         })
 
     json.dump(res, fp=sys.stdout, indent=4)

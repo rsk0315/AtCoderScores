@@ -70,6 +70,10 @@ function jumpProcess() {
         // if (String(lbound)+String(ubound) == '114514') {
         //     alert('先輩！？ 何してんすか！');
         // }
+
+
+        if ($('input[name=show_as]:checked').val() != 'as_arc')
+            queryObj['as_abc'] = 'on';
     }
     {
         // デフォルト値を動的につくるもの
@@ -557,6 +561,7 @@ $(window).on('load', function() {
     var showContests, showTypes;
     var writers;
     var includePartial;
+    var showAsABC;
 
     userName = params.user;
     rivalNames = params.rivals;
@@ -564,6 +569,7 @@ $(window).on('load', function() {
     hideAC = params.hide_ac;
     lb = params.lbound;
     ub = params.ubound;
+    showAsABC = (params.as_abc == 'on');
 
     //*
     var onDebug = false && (params.debug_mode !== undefined);
@@ -696,6 +702,12 @@ $(window).on('load', function() {
 
     $('input[name=include_partial]').prop('checked', includePartial);
 
+    if (showAsABC) {
+        $('input[name=show_as]').val(['as_abc']);
+    } else {
+        $('input[name=show_as]').val(['as_arc']);
+    }
+
     if (lb > ub) {
         var tmp = lb;
         lb = ub;
@@ -796,15 +808,15 @@ $(window).on('load', function() {
             + 'and xpath="' + contestXpath + '"'
     );
 
-    if (onDebug) {
-        $.ajax({
-            type: 'GET',
-            url: 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315',
-            'Content-Type': 'text/plain',
-        }).done(function(data) {
-            console.log(data);
-        });
-    }
+    // if (onDebug) {
+    //     $.ajax({
+    //         type: 'GET',
+    //         url: 'http://beta.kenkoooo.com/atcoder/atcoder-api/results?user=rsk0315',
+    //         'Content-Type': 'text/plain',
+    //     }).done(function(data) {
+    //         console.log(data);
+    //     });
+    // }
 
 
     $.when(
@@ -1009,6 +1021,10 @@ $(window).on('load', function() {
                 if (validPartial.length == 0)
                     return;
             }
+
+            // 共通問題を弾きます
+            if (!showAsABC && task['common'] == 'b') return;
+            if (showAsABC && task['common'] == 'r') return;
 
             // // AC 済を弾きます
             // if (hideAC && setUserAC.has(task['taskScreenName']))
