@@ -1235,12 +1235,4 @@ $(window).on('load', function() {
     }
 
     $('#difficulty_submit').on('click', jumpProcess);
-
-    $.ajax({
-        type: 'GET',
-        url: 'php/hoge.php',
-        dataType: 'text',
-    }).done(function(data) {
-        console.log(data);
-    });
 });  
