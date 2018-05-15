@@ -920,6 +920,10 @@ $(window).on('load', function() {
                     $('<li>').text('進捗状況を正しく取得できませんでした．')
                 );
 
+                var betaURL = (
+                    'https://atcoder-scores.herokuapp.com/index.html'
+                        + $(location).attr('search')
+                )
                 $('#error').append(
                     $('<ul>').css('font-weight', 'normal')
                         .append(
@@ -930,6 +934,11 @@ $(window).on('load', function() {
                                     + 'そのサービスは 1536kB を超える JSON は'
                                     + '処理してくれないみたいなのです．'
                             )
+                        )
+                        .append(
+                            $('<li>').append(
+                                $('<a>').attr({href: betaURL}).text('こちら')
+                            ).append('をお試しくださいませ．')
                         )
                 );
             }
@@ -1226,4 +1235,12 @@ $(window).on('load', function() {
     }
 
     $('#difficulty_submit').on('click', jumpProcess);
+
+    $.ajax({
+        type: 'GET',
+        url: 'php/hoge.php',
+        dataType: 'text',
+    }).done(function(data) {
+        console.log(data);
+    });
 });  
