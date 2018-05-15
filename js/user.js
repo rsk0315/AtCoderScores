@@ -791,6 +791,7 @@ $(window).on('load', function() {
     var curTime = Math.floor(Date.now()/cacheExpires);  // これ関数化すべきかも
     // json.result, json.user_id, json.problem_id だけとればいいけど無意味
     // json.result != "CE" に絞ってるのは 5000 件の上限が険しいため
+    // と思ったけど実は何かしらうまいことなっていて 5000 件以上取得できている？
     // にゃーん．
     var queryAP = (
         'select * from json where '
@@ -825,7 +826,7 @@ $(window).on('load', function() {
             type: 'GET',
             dataType: 'json',
             url: YQL_JSON_BASE,
-            data: {q: queryAP, format: 'json'},
+            data: {q: queryAP, format: 'json', diagnostics: 'true'},
             cache: false,
         }),
         // 開催前のコンテスト確認
@@ -912,39 +913,15 @@ $(window).on('load', function() {
                 }
             });
         } else if (!(isEmpty(userName) && isEmpty(rivals))) {
-            $('#error').append(
-                $('<li>').text('進捗状況を正しく取得できませんでした．')
-            );
-
-            var invalid = $('#warning>li:contains(存在しないユーザ名)');
-            var users = rivals.length;
-            if (!isEmpty(userName))
-                ++users;
-
-            if (invalid.length < users) {
-                // var $tt = $tooltip.clone().attr({
-                //     'data-original-title':
-                //     'ユーザ一人だけでこれを超えるような状況になった場合は'
-                //         + 'どうしたらいいんだろう．困りましたね．'
-                // }).tooltip()
-                // $tt.removeClass('glyphicon-question-sign')
-                // $tt.addClass('glyphicon-exclamation-sign');
+            var diagno = dataAP[0].query.diagnostics;
+            var exceeded = diagno.url['max-response-exceeded'];
+            if (exceeded !== undefined) {
+                $('#error').append(
+                    $('<li>').text('進捗状況を正しく取得できませんでした．')
+                );
 
                 $('#error').append(
                     $('<ul>').css('font-weight', 'normal')
-                        // .append(
-                        //     $('<li>').text(
-                        //         /*
-                        //         'おそらく AtCoder Problems さんの API は'
-                        //             + '正常なのですが，それを取得するための'
-                        //             + 'YQL の不具合でこけています．ユーザ名の'
-                        //             +' 組み合わせをご報告いただけると'
-                        //             + '捗るかもしれません．'
-                        //         */
-                        //         'YQL が捌けるデータの上限（1536 kB）'
-                        //             + 'を超えてしまっているかもしれません．'
-                        //     ).append($tt)
-                        // )
                         .append(
                             $('<li>').text(
                                 'AtCoder Problems のデータを直接持ってくるのが'
@@ -954,17 +931,8 @@ $(window).on('load', function() {
                                     + '処理してくれないみたいなのです．'
                             )
                         )
-
-                    // ここ，存在しないユーザとか提出のないユーザとか，
-                    // 各種コーナーケースの処理が実質不可能なので，
-                    // 考えられる理由を全て述べることにします． 
                 );
             }
-            $('#error').append(
-                $('<li>').text(
-                    'あるいは正常に虚無が返ってきただけかもしれません．'
-                )
-            );
         }
         // 調べ終わりました
 
@@ -991,7 +959,6 @@ $(window).on('load', function() {
             // コンテストの種類で弾きます
             var conCat = task['contestCategory'][0];
             var conQF = task['contestCategory'][1];
-            // console.log(task['taskScreenName']+' '+conCat+' '+conQF);
             if (conCat === null)
                 conCat = 'uncategorized';
             if (conQF === null)
@@ -1181,10 +1148,6 @@ $(window).on('load', function() {
                     });
                 }
 
-                // var ptColor = window.getComputedStyle(
-                //     document.getElementById('prog_whole_'+point)
-                // ).backgroundColor.match(/\d+/g).join(',');
-
                 var ptColor = $('.'+colorForPoint(point))
                     .css('backgroundColor').match(/\d+/g)
                     .slice(0, 3).join(',');
@@ -1263,15 +1226,4 @@ $(window).on('load', function() {
     }
 
     $('#difficulty_submit').on('click', jumpProcess);
-
-    // $.each(['username', 'rivalname', 'writer'], function(i, who) {
-    //     // ループなんてしないで入力するやつをセレクタでが〜っとやっちゃえば？
-    //     $(document).on('keypress', 'input[name=form_'+who+']', function(e) {
-    //         if (e.keyCode == 13) {
-    //             jumpProcess();
-    //         } else {
-    //             $.noop();
-    //         }
-    //     });
-    // });
 });  
