@@ -1201,13 +1201,15 @@ $(window).on('load', function() {
 
             // 難易度を絞ったときに右側に余白ができるのをなんとかしたい
             // 何かしらの指定が正しくない OR 忘れている？
-            var width = 6;
+            var width = 7;
             $.each($('#progresstable>tbody>tr:first>td'), function(i, elem) {
                 width += $(elem).innerWidth();
             });
 
+            console.log(width+' '+$('#progresstable').width());
+
             // は？
-            if (width <= $('#progresstable').width()+10) {
+            if (width <= $('#progresstable').width()+11) {
                 width = $('#progresstable').width();
             }
 
