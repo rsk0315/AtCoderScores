@@ -1220,13 +1220,46 @@ $(window).on('load', function() {
                 'border-left': 'none',
             })
 
-            html2canvas($('#progresstable')[0], {width: width}).then(function(canvas) {
-                $('#link_img').append(
-                    $('<a>').attr({
-                        href: canvas.toDataURL('image/png')
-                    }).text('進捗表の画像データ（リンク）')
-                ).css({'margin-bottom': '10px'});
-            });
+            $('#link_img').append(
+                $('<button class="btn btn-success">')
+                    .text('進捗表の画像データを生成')
+                    .on('click', function() {
+                        html2canvas($('#progresstable')[0], {
+                            width: width,
+                            logging: false,
+                        }).then(function(canvas) {
+                            // 四隅の 1 マスずつだけ透過にしてみる．
+                            // 汚かったらそのうち直す．
+                            var ctx = canvas.getContext('2d');
+                            var imageData = ctx.getImageData(
+                                0, 0, canvas.width, canvas.height
+                            );
+                            var data = imageData.data;
+
+                            // +---+ (0, 0), (0, W-1)
+                            // |   |
+                            // +---+ (H-1, 0), (H-1, W-1)
+
+                            var alpha = 250 / 255;
+                            // あまり 1.00 に近いと round up されて結局
+                            // 何も加工しないのと同じになったりしませんか？
+                            // そんなことなかったらいいんですけど．
+                            data[3] = alpha;
+                            data[4*canvas.width-1] = alpha;
+                            data[4*canvas.width*(canvas.height-1)+3] = alpha;
+                            data[data.length-1] = alpha;
+                            ctx.putImageData(imageData, 0, 0);
+
+                            $('#link_img').append(
+                                $('<a>').attr({
+                                    href: canvas.toDataURL('image/png')
+                                    
+                                }).text('画像データ（リンク）')
+                                    .css('margin-left', '10px')
+                            );
+                        });
+                    })
+            );
         });
     });
 
