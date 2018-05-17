@@ -1198,6 +1198,30 @@ $(window).on('load', function() {
 
             clearInterval(timer);
             $('#mainconttable').tablesorter();
+
+            // 難易度を絞ったときに右側に余白ができるのをなんとかしたい
+            // 何かしらの指定が正しくない OR 忘れている？
+            var width = 6;
+            $.each($('#progresstable>tbody>tr:first>td'), function(i, elem) {
+                width += $(elem).innerWidth();
+            });
+
+            // は？
+            if (width <= $('#progresstable').width()+10) {
+                width = $('#progresstable').width();
+            }
+
+            $('#progresstable tr>td').css({
+                'border-left': 'none',
+            })
+
+            html2canvas($('#progresstable')[0], {width: width}).then(function(canvas) {
+                $('#canvas').append(
+                    $('<a>').attr({
+                        href: canvas.toDataURL('image/png')
+                    }).text('画像として表示（お試し版）')
+                );
+            });
         });
     });
 
