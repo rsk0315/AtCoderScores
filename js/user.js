@@ -1199,6 +1199,9 @@ $(window).on('load', function() {
             clearInterval(timer);
             $('#mainconttable').tablesorter();
 
+            if (isEmpty(userName) && isEmpty(rivals))
+                return;
+
             // 難易度を絞ったときに右側に余白ができるのをなんとかしたい
             // 何かしらの指定が正しくない OR 忘れている？
             var width = 7;
@@ -1206,7 +1209,7 @@ $(window).on('load', function() {
                 width += $(elem).innerWidth();
             });
 
-            console.log(width+' '+$('#progresstable').width());
+            // console.log(width+' '+$('#progresstable').width());
 
             // は？
             if (width <= $('#progresstable').width()+11) {
@@ -1218,11 +1221,11 @@ $(window).on('load', function() {
             })
 
             html2canvas($('#progresstable')[0], {width: width}).then(function(canvas) {
-                $('#canvas').append(
+                $('#link_img').append(
                     $('<a>').attr({
                         href: canvas.toDataURL('image/png')
-                    }).text('画像として表示（お試し版）')
-                );
+                    }).text('進捗表の画像データ（リンク）')
+                ).css({'margin-bottom': '10px'});
             });
         });
     });
