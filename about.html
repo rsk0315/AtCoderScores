@@ -20,16 +20,22 @@
     <!-- ユーザーCSS, JS読み込み -->
     <link href="./css/user.css" rel="stylesheet">
     <script src="./js/user.js"></script>
+    <link href="./css/base.css" rel="stylesheet">
+    <script src="./js/base.js"></script>
   </head>
 
   <body>
     <!-- navigation -->
     <nav class="navbar navbar-inverse">
-      <div class="container">
-        <div class="navbar-header">
-          <a class="navbar-brand" href="./index.html">AtCoder Scores</a>
-        </div>
-
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse" aria-expanded="false">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="./index.html">AtCoder Scores</a>
+      </div>
+      <div class="collapse navbar-collapse" id="navbar-collapse">
         <ul class="nav navbar-nav">
           <li class="active"><a href="./about.html">このページについて</a></li>
           <li><a href="./contact.html">お問い合わせ</a></li>
@@ -61,29 +67,32 @@
       </ul>
 
       <h2>つくった人</h2>
+      <p>えびちゃんがたくさんがんばったと言っても過言ではないのではないですか？</p>
+
       <ul>
         <li>やざてん（<a href="http://twitter.com/Yazaten">@Yazaten</a>）</li>
         <ul>
           <li>原案</li>
         </ul>
+        <li>つたじろう（<a href="http://twitter.com/_TTJR_">@_TTJR_</a>）</li>
+        <ul>
+          <li>デザイン</li>
+          <li>テーブルの色付け</li>
+        </ul>
         <li>えび（<a href="http://twitter.com/rsk0315_h4x">@rsk0315_h4x</a>）</li>
         <!-- 承認欲求の塊なので，AtCoder Scores で検索してリプライを
              飛ばしたりしています． -->
         <ul>
-          <li>大枠の作成</li>
+          <li>ベースの作成</li>
+          <li>保守・リファクタリング</li>
           <li>問題のリストアップ関連</li>
           <li>絞り込み機能の追加</li>
-          <li>保守</li>
           <li>その他各種こだわりポイント</li>
           <ul>
             <li>進捗テーブルのスクロール可能化（横に短い画面のとき）</li>
             <li>表示 ID の色・王冠付け</li>
+            <li>進捗テーブルの画像化・ツイート機能</li>
           </ul>
-        </ul>
-        <li>つたじろう（<a href="http://twitter.com/_TTJR_">@_TTJR_</a>）</li>
-        <ul>
-          <li>デザイン全般</li>
-          <li>色付け関連</li>
         </ul>
 
         <!--
