@@ -696,7 +696,10 @@ def main():
     tasks = [
         task for task in tasks
         if not (
-                task.prefix == 'tenka1_2016_final' and task.scr_char in 'ab'
+                (task.prefix == 'tenka1_2016_final' and task.scr_char in 'ab')
+                or (task.prefix == 's8pc_3' and task.scr_char == 'h')
+                or (task.prefix == 's8pc_4' and task.scr_char == 'h')
+                or (task.prefix == 's8pc_5' and task.scr_char == 'i')
                 # 他にも除外したいのがあればここに or で追加する
         )
     ]

@@ -5755,6 +5755,27 @@
     {
         "fullScore": 300,
         "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "A",
+        "taskScreenName": "agc024_a",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_a",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_a",
+        "writers": [
+            [
+                "DEGwer",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 300,
+        "partialScore": null,
         "contestTitle": "APC 001",
         "contestScreenName": "apc001",
         "contestCategory": [
@@ -8762,6 +8783,27 @@
     {
         "fullScore": 500,
         "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "B",
+        "taskScreenName": "agc024_b",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_b",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_b",
+        "writers": [
+            [
+                "DEGwer",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 500,
+        "partialScore": null,
         "contestTitle": "APC 001",
         "contestScreenName": "apc001",
         "contestCategory": [
@@ -10737,6 +10779,27 @@
         "writers": [
             [
                 "zscoder",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 700,
+        "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "C",
+        "taskScreenName": "agc024_c",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_c",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_c",
+        "writers": [
+            [
+                "DEGwer",
                 "user-red"
             ]
         ],
@@ -13613,6 +13676,27 @@
     {
         "fullScore": 1100,
         "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "D",
+        "taskScreenName": "agc024_d",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_d",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_d",
+        "writers": [
+            [
+                "DEGwer",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 1100,
+        "partialScore": null,
         "contestTitle": "CODE FESTIVAL 2016 \u4e88\u9078 B",
         "contestScreenName": "code-festival-2016-qualb",
         "contestCategory": [
@@ -13971,6 +14055,27 @@
             [
                 "maroonrk",
                 "user-black"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 1200,
+        "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "E",
+        "taskScreenName": "agc024_e",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_e",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_e",
+        "writers": [
+            [
+                "DEGwer",
+                "user-red"
             ]
         ],
         "common": null
@@ -15164,81 +15269,6 @@
     {
         "fullScore": 1500,
         "partialScore": null,
-        "contestTitle": "square869120 Contest #3",
-        "contestScreenName": "s8pc-3",
-        "contestCategory": [
-            "s8pc",
-            null
-        ],
-        "taskChar": "H",
-        "taskScreenName": "s8pc_3_h",
-        "traditionalURL": "https://s8pc-3.contest.atcoder.jp/tasks/s8pc_3_h",
-        "betaURL": "https://beta.atcoder.jp/contests/s8pc-3/tasks/s8pc_3_h",
-        "writers": [
-            [
-                "E869120",
-                "user-yellow"
-            ],
-            [
-                "square1001",
-                "user-yellow"
-            ]
-        ],
-        "common": null
-    },
-    {
-        "fullScore": 1500,
-        "partialScore": null,
-        "contestTitle": "square869120 Contest #4",
-        "contestScreenName": "s8pc-4",
-        "contestCategory": [
-            "s8pc",
-            null
-        ],
-        "taskChar": "H",
-        "taskScreenName": "s8pc_4_h",
-        "traditionalURL": "https://s8pc-4.contest.atcoder.jp/tasks/s8pc_4_h",
-        "betaURL": "https://beta.atcoder.jp/contests/s8pc-4/tasks/s8pc_4_h",
-        "writers": [
-            [
-                "E869120",
-                "user-yellow"
-            ],
-            [
-                "square1001",
-                "user-yellow"
-            ]
-        ],
-        "common": null
-    },
-    {
-        "fullScore": 1500,
-        "partialScore": null,
-        "contestTitle": "square869120 Contest #5",
-        "contestScreenName": "s8pc-5",
-        "contestCategory": [
-            "s8pc",
-            null
-        ],
-        "taskChar": "I",
-        "taskScreenName": "s8pc_5_i",
-        "traditionalURL": "https://s8pc-5.contest.atcoder.jp/tasks/s8pc_5_i",
-        "betaURL": "https://beta.atcoder.jp/contests/s8pc-5/tasks/s8pc_5_i",
-        "writers": [
-            [
-                "E869120",
-                "user-red"
-            ],
-            [
-                "square1001",
-                "user-orange"
-            ]
-        ],
-        "common": null
-    },
-    {
-        "fullScore": 1500,
-        "partialScore": null,
         "contestTitle": "\u5929\u4e0b\u4e00\u30d7\u30ed\u30b0\u30e9\u30de\u30fc\u30b3\u30f3\u30c6\u30b9\u30c82016\u672c\u6226\uff08\u30aa\u30fc\u30d7\u30f3\u30b3\u30f3\u30c6\u30b9\u30c8\uff09",
         "contestScreenName": "tenka1-2016-final-open",
         "contestCategory": [
@@ -16283,6 +16313,27 @@
             [
                 "sugim48",
                 "user-orange"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 2300,
+        "partialScore": null,
+        "contestTitle": "AGC 024",
+        "contestScreenName": "agc024",
+        "contestCategory": [
+            "agc",
+            null
+        ],
+        "taskChar": "F",
+        "taskScreenName": "agc024_f",
+        "traditionalURL": "https://agc024.contest.atcoder.jp/tasks/agc024_f",
+        "betaURL": "https://beta.atcoder.jp/contests/agc024/tasks/agc024_f",
+        "writers": [
+            [
+                "DEGwer",
+                "user-red"
             ]
         ],
         "common": null
