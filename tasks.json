@@ -1210,6 +1210,27 @@
     {
         "fullScore": 100,
         "partialScore": null,
+        "contestTitle": "ABC 098",
+        "contestScreenName": "abc098",
+        "contestCategory": [
+            "abc",
+            null
+        ],
+        "taskChar": "A",
+        "taskScreenName": "abc098_a",
+        "traditionalURL": "https://abc098.contest.atcoder.jp/tasks/abc098_a",
+        "betaURL": "https://beta.atcoder.jp/contests/abc098/tasks/abc098_a",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 100,
+        "partialScore": null,
         "contestTitle": "APC 001",
         "contestScreenName": "apc001",
         "contestCategory": [
@@ -2941,6 +2962,27 @@
     {
         "fullScore": 200,
         "partialScore": null,
+        "contestTitle": "ABC 098",
+        "contestScreenName": "abc098",
+        "contestCategory": [
+            "abc",
+            null
+        ],
+        "taskChar": "B",
+        "taskScreenName": "abc098_b",
+        "traditionalURL": "https://abc098.contest.atcoder.jp/tasks/abc098_b",
+        "betaURL": "https://beta.atcoder.jp/contests/abc098/tasks/abc098_b",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 200,
+        "partialScore": null,
         "contestTitle": "ARC 059",
         "contestScreenName": "arc059",
         "contestCategory": [
@@ -3168,7 +3210,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
@@ -4693,6 +4735,27 @@
     {
         "fullScore": 300,
         "partialScore": null,
+        "contestTitle": "ABC 098",
+        "contestScreenName": "abc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "C",
+        "taskScreenName": "arc098_a",
+        "traditionalURL": "https://abc098.contest.atcoder.jp/tasks/arc098_a",
+        "betaURL": "https://beta.atcoder.jp/contests/abc098/tasks/arc098_a",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
+            ]
+        ],
+        "common": "b"
+    },
+    {
+        "fullScore": 300,
+        "partialScore": null,
         "contestTitle": "ARC 058",
         "contestScreenName": "arc058",
         "contestCategory": [
@@ -5453,6 +5516,27 @@
         "writers": [
             [
                 "sigma425",
+                "user-red"
+            ]
+        ],
+        "common": "r"
+    },
+    {
+        "fullScore": 300,
+        "partialScore": null,
+        "contestTitle": "ARC 098",
+        "contestScreenName": "arc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "C",
+        "taskScreenName": "arc098_a",
+        "traditionalURL": "https://arc098.contest.atcoder.jp/tasks/arc098_a",
+        "betaURL": "https://beta.atcoder.jp/contests/arc098/tasks/arc098_a",
+        "writers": [
+            [
+                "maroonrk",
                 "user-red"
             ]
         ],
@@ -8279,6 +8363,27 @@
     {
         "fullScore": 500,
         "partialScore": null,
+        "contestTitle": "ABC 098",
+        "contestScreenName": "abc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "D",
+        "taskScreenName": "arc098_b",
+        "traditionalURL": "https://abc098.contest.atcoder.jp/tasks/arc098_b",
+        "betaURL": "https://beta.atcoder.jp/contests/abc098/tasks/arc098_b",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
+            ]
+        ],
+        "common": "b"
+    },
+    {
+        "fullScore": 500,
+        "partialScore": null,
         "contestTitle": "ARC 060",
         "contestScreenName": "arc060",
         "contestCategory": [
@@ -8614,6 +8719,27 @@
     },
     {
         "fullScore": 500,
+        "partialScore": null,
+        "contestTitle": "ARC 098",
+        "contestScreenName": "arc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "D",
+        "taskScreenName": "arc098_b",
+        "traditionalURL": "https://arc098.contest.atcoder.jp/tasks/arc098_b",
+        "betaURL": "https://beta.atcoder.jp/contests/arc098/tasks/arc098_b",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
+            ]
+        ],
+        "common": "r"
+    },
+    {
+        "fullScore": 500,
         "partialScore": "300",
         "contestTitle": "AGC 001",
         "contestScreenName": "agc001",
@@ -8775,7 +8901,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
@@ -9596,6 +9722,27 @@
         "writers": [
             [
                 "sigma425",
+                "user-red"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 600,
+        "partialScore": null,
+        "contestTitle": "ARC 098",
+        "contestScreenName": "arc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "E",
+        "taskScreenName": "arc098_c",
+        "traditionalURL": "https://arc098.contest.atcoder.jp/tasks/arc098_c",
+        "betaURL": "https://beta.atcoder.jp/contests/arc098/tasks/arc098_c",
+        "writers": [
+            [
+                "maroonrk",
                 "user-red"
             ]
         ],
@@ -11609,7 +11756,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
@@ -12780,6 +12927,27 @@
             [
                 "anonymous",
                 null
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 1000,
+        "partialScore": null,
+        "contestTitle": "ARC 098",
+        "contestScreenName": "arc098",
+        "contestCategory": [
+            "arc",
+            null
+        ],
+        "taskChar": "F",
+        "taskScreenName": "arc098_d",
+        "traditionalURL": "https://arc098.contest.atcoder.jp/tasks/arc098_d",
+        "betaURL": "https://beta.atcoder.jp/contests/arc098/tasks/arc098_d",
+        "writers": [
+            [
+                "maroonrk",
+                "user-red"
             ]
         ],
         "common": null
@@ -14054,7 +14222,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
@@ -15877,7 +16045,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
@@ -15898,7 +16066,7 @@
         "writers": [
             [
                 "maroonrk",
-                "user-black"
+                "user-red"
             ]
         ],
         "common": null
