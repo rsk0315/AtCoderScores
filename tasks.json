@@ -1578,6 +1578,27 @@
     {
         "fullScore": 100,
         "partialScore": null,
+        "contestTitle": "codeFlyer \uff08bitFlyer Programming Contest\uff09",
+        "contestScreenName": "bitflyer2018-qual",
+        "contestCategory": [
+            null,
+            "qual"
+        ],
+        "taskChar": "A",
+        "taskScreenName": "bitflyer2018_qual_a",
+        "traditionalURL": "https://bitflyer2018-qual.contest.atcoder.jp/tasks/bitflyer2018_qual_a",
+        "betaURL": "https://beta.atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_a",
+        "writers": [
+            [
+                "wo01",
+                "user-orange"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 100,
+        "partialScore": null,
         "contestTitle": "\u307f\u3093\u306a\u306e\u30d7\u30ed\u30b3\u30f3 2018 \u4e88\u9078",
         "contestScreenName": "yahoo-procon2018-qual",
         "contestCategory": [
@@ -3487,6 +3508,27 @@
             [
                 "hasi",
                 "user-yellow"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 200,
+        "partialScore": null,
+        "contestTitle": "codeFlyer \uff08bitFlyer Programming Contest\uff09",
+        "contestScreenName": "bitflyer2018-qual",
+        "contestCategory": [
+            null,
+            "qual"
+        ],
+        "taskChar": "B",
+        "taskScreenName": "bitflyer2018_qual_b",
+        "traditionalURL": "https://bitflyer2018-qual.contest.atcoder.jp/tasks/bitflyer2018_qual_b",
+        "betaURL": "https://beta.atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_b",
+        "writers": [
+            [
+                "wo01",
+                "user-orange"
             ]
         ],
         "common": null
@@ -7892,6 +7934,27 @@
     },
     {
         "fullScore": 400,
+        "partialScore": null,
+        "contestTitle": "codeFlyer \uff08bitFlyer Programming Contest\uff09",
+        "contestScreenName": "bitflyer2018-qual",
+        "contestCategory": [
+            null,
+            "qual"
+        ],
+        "taskChar": "C",
+        "taskScreenName": "bitflyer2018_qual_c",
+        "traditionalURL": "https://bitflyer2018-qual.contest.atcoder.jp/tasks/bitflyer2018_qual_c",
+        "betaURL": "https://beta.atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_c",
+        "writers": [
+            [
+                "wo01",
+                "user-orange"
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 400,
         "partialScore": "50, 220",
         "contestTitle": "square869120 Contest #3",
         "contestScreenName": "s8pc-3",
@@ -9223,6 +9286,27 @@
             ]
         ],
         "common": "r"
+    },
+    {
+        "fullScore": 500,
+        "partialScore": null,
+        "contestTitle": "codeFlyer \uff08bitFlyer Programming Contest\uff09",
+        "contestScreenName": "bitflyer2018-qual",
+        "contestCategory": [
+            null,
+            "qual"
+        ],
+        "taskChar": "D",
+        "taskScreenName": "bitflyer2018_qual_d",
+        "traditionalURL": "https://bitflyer2018-qual.contest.atcoder.jp/tasks/bitflyer2018_qual_d",
+        "betaURL": "https://beta.atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_d",
+        "writers": [
+            [
+                "wo01",
+                "user-orange"
+            ]
+        ],
+        "common": null
     },
     {
         "fullScore": 500,
@@ -11287,6 +11371,27 @@
             [
                 "",
                 null
+            ]
+        ],
+        "common": null
+    },
+    {
+        "fullScore": 700,
+        "partialScore": "600",
+        "contestTitle": "codeFlyer \uff08bitFlyer Programming Contest\uff09",
+        "contestScreenName": "bitflyer2018-qual",
+        "contestCategory": [
+            null,
+            "qual"
+        ],
+        "taskChar": "E",
+        "taskScreenName": "bitflyer2018_qual_e",
+        "traditionalURL": "https://bitflyer2018-qual.contest.atcoder.jp/tasks/bitflyer2018_qual_e",
+        "betaURL": "https://beta.atcoder.jp/contests/bitflyer2018-qual/tasks/bitflyer2018_qual_e",
+        "writers": [
+            [
+                "wo01",
+                "user-orange"
             ]
         ],
         "common": null
