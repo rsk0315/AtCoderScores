@@ -28,8 +28,8 @@
     <script src="./js/purl.js"></script>
 
     <!-- ユーザー CSS/JS 読み込み -->
-    <link href="./css/user.css" rel="stylesheet">
-    <script src="./js/user.js"></script>
+    <!-- <link href="./css/user.css" rel="stylesheet"> -->
+    <!-- <script src="./js/user.js"></script> -->
 
     <!-- 各種何かしらのことをする CSS 読み込み -->
     <link href="./css/base.css" rel="stylesheet">
@@ -67,24 +67,23 @@
         <!-- messages -->
         <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
              後々ちゃんと勉強したいです．えびより -->
-        <div class="panel panel-primary" style="margin-top: 10px">
-          <div class="panel-heading collapse-heading collapsed" data-toggle="collapse" data-target="#collapse-notify" aria-expanded="false">
+        <div class="panel panel-danger" style="margin-top: 10px">
+          <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-notify" aria-expanded="true">
             <h3 class="panel-title">
               お知らせ
-              <span class="glyphicon glyphicon-question-sign" aria-hidden="true" data-html="true" data-toggle="tooltip" title="" data-original-title="えびちゃんより．"></span>
               <span class="glyphicon pull-right"></span>
             </h3>
           </div>
 
-          <div id="collapse-notify" class="panel-body panel-collapse collapse" aria-expanded="false">
+          <div id="collapse-notify" class="panel-body panel-collapse" aria-expanded="true">
             <p class="filter-body-heading" style="border-bottom: 1px solid #DDD; margin-top: 10px; margin-bottom: 10px">
-              <span style="font-size: large">移転？</span>
+              <span style="font-size: large">移転しました</span>
             </p>
             <div>
               <p>精進お疲れさまです．</p>
 
               <p>
-                今後，<a href="https://atcoder-scores.herokuapp.com/index.html">atcoder-scores.herokuapp.com</a> に移転するかもしれません．進捗表示をする際，提出の多い人たちを選ぶと<a href="index.html?user=rsk0315&rivals=TAB,Tsuta_J,tsukasa_diary">正しく表示されない問題</a>を回避する方法をいろいろ試みてうまくいかなかったのですが，移転（を考えている）先のサイトではその方法のうちのひとつが動作したためです．
+                <a href="https://atcoder-scores.herokuapp.com/index.html">atcoder-scores.herokuapp.com</a> に移転しました．進捗表示をする際，提出の多い人たちを選ぶと<a href="index.html?user=rsk0315&rivals=TAB,Tsuta_J,tsukasa_diary">正しく表示されない問題</a>を回避する方法をいろいろ試みてうまくいかなかったのですが，移転（を考えている）先のサイトではその方法のうちのひとつが動作したためです．
               </p>
 
               <p>今後ともよろしくお願いします．えびより．</p>
@@ -95,7 +94,7 @@
         </div>
         <!-- messages end -->
 
-        <div class="panel panel-default" style="margin-top: 10px">
+        <div class="panel panel-default" style="margin-top: 10px; display: none">
           <div class="panel-heading collapse-heading" data-toggle="collapse" data-target="#collapse-prog" aria-expanded="true">
             <h3 class="panel-title">
               進捗確認
@@ -126,7 +125,7 @@
         <!-- filters -->
         <!-- AtCoder のサイトを見よう見まねでアレしているだけなので，
              後々ちゃんと勉強したいです．えびより -->
-        <div class="panel panel-default" style="margin-top: 10px">
+        <div class="panel panel-default" style="margin-top: 10px; display: none">
           <div class="panel-heading collapse-heading collapsed" data-toggle="collapse" data-target="#collapse-filter" aria-expanded="false">
             <h3 class="panel-title">
               絞り込み
@@ -247,7 +246,7 @@
           <!-- filters end -->
 
         </div>
-        <button type="button" id="difficulty_submit" class="btn btn-primary">適用</button>
+        <button type="button" id="difficulty_submit" class="btn btn-primary" style="display:none">適用</button>
       </div>
       <!-- header end -->
 
@@ -316,7 +315,7 @@
         </tbody>
       </table>
 
-      <table id="mainconttable" class="table table-striped table-hover table-condensed tablesorter">
+      <table id="mainconttable" class="table table-striped table-hover table-condensed tablesorter" style="display:none">
         <thead>
           <tr>
             <th style="text-align:center; width:10%;">得点</th>
